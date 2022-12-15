@@ -90,7 +90,7 @@
         <div class="box-title">
             <v-row >
                  <v-col class="flex-align-end">
-                    <router-link :to="{ name: 'AssignmentCreate' }" class="routerLink" v-privilege="'sla_exp'">
+                    <router-link :to="{ name: 'CreateSalesAssignment' }" class="routerLink" v-privilege="'sla_exp'">
                         <v-btn
                             depressed
                             color="#50ABA3"

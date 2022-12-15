@@ -8,6 +8,8 @@ import store from "./store";
 import Http from "./services/http";
 import vuetify from "./plugins/vuetify";
 import VueToast from 'vue-toast-notification';
+import VueFileAgent from 'vue-file-agent';
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 import 'vue-toast-notification/dist/theme-sugar.css';
 import '@mdi/font/css/materialdesignicons.css'
 
@@ -15,13 +17,15 @@ import {
   ConfirmationDialogNew,
   LoadingBar,
   SelectSalesPerson,
-  SelectSalesGroup
+  SelectSalesGroup,
+  UploadExcel,
 } from "@vue-mf/global";
 import Vuetify from "vuetify/lib";
 
 Vue.config.productionTip = false;
 Vue.use(VueToast);
 Vue.use(Vuetify);
+Vue.use(VueFileAgent);
 
 // ini untuk privilege
 Vue.directive('privilege', {
@@ -42,7 +46,8 @@ Vue.mixin({
     ConfirmationDialogNew,
     LoadingBar,
     SelectSalesPerson,
-    SelectSalesGroup
+    SelectSalesGroup,
+    UploadExcel,
   },
   data: function() {
     return {

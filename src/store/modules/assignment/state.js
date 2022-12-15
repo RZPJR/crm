@@ -61,6 +61,16 @@ const state = {
             },
         ],
     },
+
+    // Create Sales Assignment 
+    create_assignment: {
+        isLoading: false,
+        data: [],
+        error: {},
+        error_detail: [],
+        sales_group_id: '',
+        clear: false,
+    }
 };
 
 export default state;
