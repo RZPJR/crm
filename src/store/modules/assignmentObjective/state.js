@@ -51,6 +51,10 @@ const state = {
             },
         ],
     },
+    update_assignment_objective_list: {
+        isLoading: false,
+        form: {},
+    }
 };
 
 export default state;

@@ -8,6 +8,16 @@ const mutations = {
         state.assignment_objective_list.data = payload;
         return state;
     },
+    
+    // Update Sales Assignment
+    setPreloadAssignmentObjectiveUpdateDetail: function(state, payload) {
+        state.update_assignment_objective_list.isLoading = payload;
+    return state;
+    },
+    setAssignmentObjectiveUpdateDetail: function(state, payload) {
+        state.update_assignment_objective_list.form = payload;
+        return state;
+    },
 };
 
 export default mutations;

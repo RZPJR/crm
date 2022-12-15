@@ -24,6 +24,35 @@ const actions = {
             commit('setPreloadAssignmentObjectiveList', false);
         }
     },
+    
+    // Update Sales Assignment
+    fetchAssignmentObjectiveUpdateDetail: async ({ state, commit, dispatch }, payload) => {
+        commit('setPreloadAssignmentObjectiveUpdateDetail', true);
+        commit('setAssignmentObjectiveList', {
+            code: '',
+            name: '',
+            objective: '',
+            survei_link: '',
+        });
+        try {
+            let search = state.assignment_objective_list.filter.search
+            let status = state.assignment_objective_list.filter.status === 999 ? '' : "|status:"+state.assignment_list.filter.status      
+            
+            // const response = await http.get("/crm/assignment/objective" + this.$route.params.id);
+            // if (response.data.data) {
+            //     commit('setAssignmentObjectiveList', {
+            //         code: response.data.data.code,
+            //         name: response.data.data.name,
+            //         objective: response.data.data.objective,
+            //         survei_link: response.data.data.surveylink,
+            //     });
+            // }          
+            commit('setPreloadAssignmentObjectiveUpdateDetail', false);
+        } catch (error) {
+            console.log(error);
+            commit('setPreloadAssignmentObjectiveUpdateDetail', false);
+        }
+    },
 };
 
 export default actions;

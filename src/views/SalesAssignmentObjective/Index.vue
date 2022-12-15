@@ -118,7 +118,7 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'sla_obj_upd'" :to="`/sales/assignment/objective/update/${props.item.id}`" v-if="props.item.status == 1">
+                                    <v-list-item v-privilege="'sla_obj_upd'" :to="`/customer-relation/sales-assignment-objective/update`" v-if="props.item.status == 1">
                                         <v-list-item-title>Update</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
