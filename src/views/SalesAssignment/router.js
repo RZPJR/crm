@@ -9,4 +9,9 @@ export default [
         name: 'CreateSalesAssignment',
         component: () => import("./Create.vue"),
     },
+    {
+        path: '/customer-relation/sales-assignment/detail',
+        name: 'DetailSalesAssignment',
+        component: () => import("./Detail.vue"),
+    },
 ]

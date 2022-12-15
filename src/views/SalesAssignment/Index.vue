@@ -144,7 +144,7 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'sla_rdd'" :to="`/sales/assignment/detail/${props.item.id}`">
+                                    <v-list-item v-privilege="'sla_rdd'" :to="{ name: 'DetailSalesAssignment' }">
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>

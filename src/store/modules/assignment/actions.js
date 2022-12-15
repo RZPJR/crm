@@ -182,6 +182,45 @@ const actions = {
             commit('setPreloadCreateAssignment', false);
         }
     },
+
+    // Detail Sales Assignment
+    fetchAssignmentList: async ({ state, commit, dispatch }, payload) => {
+        commit('setPreloadDetailAssignment', true);
+        commit('setDetailAssignment', []);
+        try {
+            let search = state.detail_assignment.filter.search
+            let status = state.detail_assignment.filter.status === 999 ? '' : "|status:"+state.detail_assignment.filter.status      
+            let task_type = state.detail_assignment.filter.task_type === '' ? '' : "|task:"+state.detail_assignment.filter.task_type
+            let finish_date = ''
+            if (state.detail_assignment.filter.finish_date.value.length > 0) {
+                if (state.detail_assignment.filter.finish_date.value.length == 1) {
+                    finish_date = '|finish_date.gte:'+state.detail_assignment.filter.finish_date.value[0]+'T00:00:00Z'+ '|finish_date.lte:'+ state.detail_assignment.filter.finish_date.value[0]+'T24:59:59Z'
+                } else {
+                    let date = state.detail_assignment.filter.finish_date.value[0]
+                    let date2 = state.detail_assignment.filter.finish_date.value[1]
+                    if (date > date2) {
+                        finish_date = '|finish_date.gte:'+date2+'T00:00:00Z'+ '|finish_date.lte:'+date+'T24:59:59Z'
+                    } else {
+                        finish_date = '|finish_date.gte:'+date+'T00:00:00Z'+ '|finish_date.lte:'+date2+'T24:59:59Z'
+                    }
+                }
+            }
+            // const response = await http.get("/crm/assignment/item", {
+            //     params: {
+            //       perpage:100,
+            //         embeds:'salesperson_id,branch_id,sales_assignment_id',
+            //         conditions:'Or.salesperson.name.icontains:'+searchKey+'|sales_assignment_id.e:'+
+            //             this.$route.params.id+finish_date+status+task_type,
+            //         orderby:'-id',
+            //     }
+            // });
+            // if (response.data.data) commit('setDetailAssignment', response.data.data);
+            commit('setPreloadDetailAssignment', false);
+        } catch (error) {
+            console.log(error);
+            commit('setPreloadDetailAssignment', false);
+        }
+        },
 };
 
 export default actions;
