@@ -118,9 +118,9 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{props.item.salesperson.name}}</td>
-                        <td>{{props.item.task}}</td>
-                        <td>{{props.item.branch ? props.item.branch.code+' - '+props.item.branch.name : '-'}}</td>
+                        <td>{{props.item.salesperson_id ? props.item.salesperson_id : '-'}}</td>
+                        <td>{{props.item.task === 1 ? 'Visit' : 'Follow Up' }}</td>
+                        <td>{{props.item.customer_acquisition_id ? props.item.customer_acquisition_id : '-'}}</td>
                         <td>{{props.item.start_date|moment("YYYY-MM-DD")}}</td>
                         <td>{{props.item.end_date|moment("YYYY-MM-DD")}}</td>
                         <td>{{props.item.finish_date == '0001-01-01T00:00:00Z' ? '-' : props.item.finish_date|moment("YYYY-MM-DD HH:mm:ss")}}</td>
@@ -212,10 +212,10 @@
         },
         methods: {
             ...mapActions([
-                'fetchAssignmentList',
+                'fetchAssignmentListDetail',
             ]),
             renderData(){
-                this.fetchAssignmentList();
+                this.fetchAssignmentListDetail({id: this.$route.params.id});
             },
             //For Cancel Assignment
             changeStatus(id) {

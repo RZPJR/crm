@@ -115,8 +115,8 @@
                 <template v-slot:item="props">
                     <tr style="height:48px">
                         <td>{{props.item.code}}</td>
-                        <td>{{props.item.sales_group.name}}</td>
-                        <td>{{props.item.sales_group.sls_man.name}}</td>
+                        <td>{{'-'}}</td>
+                        <td>{{'-'}}</td>
                         <td>{{props.item.start_date | moment("YYYY-MM-DD")}}</td>
                         <td>{{props.item.end_date | moment("YYYY-MM-DD")}}</td>
                         <td>
@@ -148,7 +148,7 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'sla_rdd'" :to="{ name: 'DetailSalesAssignment' }">
+                                    <v-list-item v-privilege="'sla_rdd'" :to="`/customer-relation/sales-assignment/detail/${props.item.id}`">
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
@@ -204,7 +204,7 @@
         },
         methods: {
             ...mapActions ([
-                'fetchAssignmentList'
+                'fetchAssignmentList',
             ]),
             // For cancel assignment
             changeStatus(id) {
@@ -219,15 +219,15 @@
                 }
             },
             // For select sales group filter
-            salesGroupSelected(d) {
-                this.filter.sales_group_id = '';
-                if(d){
-                    this.filter.sales_group_id = d.id
-                }
-                Vue.nextTick(() => {
-                    this.fetchAssignmentList()
-                });
-            },
+            // salesGroupSelected(d) {
+            //     this.filter.sales_group_id = '';
+            //     if(d){
+            //         this.filter.sales_group_id = d.id
+            //     }
+            //     Vue.nextTick(() => {
+            //         this.fetchAssignmentList()
+            //     });
+            // },
         },
         watch: {
             'filter.status': {
