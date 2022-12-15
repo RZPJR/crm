@@ -68,7 +68,7 @@
         <div class="box-title">
             <v-row >
                 <v-col class="flex-align-end">
-                    <router-link :to="{ name: 'AssignmentObjectiveCreate' }" class="routerLink" v-privilege="'sla_obj_crt'">
+                    <router-link :to="{ name: 'SalesAssignmentObjectiveCreate' }" class="routerLink" v-privilege="'sla_obj_crt'">
                         <v-btn
                             depressed
                             color="#50ABA3"

@@ -6,8 +6,8 @@ const actions = {
         commit('setPreloadAssignmentObjectiveList', true);
         commit('setAssignmentObjectiveList', []);
         try {
-            let search = state.assignment_list.filter.search
-            let status = state.assignment_list.filter.status === 999 ? '' : "|status:"+state.assignment_list.filter.status      
+            let search = state.assignment_objective_list.filter.search
+            let status = state.assignment_objective_list.filter.status === 999 ? '' : "|status:"+state.assignment_list.filter.status      
             
             // const response = await http.get("/crm/assignment/objective", {
             //     params: {
