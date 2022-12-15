@@ -121,7 +121,7 @@
                         <td>{{ props.item.name }}</td>
                         <td>{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
                         <td>{{ props.item.address_name ? props.item.address_name : '-'}}</td>
-                        <td>{{ props.item.salesperson.display_name ? props.item.salesperson.display_name : '-'}}</td>
+                        <td>{{ props.item.salesperson?.display_name ? props.item.salesperson.display_name : '-'}}</td>
                         <td>{{ props.item.sales_group ? (props.item.sales_group.name ? props.item.sales_group.name : '-') : '-'}}</td>
                         <td>{{ props.item.submit_date == '0001-01-01T00:00:00Z' ? '-' : props.item.submit_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
                         <td>
