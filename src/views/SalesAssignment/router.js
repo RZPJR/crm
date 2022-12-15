@@ -1,7 +1,7 @@
 export default [
     {
         path: '/customer-relation/sales-assignment',
-        name: 'Sales Assignment',
+        name: 'SalesAssignment',
         component: () => import("./Index.vue"),
     },
 ]

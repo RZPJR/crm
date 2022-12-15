@@ -171,7 +171,7 @@
     import { mapState, mapActions } from 'vuex';
 
     export default {
-        name: "SalesAssignmentList",
+        name: "SalesAssignment",
         data() {
             return {
                 ConfirmData : {},
