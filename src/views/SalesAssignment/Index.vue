@@ -1,6 +1,10 @@
 <template>
     <v-container fill-height class="main-container">
         <div class="box-start">
+            <v-tabs v-model="tab" class="mb14">
+                <v-tab :href="`/customer-relation/sales-assignment`"><b class="no-caps">Sales Assignment</b></v-tab>
+                <v-tab :href="`/customer-relation/sales-assignment-objective`"><b class="no-caps">Sales Assignment Objective</b></v-tab>
+            </v-tabs>
             <v-row>
                 <!-- <v-col cols="12" md="3">
                    <SelectSalesGroup
@@ -175,6 +179,7 @@
         data() {
             return {
                 ConfirmData : {},
+                tab: '/customer-relation/sales-assignment',
             }
         },
         created() {

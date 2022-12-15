@@ -1,5 +1,4 @@
 import http from "../../../services/http";
-import state from "./state";
 
 const actions = {
     // Readlist Sales Assignment
@@ -220,7 +219,7 @@ const actions = {
             console.log(error);
             commit('setPreloadDetailAssignment', false);
         }
-        },
+    },
 };
 
 export default actions;
