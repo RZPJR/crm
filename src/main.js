@@ -13,6 +13,9 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import { 
   ConfirmationDialogNew,
+  LoadingBar,
+  SelectSalesPerson,
+  SelectSalesGroup
 } from "@vue-mf/global";
 import Vuetify from "vuetify/lib";
 
@@ -37,6 +40,9 @@ Vue.directive('privilege', {
 Vue.mixin({
   components: { 
     ConfirmationDialogNew,
+    LoadingBar,
+    SelectSalesPerson,
+    SelectSalesGroup
   },
   data: function() {
     return {
