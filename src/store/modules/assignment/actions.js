@@ -39,8 +39,6 @@ const actions = {
             const response = await http.get("/sales/assignment", {
                 params: {
                   perpage:100,
-                  embeds:'sales_group_id,sales_group_id.sls_man_id',
-                  conditions:'Or.status.icontains:'+status+sales_group+start_date+end_date,
                   orderby:'-id',
                 }
             });
@@ -56,10 +54,9 @@ const actions = {
     downloadAssignmentFile: async ({ state, commit }, file) => {
         commit('setPreloadCreateAssignment', true);
         try {            
-            const response = await http.get("/crm/assignment/export", {
+            const response = await http.get("/sales/assignment/export", {
                 params: {
-                    export:1,
-                    sales_group_id: state.create_assignment.sales_group_id,
+                    teritory_id: state.create_assignment.sales_group_id,
                 }
             });
             commit('setPreloadCreateAssignment', false);
