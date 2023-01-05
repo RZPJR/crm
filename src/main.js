@@ -18,8 +18,10 @@ import {
   LoadingBar,
   SelectSalesPerson,
   SelectSalesGroup,
+  SelectTaskTipe,
   DetailRowNew,
   UploadExcel,
+  DisplayPhotoOverlay
 } from "@vue-mf/global";
 import Vuetify from "vuetify/lib";
 Vue.use(require('vue-moment'));
@@ -49,8 +51,10 @@ Vue.mixin({
     LoadingBar,
     SelectSalesPerson,
     SelectSalesGroup,
+    SelectTaskTipe,
     DetailRowNew,
     UploadExcel,
+    DisplayPhotoOverlay
   },
   data: function() {
     return {
