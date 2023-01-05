@@ -92,7 +92,7 @@
                         <td>{{props.item.name ? props.item.name : '-'}}</td>
                         <td>{{props.item.objective ? props.item.objective : '-'}}</td>
                         <td>
-                            <a :href="props.item.surveylink" class="routerLink linkReload" target="_blank">{{props.item.surveylink ? props.item.surveylink : '-'}}</a>
+                            <a :href="props.item.survey_link" class="routerLink linkReload" target="_blank">{{props.item.survey_link ? props.item.survey_link : '-'}}</a>
                         </td>
                         <td>{{props.item.created_by ? (props.item.created_by.display_name ? props.item.created_by.display_name : '-') : '-'}}</td>
                         <td>
@@ -118,7 +118,7 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'sla_obj_upd'" :to="`/customer-relation/sales-assignment-objective/update`" v-if="props.item.status == 1">
+                                    <v-list-item v-privilege="'sla_obj_upd'" :to="`/customer-relation/sales-assignment-objective/update/`+props.item.id" v-if="props.item.status == 1">
                                         <v-list-item-title>Update</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>

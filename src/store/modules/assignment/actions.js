@@ -7,40 +7,53 @@ const actions = {
         commit('setPreloadAssignmentList', true);
         commit('setAssignmentList', []);
         try {
-            let status = state.assignment_list.filter.status === 999 ? '' : "|status:"+state.assignment_list.filter.status      
+            let status = state.assignment_list.filter.status === 999 ? '' : state.assignment_list.filter.status      
             let sales_group = state.assignment_list.filter.sales_group_id === '' ? '' : "|sales_group_id.e:"+state.assignment_list.filter.sales_group_id
-            let start_date = ''
-            if (state.assignment_list.filter.start_date.length > 0) {
-                if (state.assignment_list.filter.start_date.length == 1) {
-                start_date = '|start_date:' + state.assignment_list.filter.start_date[0]
+            let start_date1 = ''
+            let start_date2 = ''
+            if (state.assignment_list.filter.start_date.value1.length > 0 && state.assignment_list.filter.start_date.value2.length > 0) {
+                if (state.assignment_list.filter.start_date.value1.length == 1 && state.assignment_list.filter.start_date.value2.length == 1) {
+                start_date1 = state.assignment_list.filter.start_date.value1[0]
+                start_date2 = state.assignment_list.filter.start_date.value2[0]
                 } else {
-                    let date = state.assignment_list.filter.start_date[0]
-                    let date2 = state.assignment_list.filter.start_date[1]
+                    let date = state.assignment_list.filter.start_date.value1[0]
+                    let date2 = state.assignment_list.filter.start_date.value2[1]
                     if (date > date2) {
-                        start_date = '|start_date.gte:' + date2 + '|start_date.lte:' + date
+                        start_date1 = date2
+                        start_date2 = date
                     } else {
-                        start_date = '|start_date.gte:' + date + '|start_date.lte:' + date2
+                        start_date1 = date
+                        start_date2 = date2
                     }
                 }
             }
-            let end_date = ''
-            if (state.assignment_list.filter.end_date.length > 0) {
-                if (state.assignment_list.filter.end_date.length == 1) {
-                    end_date = '|end_date:' + state.assignment_list.filter.end_date[0]
+            let end_date1 = ''
+            let end_date2 = ''
+            if (state.assignment_list.filter.end_date.value1.length > 0 && state.assignment_list.filter.end_date.value2.length > 0) {
+                if (state.assignment_list.filter.end_date.value1.length == 1 && state.assignment_list.filter.end_date.value2.length == 1) {
+                end_date1 = state.assignment_list.filter.end_date.value1[0]
+                end_date2 = state.assignment_list.filter.end_date.value2[0]
                 } else {
-                    let date = state.assignment_list.filter.end_date[0]
-                    let date2 = state.assignment_list.filter.end_date[1]
+                    let date = state.assignment_list.filter.end_date.value1[0]
+                    let date2 = state.assignment_list.filter.end_date.value2[1]
                     if (date > date2) {
-                        end_date = '|end_date.gte:' + date2 + '|end_date.lte:' + date
+                        end_date1 = date2
+                        end_date2 = date
                     } else {
-                        end_date = '|end_date.gte:' + date + '|end_date.lte:' + date2
+                        end_date1 = date
+                        end_date2 = date2
                     }
                 }
             }
             const response = await http.get("/sales/assignment", {
                 params: {
-                  perpage:100,
+                  per_page:1000,
                   orderby:'-id',
+                  start_date_from:start_date1,
+                  start_date_to:start_date2,
+                  end_date_from:end_date1,
+                  end_date_to:end_date2,
+                  status: status
                 }
             });
             if (response.data.data) commit('setAssignmentList', response.data.data);
@@ -86,7 +99,6 @@ const actions = {
                     "visit_date": item.Visit_Date == null ? "" : Vue.moment(String(item.Visit_Date)).format(),
                     "objective_codes": item.Objective_Codes == null ? '' : String(item.Objective_Codes.replace(/ /g, "")),
                 })
-                console.log(list,'wwwwwwwwwwwwwwwwwwww')
                 if(item.Objective_Codes){
                     if(item.Objective_Codes.includes(" ")){
                         error_detail.push({message:'Please ensure the Objective Code on line no.' + item.No+' contains no spaces between code'})
@@ -121,11 +133,11 @@ const actions = {
                     message: "Data has been uploaded successfully",
                     type: 'success',
                 });
+                commit('setCreateAssignmentSuccess', true);
             }
             commit('setPreloadCreateAssignment', false);
-            window.location.replace("/customer-relation/sales-assignment");
         } catch (error) {
-            commit('setPreloadCreateAssignment', e.errors);
+            commit('setPreloadCreateAssignment', false);
             let error_detail = []
             for (var key in state.create_assignment.error) {
                 let getIdx = []
@@ -180,9 +192,8 @@ const actions = {
                 } else{
                     error_detail.push({message:'Data No '+indexRow+': '+state.create_assignment.error[key]})
                 }
+                commit('setCreateAssignmentErrorDetail', error_detail)
             }
-            commit('setCreateAssignmentErrorDetail', error_detail)
-            commit('setPreloadCreateAssignment', false);
         }
     },
 
@@ -197,19 +208,19 @@ const actions = {
             let finish_date = ''
             if (state.detail_assignment.filter.finish_date.value.length > 0) {
                 if (state.detail_assignment.filter.finish_date.value.length == 1) {
-                    finish_date = '|finish_date.gte:'+state.detail_assignment.filter.finish_date.value[0]+'T00:00:00Z'+ '|finish_date.lte:'+ state.detail_assignment.filter.finish_date.value[0]+'T24:59:59Z'
+                    finish_date = state.detail_assignment.filter.finish_date.value[0]+'T00:00:00Z'+ state.detail_assignment.filter.finish_date.value[0]+'T24:59:59Z'
                 } else {
                     let date = state.detail_assignment.filter.finish_date.value[0]
                     let date2 = state.detail_assignment.filter.finish_date.value[1]
                     if (date > date2) {
-                        finish_date = '|finish_date.gte:'+date2+'T00:00:00Z'+ '|finish_date.lte:'+date+'T24:59:59Z'
+                        finish_date = date2+'T00:00:00Z'+date+'T24:59:59Z'
                     } else {
-                        finish_date = '|finish_date.gte:'+date+'T00:00:00Z'+ '|finish_date.lte:'+date2+'T24:59:59Z'
+                        finish_date = date+'T00:00:00Z'+date2+'T24:59:59Z'
                     }
                 }
             }
             const response = await http.get("/sales/assignment/"+payload.id);
-            if (response.data.data) commit('setDetailAssignment', response.data.data.sales_assignment_item);
+            if (response.data.data) commit('setDetailAssignment', response.data.data);
             commit('setPreloadDetailAssignment', false);
         } catch (error) {
             console.log(error);
