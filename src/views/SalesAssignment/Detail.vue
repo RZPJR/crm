@@ -225,7 +225,7 @@
                     statusMsg : "Success to cancel this task",
                     title : "Cancel task",
                     text : "Are you sure want to Cancel this task?",
-                    urlApi : "/sales/assignment/cancel/item/"+id,
+                    urlApi : "/crm/v1/sales/assignment/cancel/item/"+id,
                     data : {}
                 }
             },
