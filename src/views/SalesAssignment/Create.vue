@@ -142,8 +142,14 @@
                 this.readAssignmentFile(file);
             },
             // For select upload excel
-            uploadFile() {
-                this.createAssignment()
+            async uploadFile() {
+                await this.createAssignment()
+                console.log(this.create_assignment.success)
+                if(this.create_assignment.success === true){
+                    window.location.replace('/customer-relation/sales-assignment/')
+                }else{
+                    console.log('error')
+                }
             },
         },
         created() {

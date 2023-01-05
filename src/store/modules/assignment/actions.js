@@ -1,5 +1,6 @@
 import http from "../../../services/http";
 import Vue from 'vue'
+import router from '../../../router/index'
 
 const actions = {
     // Readlist Sales Assignment
@@ -118,6 +119,7 @@ const actions = {
     },
     createAssignment: async ({ state, commit }, payload) => {
         commit('setPreloadCreateAssignment', true);
+        commit('setCreateAssignmentSuccess', false);
         commit('setCreateAssignmentErrorDetail', []);
         commit('setCreateAssignmentClear', true);
         let data = {
@@ -128,11 +130,6 @@ const actions = {
         try {
             const response = await http.post("/sales/assignment/import", data);
             if (response) {
-                this.$toast.open({
-                    position: 'top-right',
-                    message: "Data has been uploaded successfully",
-                    type: 'success',
-                });
                 commit('setCreateAssignmentSuccess', true);
             }
             commit('setPreloadCreateAssignment', false);
