@@ -6,6 +6,7 @@ import assignmentObjective from "./modules/assignmentObjective";
 import customerAcquisition from "./modules/customerAcquisition";
 
 Vue.use(Vuex);
+Vue.use(require('vue-moment'));
 
 export default new Vuex.Store({
   modules: {

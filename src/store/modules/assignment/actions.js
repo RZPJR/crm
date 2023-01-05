@@ -1,4 +1,5 @@
 import http from "../../../services/http";
+import Vue from 'vue'
 
 const actions = {
     // Readlist Sales Assignment
@@ -61,7 +62,7 @@ const actions = {
             });
             commit('setPreloadCreateAssignment', false);
             if (response) {
-                window.location.href = response.data.file
+                window.open(response.data.data.url)
             }
         } catch (error) {     
             console.log(error);       
@@ -77,16 +78,16 @@ const actions = {
             let error_detail = []
             await file.forEach((item, i) => {
                 list.push({
-                    "sales_group_id": item.Sales_Group_ID == null ? '' : String(item.Sales_Group_ID),
+                    "territory_code": item.Territory_Code == null ? '' : String(item.Territory_Code),
+                    "customer_code": item.Customer_Code == null ? '' : String(item.Customer_Code),
                     "customer_type": item.Customer_Type == null ? '' : String(item.Customer_Type),
-                    "branch_id": item.Outlet_ID == null ? '' : String(item.Outlet_ID),
-                    "salesperson_id": item.Staff_ID == null ? '' : String(item.Staff_ID),
+                    "salesperson_code": item.Salesperson_Code == null ? '' : String(item.Salesperson_Code),
                     "task": item.Task == null ? '' : String(item.Task),
-                    "visit_date": item.Visit_Date == null ? '' : String(item.Visit_Date),
-                    "objective_code": item.Objective_Code == null ? '' : String(item.Objective_Code.replace(/ /g, ""))
+                    "visit_date": item.Visit_Date == null ? "" : Vue.moment(String(item.Visit_Date)).format(),
+                    "objective_codes": item.Objective_Codes == null ? '' : String(item.Objective_Codes.replace(/ /g, "")),
                 })
-                if(item.Objective_Code){
-                    if(item.Objective_Code.includes(" ")){
+                if(item.Objective_Codes){
+                    if(item.Objective_Codes.includes(" ")){
                         error_detail.push({message:'Please ensure the Objective Code on line no.' + item.No+' contains no spaces between code'})
                     }
                 }
@@ -106,8 +107,13 @@ const actions = {
         commit('setPreloadCreateAssignment', true);
         commit('setCreateAssignmentErrorDetail', []);
         commit('setCreateAssignmentClear', true);
+        let data = {
+            // "territory_code" : state.create_assignment.sales_group_id,
+            "territory_code" : "T000001",
+            "assignments": state.create_assignment.data
+        }
         try {
-            const response = await http.post("/crm/assignment/upload", payload);
+            const response = await http.post("/sales/assignment/import", data);
             if (response) {
                 this.$toast.open({
                     position: 'top-right',

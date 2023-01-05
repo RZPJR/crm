@@ -18,7 +18,7 @@ const HTTP = {
     return api2 ? api2.get(`${url}`, data) : api.get(`${url}`, data);
   },
   post(url, data, api2) {
-    return api2 ? api2.post(`${url}`, data) : api.get(`${url}`, data);
+    return api2 ? api2.post(`${url}`, data) : api.post(`${url}`, data);
   },
   put(url, data, api2) {
     return api2 ? api2.put(`${url}`, data) : api.get(`${url}`, data);

@@ -7,10 +7,11 @@
                         <div>Step 1. Download Template</div>
                         <div class="mt-2 text-black60">Download Eden Farm assignment template</div>
                         <div class="mt-5">
-                            <!-- <SelectSalesGroup
-                                @selected="salesGroupSelected"
+                            <!-- @selected="salesGroupSelected" -->
+                            <SelectSalesGroup
                                 :dense="true"
-                            ></SelectSalesGroup> -->
+                                :disabled="true"
+                            ></SelectSalesGroup>
                         </div>
                         <v-card-actions>
                             <v-spacer></v-spacer>
@@ -99,8 +100,9 @@
             }),
             //For watch disable download
             disableButton() {
-                if (this.create_assignment.sales_group_id) return false
-                else return true
+                // if (this.create_assignment.sales_group_id) return false
+                // else return true
+                return false
             },
             disableUpload() {
                 if (this.create_assignment.sales_group_id && this.create_assignment.data.length>1 && !this.error_detail.length>0) return false
