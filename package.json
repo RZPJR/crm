@@ -19,6 +19,7 @@
     "vue": "^2.6.12",
     "vue-chartjs": "^3.5.1",
     "vue-file-agent": "^1.7.3",
+    "vue-moment": "^4.1.0",
     "vue-numeric": "2.4.3",
     "vue-numeric-input": "^1.0.6",
     "vue-router": "^3.4.3",

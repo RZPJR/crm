@@ -68,7 +68,7 @@ const state = {
         data: [],
         error: {},
         error_detail: [],
-        sales_group_id: '',
+        sales_group_id: 1,
         clear: false,
     },
 
