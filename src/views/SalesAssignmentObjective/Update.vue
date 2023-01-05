@@ -45,8 +45,8 @@
                 </v-col>
                 <v-col cols="12" md="6" class="mtn24">
                     <v-textarea
-                        name="survei_link"
-                        v-model="form.survei_link"
+                        name="survey_link"
+                        v-model="form.survey_link"
                         maxlength="250"
                         outlined
                         rows="3"
@@ -106,15 +106,15 @@
                 'fetchAssignmentObjectiveUpdateDetail',
             ]),
             renderData() {
-                this.fetchAssignmentObjectiveUpdateDetail();
+                this.fetchAssignmentObjectiveUpdateDetail({id: this.$route.params.id});
             },
             // For Confirm Action
             confirmButton() {
-                if(this.form.survei_link){
+                if(this.form.survey_link){
                     this.sendForm = {
                         name: this.form.name,
                         objective: this.form.objective,
-                        surveylink: this.form.survei_link
+                        survey_link: this.form.survey_link
                     }
                 }else{
                     this.sendForm = {
@@ -126,8 +126,8 @@
                     model : true,
                     title : "Update Assignment Objective",
                     text : "Are you sure want to update this Assignment Objective?",
-                    urlApi : "/sales/assignment/objective/"+this.$route.params.id,
-                    nextPage : "/sales/assignment/objective",
+                    urlApi : "/crm/v1/sales/assignment/objective/"+this.$route.params.id,
+                    nextPage : "/customer-relation/sales-assignment-objective",
                     data : this.sendForm
                 }
             },

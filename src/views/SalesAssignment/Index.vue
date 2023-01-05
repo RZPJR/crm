@@ -28,7 +28,7 @@
                                     prepend-inner-icon="mdi-calendar"
                                     outlined
                                     clearable
-                                    @click:clear="start_date.value = [],start_date.input = ''"
+                                    @click:clear="start_date.value1 = [],start_date.value2 = [],start_date.input = '',fetchAssignmentList()"
                                     v-model="start_date.input"
                                     maxlength="24"
                                     dense
@@ -43,7 +43,15 @@
                             range
                             persistent-hint
                             v-model="start_date.value"
-                        ></v-date-picker>
+                        >
+                        <v-btn
+                            text
+                            color="primary"
+                            @click="start_date.model = false,fetchAssignmentList()"
+                        >
+                            OK
+                        </v-btn>
+                        </v-date-picker>
                     </v-menu>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -61,7 +69,7 @@
                                     prepend-inner-icon="mdi-calendar"
                                     outlined
                                     clearable
-                                    @click:clear="end_date.value = [],end_date.input = ''"
+                                    @click:clear="end_date.value1 = [],end_date.value2 = [],end_date.input = '',fetchAssignmentList()"
                                     v-model="end_date.input"
                                     maxlength="24"
                                     dense
@@ -76,7 +84,15 @@
                             range
                             persistent-hint
                             v-model="end_date.value"
-                        ></v-date-picker>
+                        >
+                        <v-btn
+                            text
+                            color="primary"
+                            @click="end_date.model = false,fetchAssignmentList()"
+                        >
+                            OK
+                        </v-btn>
+                        </v-date-picker>
                     </v-menu>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -244,11 +260,7 @@
                         if (val.length == 10) {
                             let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
                             if (valid == true) {
-                                this.start_date.value[0] = this.$moment(val).format('YYYY-MM-DD')
-                                Vue.nextTick(() => {
-                                    this.assignment_list.data = []
-                                    this.fetchAssignmentList()
-                                });
+                                this.start_date.value1[0] = this.$moment(val).format('YYYY-MM-DD')
                             }
                         } else if (val.length == 24) {
                             let date1 = val.substr(0, 10)
@@ -256,22 +268,12 @@
                             let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
                             let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
                             if (valid1 == true && valid2 == true) {
-                                this.start_date.value[0] = this.$moment(date1).format('YYYY-MM-DD')
-                                this.start_date.value[1] = this.$moment(date2).format('YYYY-MM-DD')
-                                if (this.start_date.value.length == 2) {
-                                    Vue.nextTick(() => {
-                                        this.assignment_list.data = []
-                                        this.fetchAssignmentList()
-                                    });
-                                }
+                                this.start_date.value1[0] = this.$moment(date1).format('YYYY-MM-DD')
+                                this.start_date.value2[1] = this.$moment(date2).format('YYYY-MM-DD')
                             }
                         }
                     } else if (val == "") {
                         this.start_date.value = []
-                        Vue.nextTick(() => {
-                            this.assignment_list.data = []
-                            this.fetchAssignmentList()
-                        });
                     }
                 },
                 deep: true
@@ -290,11 +292,7 @@
                         if (val.length == 10) {
                             let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
                             if (valid == true) {
-                                this.end_date.value[0] = this.$moment(val).format('YYYY-MM-DD')
-                                Vue.nextTick(() => {
-                                    this.items = []
-                                    this.fetchAssignmentList()
-                                });
+                                this.end_date.value1[0] = this.$moment(val).format('YYYY-MM-DD')
                             }
                         } else if (val.length == 24) {
                             let date1 = val.substr(0, 10)
@@ -302,22 +300,12 @@
                             let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
                             let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
                             if (valid1 == true && valid2 == true) {
-                                this.end_date.value[0] = this.$moment(date1).format('YYYY-MM-DD')
-                                this.end_date.value[1] = this.$moment(date2).format('YYYY-MM-DD')
-                                if (this.end_date.length == 2) {
-                                    Vue.nextTick(() => {
-                                        this.items = []
-                                        this.fetchAssignmentList()
-                                    });
-                                }
+                                this.end_date.value1[0] = this.$moment(date1).format('YYYY-MM-DD')
+                                this.end_date.value2[1] = this.$moment(date2).format('YYYY-MM-DD')
                             }
                         }
                     } else if (val == "") {
                         this.end_date.value = []
-                        Vue.nextTick(() => {
-                            this.items = []
-                            this.fetchAssignmentList()
-                        });
                     }
                 },
                 deep: true

@@ -10,7 +10,7 @@ export default [
         component: () => import("./Create.vue"),
     },
     {
-        path: '/customer-relation/sales-assignment-objective/update',
+        path: '/customer-relation/sales-assignment-objective/update/:id',
         name: 'SalesAssignmentObjectiveUpdate',
         component: () => import("./Update.vue"),
     },

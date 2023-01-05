@@ -27,12 +27,14 @@ const state = {
             start_date: {
                 model: '',
                 input: '',
-                value: [],
+                value1: [],
+                value2: [],
             },
             end_date: {
                 model: '',
                 input: '',
-                value: [],
+                value1: [],
+                value2: [],
             },
         },
         table_header: [
@@ -88,6 +90,7 @@ const state = {
         error_detail: [],
         sales_group_id: 1,
         clear: false,
+        success: false,
     },
 
     // Detail Sales Assignment

@@ -30,6 +30,10 @@ const mutations = {
         state.create_assignment.clear = payload;
         return state;
     },
+    setCreateAssignmentSuccess: function(state, payload) {
+        state.create_assignment.success = payload;
+        return state;
+    },
 
     // Detail Sales Assignment
     setPreloadDetailAssignment: function(state, payload) {

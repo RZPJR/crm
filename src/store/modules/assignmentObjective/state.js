@@ -53,7 +53,12 @@ const state = {
     },
     update_assignment_objective_list: {
         isLoading: false,
-        form: {},
+        form: {
+            code: '',
+            name: '',
+            objective: '',
+            survey_link: '',
+        },
     }
 };
 
