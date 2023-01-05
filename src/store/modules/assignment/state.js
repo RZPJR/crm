@@ -5,6 +5,24 @@ const state = {
         data: [],
         filter: {
             status: 999,
+            statuses: [
+                {
+                    text: 'All Status',
+                    value: 999
+                },
+                {
+                    text: 'Active',
+                    value: 1
+                },
+                {
+                    text: 'Finished',
+                    value: 2
+                },
+                {
+                    text: 'Cancelled',
+                    value: 3
+                },
+            ],
             sales_group_id: '',
             start_date: {
                 model: '',

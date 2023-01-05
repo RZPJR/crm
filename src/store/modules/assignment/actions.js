@@ -86,6 +86,7 @@ const actions = {
                     "visit_date": item.Visit_Date == null ? "" : Vue.moment(String(item.Visit_Date)).format(),
                     "objective_codes": item.Objective_Codes == null ? '' : String(item.Objective_Codes.replace(/ /g, "")),
                 })
+                console.log(list,'wwwwwwwwwwwwwwwwwwww')
                 if(item.Objective_Codes){
                     if(item.Objective_Codes.includes(" ")){
                         error_detail.push({message:'Please ensure the Objective Code on line no.' + item.No+' contains no spaces between code'})

@@ -82,7 +82,7 @@
                 <v-col cols="12" md="3">
                     <v-select
                         v-model="filter.status"
-                        :items="status"
+                        :items="filter.statuses"
                         item-text="text"
                         item-value="value"
                         outlined
@@ -155,7 +155,7 @@
                                     <div class="px-md-2" v-if="props.item.status == 1">
                                         <hr>
                                     </div>
-                                    <v-list-item v-privilege="'sla_can'" @click="changeStatus(props.item.id)" v-if="props.item.status == 1">
+                                    <v-list-item @click="changeStatus(props.item.id)" v-if="props.item.status == 1">
                                         <v-list-item-content>
                                             <v-list-item-title>Cancel</v-list-item-title>
                                         </v-list-item-content>
@@ -214,7 +214,7 @@
                     statusMsg : "Success to cancel this sales assignment",
                     title : "Cancel Sales Assignment",
                     text : "Are you sure want to Cancel this sales assignment?",
-                    urlApi : "/sales/assignment/cancel/"+id,
+                    urlApi : "/crm/v1/sales/assignment/cancel/"+id,
                     data : {}
                 }
             },
