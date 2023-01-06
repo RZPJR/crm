@@ -140,7 +140,7 @@
                                     small
                                 >Finished</v-chip>
                             </div>
-                            <div v-if="props.item.status == 14">
+                            <div v-if="props.item.status == 27">
                                 <v-chip
                                     :color="statusMaster('failed')"
                                     small
@@ -198,7 +198,7 @@
                     },
                     {
                         text: 'Failed',
-                        value: 14
+                        value: 27
                     }
                 ],
                 out_of_route: 999,

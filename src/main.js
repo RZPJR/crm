@@ -72,7 +72,6 @@ Vue.mixin({
           value: 7
         }
       ],
-
       salable: [
         {
           text: "Salable",

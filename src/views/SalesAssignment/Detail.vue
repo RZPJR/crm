@@ -70,7 +70,7 @@
                                     prepend-inner-icon="mdi-calendar"
                                     outlined
                                     clearable
-                                    @click:clear="finish_date.value = [],finish_date.input = ''"
+                                    @click:clear="finish_date.value1 = [],finish_date.value2 = [] ,finish_date.input = '',renderData()"
                                     v-model="finish_date.input"
                                     maxlength="24"
                                     dense
@@ -85,13 +85,21 @@
                             range
                             persistent-hint
                             v-model="finish_date.value"
-                        ></v-date-picker>
+                        >
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="finish_date.model = false,renderData()"
+                            >
+                                OK
+                            </v-btn>
+                        </v-date-picker>
                     </v-menu>
                 </v-col>
                 <v-col cols="12" md="3">
                     <v-select
                         v-model="filter.status"
-                        :items="status"
+                        :items="status_list"
                         label="Status"
                         item-text="text"
                         item-value="value"
@@ -143,7 +151,7 @@
                                     small
                                 >Cancelled</v-chip>
                             </div>
-                            <div v-if="props.item.status == 14">
+                            <div v-if="props.item.status == 27">
                                 <v-chip
                                     :color="statusMaster('failed')"
                                     small
@@ -190,6 +198,20 @@
                 loading: false,
                 ConfirmData : {},
                 items:[],
+                status_list: [
+                    {
+                        text: 'All Status',
+                        value: 999
+                    },
+                    {
+                        text: 'Active',
+                        value: 1
+                    },
+                    {
+                        text: 'Cancelled',
+                        value: 3
+                    }
+                ]
             }
         },
         created() {
@@ -255,11 +277,7 @@
                         if (val.length == 10) {
                             let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
                             if (valid == true) {
-                                this.finish_date.value[0] = this.$moment(val).format('YYYY-MM-DD')
-                                Vue.nextTick(() => {
-                                    this.items = []
-                                    this.renderData()
-                                });
+                                this.finish_date.value1[0] = this.$moment(val).format('YYYY-MM-DD')
                             }
                         } else if (val.length == 24) {
                             let date1 = val.substr(0, 10)
@@ -267,22 +285,12 @@
                             let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
                             let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
                             if (valid1 == true && valid2 == true) {
-                                this.finish_date.value[0] = this.$moment(date1).format('YYYY-MM-DD')
-                                this.finish_date.value[1] = this.$moment(date2).format('YYYY-MM-DD')
-                                if (this.finish_date.value.length == 2) {
-                                    Vue.nextTick(() => {
-                                        this.items = []
-                                        this.renderData()
-                                    });
-                                }
+                                this.finish_date.value1[0] = this.$moment(date1).format('YYYY-MM-DD')
+                                this.finish_date.value2[1] = this.$moment(date2).format('YYYY-MM-DD')
                             }
                         }
                     } else if (val == "") {
                         this.finish_date.value = []
-                        Vue.nextTick(() => {
-                            this.items = []
-                            this.renderData()
-                        });
                     }
                 },
                 deep: true
