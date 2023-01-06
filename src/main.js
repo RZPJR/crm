@@ -69,10 +69,9 @@ Vue.mixin({
         },
         {
           text: "Archived",
-          value: 2
+          value: 7
         }
       ],
-
       salable: [
         {
           text: "Salable",

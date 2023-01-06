@@ -103,7 +103,8 @@ const state = {
             finish_date: {
                 model: '',
                 input: '',
-                value: [],
+                value1: [],
+                value2: [],
             },
         },
         table_header: [

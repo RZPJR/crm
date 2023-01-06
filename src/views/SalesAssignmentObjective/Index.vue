@@ -102,7 +102,7 @@
                                     small
                                 ><span class="pa-md-2">Active</span></v-chip>
                             </div>
-                            <div v-if="props.item.status == 2">
+                            <div v-if="props.item.status == 7">
                                 <v-chip
                                     :color="statusMaster('archived')"
                                     small
@@ -193,7 +193,7 @@
                         statusMsg : "Success to Archive this assignment objective",
                         title : "Archive",
                         text : "Are you sure want to Archive this assignment objective?",
-                        urlApi : '/sales/assignment/objective/archive/'+id,
+                        urlApi : '/crm/v1/sales/assignment/objective/archive/'+id,
                         data : {}
                     }
                 } else {
@@ -203,7 +203,7 @@
                         statusMsg : "Success to Unarchive this assignment objective",
                         title : "Unarchive",
                         text : "Are you sure want to Unarchive this assignment objective?",
-                        urlApi : '/sales/assignment/objective/unarchive/'+id,
+                        urlApi : '/crm/v1/sales/assignment/objective/unarchive/'+id,
                         data : {}
                     }
                 }

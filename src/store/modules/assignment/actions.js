@@ -200,23 +200,35 @@ const actions = {
         commit('setDetailAssignment', []);
         try {
             let search = state.detail_assignment.filter.search
-            let status = state.detail_assignment.filter.status === 999 ? '' : "|status:"+state.detail_assignment.filter.status      
-            let task_type = state.detail_assignment.filter.task_type === '' ? '' : "|task:"+state.detail_assignment.filter.task_type
-            let finish_date = ''
-            if (state.detail_assignment.filter.finish_date.value.length > 0) {
-                if (state.detail_assignment.filter.finish_date.value.length == 1) {
-                    finish_date = state.detail_assignment.filter.finish_date.value[0]+'T00:00:00Z'+ state.detail_assignment.filter.finish_date.value[0]+'T24:59:59Z'
+            let status = state.detail_assignment.filter.status === 999 ? '' : state.detail_assignment.filter.status      
+            let task_type = state.detail_assignment.filter.task_type === '' ? '' : state.detail_assignment.filter.task_type
+            let finish_date1 = ''
+            let finish_date2 = ''
+            if (state.detail_assignment.filter.finish_date.value1.length > 0 && state.detail_assignment.filter.finish_date.value2.length > 0) {
+                if (state.detail_assignment.filter.finish_date.value1.length == 1 && state.detail_assignment.filter.finish_date.value2.length == 1) {
+                    finish_date1 = state.detail_assignment.filter.finish_date.value1[0]
+                    finish_date2 = state.detail_assignment.filter.finish_date.value2[0]
                 } else {
                     let date = state.detail_assignment.filter.finish_date.value[0]
                     let date2 = state.detail_assignment.filter.finish_date.value[1]
                     if (date > date2) {
-                        finish_date = date2+'T00:00:00Z'+date+'T24:59:59Z'
+                        finish_date1 = date2
+                        finish_date2 = date
                     } else {
-                        finish_date = date+'T00:00:00Z'+date2+'T24:59:59Z'
+                        finish_date1 = date
+                        finish_date2 = date2
                     }
                 }
             }
-            const response = await http.get("/sales/assignment/"+payload.id);
+            const response = await http.get("/sales/assignment/"+payload.id, {
+                params: {
+                    search: search,
+                    status: status,
+                    task_type: task_type,
+                    finish_date_from: finish_date1,
+                    finish_date_to: finish_date2
+                }
+            });
             if (response.data.data) commit('setDetailAssignment', response.data.data);
             commit('setPreloadDetailAssignment', false);
         } catch (error) {
