@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import assignment from "./modules/assignment";
 import assignmentObjective from "./modules/assignmentObjective";
+import assignmentSubmission from "./modules/assignmentSubmission";
 import customerAcquisition from "./modules/customerAcquisition";
 
 Vue.use(Vuex);
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     assignment,
     assignmentObjective,
     customerAcquisition,
+    assignmentSubmission
   }
 });

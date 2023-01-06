@@ -104,14 +104,14 @@
         <div class="box-title">
             <v-row >
                 <v-col class="fs24 bold">
-                    Batch: {{batch_name}}
+                    Batch: {{detail_assignment.data.code}}
                 </v-col>
             </v-row>
         </div>
         <div class="box-body-table">
             <v-data-table
                 :headers="detail_assignment.table_header"
-                :items="detail_assignment.data"
+                :items="detail_assignment.data.sales_assignment_item"
                 :loading="detail_assignment.isLoading"
                 :items-per-page="10"
                 :mobile-breakpoint="0"
@@ -159,7 +159,7 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'sla_can'" @click="changeStatus(props.item.id)">
+                                    <v-list-item @click="changeStatus(props.item.id)">
                                         <v-list-item-content>
                                             <v-list-item-title>Cancel</v-list-item-title>
                                         </v-list-item-content>

@@ -200,8 +200,8 @@ const actions = {
         commit('setDetailAssignment', []);
         try {
             let search = state.detail_assignment.filter.search
-            let status = state.detail_assignment.filter.status === 999 ? '' : "|status:"+state.detail_assignment.filter.status      
-            let task_type = state.detail_assignment.filter.task_type === '' ? '' : "|task:"+state.detail_assignment.filter.task_type
+            let status = state.detail_assignment.filter.status === 999 ? '' : state.detail_assignment.filter.status      
+            let task_type = state.detail_assignment.filter.task_type === '' ? '' : state.detail_assignment.filter.task_type
             let finish_date = ''
             if (state.detail_assignment.filter.finish_date.value.length > 0) {
                 if (state.detail_assignment.filter.finish_date.value.length == 1) {
