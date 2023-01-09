@@ -136,7 +136,7 @@ const actions = {
         } catch (error) {
             commit('setPreloadCreateAssignment', false);
             let error_detail = []
-            for (var key in state.create_assignment.error) {
+            for (var key in error.errors) {
                 let getIdx = []
                 let objectiveCode = []
                 let indexRow = ''
@@ -176,19 +176,26 @@ const actions = {
                 if (key.includes('.visit_date')) {
                     getIdx = key.split('.')
                 }
-                if (key.includes('objective_code_')) {
-                    getIdx = key.split("objective_code_")
+                if (key.includes('objective_codes_')) {
+                    getIdx = key.split("objective_codes_")
                     objectiveCode = getIdx[1].split("_")
+                    getIdx[1] = objectiveCode[0]
+                }
+                if (key.includes('.objective_codes')) {
+                    getIdx = key.split(".")
+                    objectiveCode = getIdx[1].split(".")
                     getIdx[1] = objectiveCode[0]
                 }
 
                 indexRow = parseInt(getIdx[1])+1
-                
+
                 if (objectiveCode.length > 0){
-                    error_detail.push({message:'Data No '+indexRow+': '+objectiveCode[1]+' - '+state.create_assignment.error[key]})
+                    // error_detail.push({message:'Data No '+indexRow+': '+objectiveCode[1]+' - '+error.errors[key]})
+                    error_detail.push({message:'Data No '+indexRow+': '+error.errors[key]})
                 } else{
-                    error_detail.push({message:'Data No '+indexRow+': '+state.create_assignment.error[key]})
+                    error_detail.push({message:'Data No '+indexRow+': '+error.errors[key]})
                 }
+
                 commit('setCreateAssignmentErrorDetail', error_detail)
             }
         }

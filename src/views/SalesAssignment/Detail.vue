@@ -126,7 +126,7 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{props.item.salesperson_id ? props.item.salesperson_id : '-'}}</td>
+                        <td>{{props.item.salesperson ? props.item.salesperson.name : '-'}}</td>
                         <td>{{props.item.task === 1 ? 'Visit' : 'Follow Up' }}</td>
                         <td>{{props.item.customer_acquisition_id ? props.item.customer_acquisition_id : '-'}}</td>
                         <td>{{props.item.start_date|moment("YYYY-MM-DD")}}</td>
