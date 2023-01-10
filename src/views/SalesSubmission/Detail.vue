@@ -25,17 +25,7 @@
                         >Finished
                         </v-btn>
                     </div>
-                    <div v-else-if="this.items.status == 3">
-                        <v-btn
-                            elevation="0"
-                            rounded
-                            small
-                            class="no-caps mb4"
-                            :color="statusMaster('cancelled')"
-                        >Cancelled
-                        </v-btn>
-                    </div>
-                    <div v-else-if="this.items.status == 14">
+                    <div v-else-if="this.items.status == 27">
                         <v-btn
                             elevation="0"
                             rounded
