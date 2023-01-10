@@ -65,14 +65,14 @@
                         @selected="salespersonSelected"
                         v-privilege="'filter_rdl'"
                     ></SelectSalesPerson>
-                </v-col>
-                <v-col cols="12" md="3">
+                </v-col> -->
+                <!-- <v-col cols="12" md="3">
                     <SelectSalesGroup
                         v-model="sales_group_id"
                         @selected="salesGroupSelected"
                         :norequired="true"
                         :dense="true"
-                        v-privilege="'filter_rdl'"
+                        :label="'Territory'"
                     ></SelectSalesGroup>
                 </v-col> -->
                 <v-col cols="12" md="3">
@@ -132,7 +132,7 @@
                         <td>{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
                         <td>{{ props.item.address_name ? props.item.address_name : '-'}}</td>
                         <td>{{ props.item.salesperson?.display_name ? props.item.salesperson.display_name : '-'}}</td>
-                        <td>{{ props.item.sales_group ? (props.item.sales_group.name ? props.item.sales_group.name : '-') : '-'}}</td>
+                        <td>{{ props.item.territory ? (props.item.territory.description ? props.item.territory.description : '-') : '-'}}</td>
                         <td>{{ props.item.submit_date == '0001-01-01T00:00:00Z' ? '-' : props.item.submit_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
                         <td>
                             <v-menu offset-y>

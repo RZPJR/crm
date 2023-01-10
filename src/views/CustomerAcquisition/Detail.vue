@@ -8,10 +8,10 @@
             </v-row>
             <v-row>
                 <v-col cols="12" md="6" class="mt24">
-                    <DetailRowNew :name="'Salesperson'" :value="'-'"/>
+                    <DetailRowNew :name="'Salesperson'" :value="items.salesperson.name"/>
                 </v-col>
                 <v-col cols="12" md="6" class="mt24">
-                    <DetailRowNew :name="'Teritory'" :value="'-'"/>
+                    <DetailRowNew :name="'Teritory'" :value="items.territory.description"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Phone Number'" :value="items.phone_number ? items.phone_number : '-'"/>

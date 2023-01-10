@@ -43,7 +43,6 @@
                         :dense="true"
                         :clear="clearGroup"
                         :label="'Territory'"
-                        disabled
                     ></SelectSalesGroup>
                 </v-col>
                 <v-col cols="12" md="3" class="mt24">
@@ -76,7 +75,7 @@
                         ></v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="12" md="3" class="mt24">
+                <!-- <v-col cols="12" md="3" class="mt24">
                     <SelectSalesPerson
                         v-model="salesperson"
                         :norequired="true"
@@ -84,7 +83,7 @@
                         @selected="salespersonSelected"
                         disabled
                     ></SelectSalesPerson>
-                </v-col>
+                </v-col> -->
                 <v-col cols="12" md="3" class="mt24">
                     <SelectTaskTipe
                         v-model="task_type"
@@ -93,7 +92,7 @@
                         @selected="taskTypeSelected"
                     ></SelectTaskTipe>
                 </v-col>
-                <v-col cols="12" md="3" class="-mt24">
+                <v-col cols="12" md="3" class="mt24">
                     <v-select
                         v-model="statuses"
                         :items="status"
@@ -127,7 +126,7 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{ props.item.sales_assignment ? props.item.sales_assignment.sales_group.name : props.item.sales_group ? props.item.sales_group.name : "-"}}</td>
+                        <td>{{ props.item.territory.description}}</td>
                         <td>{{ props.item.salesperson ? props.item.salesperson.name : "-" }}</td>
                         <td>{{ props.item.task === 1 ? "Visit" : props.item.task === 2 ? 'Follow Up' : 'Customer Acquisition' }}</td>
                         <td>{{ props.item.out_of_route === 1 ? "Yes" : "No" }}</td>
@@ -331,6 +330,10 @@
                 }else{
                     oor = this.out_of_route 
                 }
+                let territory_id = ''
+                if(this.sales_group_id){
+                    territory_id = this.sales_group_id
+                }
                 HTTP.get("/sales/assignment/submission", {
                     params: {
                         perpage: 100,
@@ -339,7 +342,8 @@
                         status: status,
                         submit_date_start: submittedDate1,
                         submit_date_end: submittedDate2,
-                        out_of_route: oor
+                        out_of_route: oor,
+                        territory_id: territory_id
                     }
                 }).then(response => {
                     this.loading = false;
