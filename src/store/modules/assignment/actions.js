@@ -97,7 +97,7 @@ const actions = {
                     "customer_type": item.Customer_Type == null ? '' : String(item.Customer_Type),
                     "salesperson_code": item.Salesperson_Code == null ? '' : String(item.Salesperson_Code),
                     "task": item.Task == null ? '' : String(item.Task),
-                    "visit_date": item.Visit_Date == null ? "" : Vue.moment(String(item.Visit_Date)).format(),
+                    "visit_date": item.Visit_Date == null ? "" : Vue.moment(String(item.Visit_Date)).format('YYYY-MM-DD'),
                     "objective_codes": item.Objective_Codes == null ? '' : String(item.Objective_Codes.replace(/ /g, "")),
                 })
                 if(item.Objective_Codes){
