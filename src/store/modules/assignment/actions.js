@@ -72,7 +72,7 @@ const actions = {
         try {            
             const response = await http.get("/sales/assignment/export", {
                 params: {
-                    teritory_id: state.create_assignment.sales_group_id,
+                    territory_id: state.create_assignment.sales_group_id,
                 }
             });
             commit('setPreloadCreateAssignment', false);
