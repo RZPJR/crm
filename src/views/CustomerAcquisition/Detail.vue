@@ -11,7 +11,7 @@
                     <DetailRowNew :name="'Salesperson'" :value="'-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="mt24">
-                    <DetailRowNew :name="'Sales Group'" :value="'-'"/>
+                    <DetailRowNew :name="'Teritory'" :value="'-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Phone Number'" :value="items.phone_number ? items.phone_number : '-'"/>
