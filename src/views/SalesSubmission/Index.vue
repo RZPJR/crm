@@ -129,7 +129,7 @@
                     <tr style="height:48px">
                         <td>{{ props.item.sales_assignment ? props.item.sales_assignment.sales_group.name : props.item.sales_group ? props.item.sales_group.name : "-"}}</td>
                         <td>{{ props.item.salesperson ? props.item.salesperson.name : "-" }}</td>
-                        <td>{{ props.item.task ? props.item.task : "-" }}</td>
+                        <td>{{ props.item.task === 1 ? "Visit" : props.item.task === 2 ? 'Follow Up' : 'Customer Acquisition' }}</td>
                         <td>{{ props.item.out_of_route === 1 ? "Yes" : "No" }}</td>
                         <td>{{ props.item.submit_date == '0001-01-01T00:00:00Z' ? '-' : props.item.submit_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
                         <td>{{ props.item.finish_date == '0001-01-01T00:00:00Z' ? '-' : props.item.finish_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
