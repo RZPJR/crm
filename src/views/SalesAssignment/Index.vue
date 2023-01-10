@@ -131,7 +131,7 @@
                 <template v-slot:item="props">
                     <tr style="height:48px">
                         <td>{{props.item.code}}</td>
-                        <td>{{'-'}}</td>
+                        <td>{{props.item.teritory.description}}</td>
                         <td>{{'-'}}</td>
                         <td>{{props.item.start_date | moment("YYYY-MM-DD")}}</td>
                         <td>{{props.item.end_date | moment("YYYY-MM-DD")}}</td>

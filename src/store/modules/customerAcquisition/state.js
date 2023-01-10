@@ -40,7 +40,7 @@ const state = {
                 sortable: false
             },
             {
-                text:'Sales Group',
+                text:'Territory',
                 width:'10%',
                 class: 'grey--text text--darken-4',
                 sortable: false

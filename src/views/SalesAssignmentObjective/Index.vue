@@ -94,7 +94,7 @@
                         <td>
                             <a :href="props.item.survey_link" class="routerLink linkReload" target="_blank">{{props.item.survey_link ? props.item.survey_link : '-'}}</a>
                         </td>
-                        <td>{{props.item.created_by ? (props.item.created_by.display_name ? props.item.created_by.display_name : '-') : '-'}}</td>
+                        <td>{{props.item.created_by ? (props.item.created_by.name ? props.item.created_by.name : '-') : '-'}}</td>
                         <td>
                             <div v-if="props.item.status == 1">
                                 <v-chip

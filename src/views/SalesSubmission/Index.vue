@@ -34,8 +34,8 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <v-row :class="showFilter? '':'hidden'">
-                <v-col cols="12" md="3" class="-mt24">
+            <v-row v-if="showFilter">
+                <v-col cols="12" md="3" class="mt24">
                     <SelectSalesGroup
                         v-model="sales_group_id"
                         @selected="salesGroupSelected"
@@ -46,7 +46,7 @@
                         disabled
                     ></SelectSalesGroup>
                 </v-col>
-                <v-col cols="12" md="3" class="-mt24">
+                <v-col cols="12" md="3" class="mt24">
                     <v-menu
                         ref="menu"
                         v-model="submitted_date_model"
@@ -76,7 +76,7 @@
                         ></v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="12" md="3" class="-mt24">
+                <v-col cols="12" md="3" class="mt24">
                     <SelectSalesPerson
                         v-model="salesperson"
                         :norequired="true"
@@ -85,7 +85,7 @@
                         disabled
                     ></SelectSalesPerson>
                 </v-col>
-                <v-col cols="12" md="3" class="-mt24">
+                <v-col cols="12" md="3" class="mt24">
                     <SelectTaskTipe
                         v-model="task_type"
                         :default="1"

@@ -27,7 +27,7 @@
                         depressed
                         x-small
                         @click="showFilter = !showFilter"
-                        v-if="filter"
+                        v-if="showFilter"
                         class="no-caps fs12"
                     >
                         Hide<v-icon right>mdi-chevron-up</v-icon>

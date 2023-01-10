@@ -45,13 +45,13 @@ const state = {
                 sortable: false,
             },
             {
-                text:'Sales Group',
+                text:'Territory',
                 width: "20%",
                 class: 'grey--text text--darken-4',
                 sortable: false
             },
             {
-                text:'Sales Manager',
+                text:'Supervisor',
                 width: "20%",
                 class: 'grey--text text--darken-4',
                 sortable: false
@@ -88,7 +88,7 @@ const state = {
         data: [],
         error: {},
         error_detail: [],
-        sales_group_id: 1,
+        sales_group_id: '',
         clear: false,
         success: false,
     },
