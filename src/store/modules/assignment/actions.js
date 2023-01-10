@@ -9,7 +9,7 @@ const actions = {
         commit('setAssignmentList', []);
         try {
             let status = state.assignment_list.filter.status === 999 ? '' : state.assignment_list.filter.status      
-            let sales_group = state.assignment_list.filter.sales_group_id === '' ? '' : "|sales_group_id.e:"+state.assignment_list.filter.sales_group_id
+            let sales_group = state.assignment_list.filter.sales_group_id === '' ? '' : state.assignment_list.filter.sales_group_id
             let start_date1 = ''
             let start_date2 = ''
             if (state.assignment_list.filter.start_date.value1.length > 0 && state.assignment_list.filter.start_date.value2.length > 0) {
@@ -54,7 +54,8 @@ const actions = {
                   start_date_to:start_date2,
                   end_date_from:end_date1,
                   end_date_to:end_date2,
-                  status: status
+                  status: status,
+                  territory_id: sales_group
                 }
             });
             if (response.data.data) commit('setAssignmentList', response.data.data);

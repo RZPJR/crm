@@ -6,13 +6,14 @@
                 <v-tab :href="`/customer-relation/sales-assignment-objective`"><b class="no-caps">Sales Assignment Objective</b></v-tab>
             </v-tabs>
             <v-row>
-                <!-- <v-col cols="12" md="3">
+                <v-col cols="12" md="3">
                    <SelectSalesGroup
                         @selected="salesGroupSelected"
                         :dense="true"
                         :norequired="true"
+                        :label="'Territory'"
                     ></SelectSalesGroup>
-                </v-col> -->
+                </v-col>
                 <v-col cols="12" md="3">
                     <v-menu
                         ref="menu"
@@ -131,7 +132,7 @@
                 <template v-slot:item="props">
                     <tr style="height:48px">
                         <td>{{props.item.code}}</td>
-                        <td>{{props.item.teritory.description}}</td>
+                        <td>{{props.item.territory.description}}</td>
                         <td>{{'-'}}</td>
                         <td>{{props.item.start_date | moment("YYYY-MM-DD")}}</td>
                         <td>{{props.item.end_date | moment("YYYY-MM-DD")}}</td>
@@ -235,15 +236,15 @@
                 }
             },
             // For select sales group filter
-            // salesGroupSelected(d) {
-            //     this.filter.sales_group_id = '';
-            //     if(d){
-            //         this.filter.sales_group_id = d.id
-            //     }
-            //     Vue.nextTick(() => {
-            //         this.fetchAssignmentList()
-            //     });
-            // },
+            salesGroupSelected(d) {
+                this.filter.sales_group_id = '';
+                if(d){
+                    this.filter.sales_group_id = d.id
+                }
+                Vue.nextTick(() => {
+                    this.fetchAssignmentList()
+                });
+            },
         },
         watch: {
             'filter.status': {
