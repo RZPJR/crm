@@ -208,9 +208,17 @@
                         value: 1
                     },
                     {
+                        text: 'Finished',
+                        value: 2
+                    },
+                    {
                         text: 'Cancelled',
                         value: 3
-                    }
+                    },
+                    {
+                        text: 'Failed',
+                        value: 27
+                    },
                 ]
             }
         },
