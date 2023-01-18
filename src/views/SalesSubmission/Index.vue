@@ -35,7 +35,7 @@
                 </v-col>
             </v-row>
             <v-row v-if="submission_list.showFilter">
-                <v-col cols="12" md="3" class="mt24">
+                <v-col cols="12" md="3">
                     <SelectSalesGroup
                         v-model="submission_list.sales_group_id"
                         @selected="salesGroupSelected"
@@ -45,7 +45,7 @@
                         :label="'Territory'"
                     ></SelectSalesGroup>
                 </v-col>
-                <v-col cols="12" md="3" class="mt24">
+                <v-col cols="12" md="3">
                     <v-menu
                         ref="menu"
                         v-model="submission_list.submitted_date_model"
@@ -75,7 +75,7 @@
                         ></v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="12" md="3" class="mt24">
+                <v-col cols="12" md="3">
                     <SelectTaskTipe
                         v-model="submission_list.task_type"
                         :default="1"
@@ -83,7 +83,7 @@
                         @selected="taskTypeSelected"
                     ></SelectTaskTipe>
                 </v-col>
-                <v-col cols="12" md="3" class="mt24">
+                <v-col cols="12" md="3">
                     <v-select
                         v-model="submission_list.statuses"
                         :items="submission_list.status"
