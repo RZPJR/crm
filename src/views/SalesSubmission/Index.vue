@@ -72,7 +72,14 @@
                         <v-date-picker
                             range
                             v-model="submission_list.submitted_date"
-                        ></v-date-picker>
+                        >
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="submission_list.submitted_date_model = false,fetchAssignmentSubmission()"
+                            >OK</v-btn>    
+                        </v-date-picker>
                     </v-menu>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -249,7 +256,6 @@
                 handler: function (val) {
                     if (val) {
                         this.submission_list.submitted_date_input = this.formatDateRange(val)
-                        this.fetchAssignmentSubmission()
                     }
                 },
                 deep: true
