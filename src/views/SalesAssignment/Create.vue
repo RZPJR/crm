@@ -10,7 +10,8 @@
                             <!-- @selected="salesGroupSelected" -->
                             <SelectSalesGroup
                                 :dense="true"
-                                :disabled="true"
+                                :label="'Territory'"
+                                @selected="salesGroupSelected"
                             ></SelectSalesGroup>
                         </div>
                         <v-card-actions>
@@ -43,12 +44,12 @@
                             <v-tooltip top :disabled="!disableButton">
                                 <template v-slot:activator="{ on: tooltip }">
                                     <div v-on="{ ...tooltip }">
-                                            <!-- :disabled="disableButton" -->
                                         <UploadExcel
                                             @onSelect="onSelectFile"
                                             @onDelete="onDeleteFile"
                                             :clear="clear"
                                             :error="error.id"
+                                            :disabled="disableButton"
                                         ></UploadExcel>
                                     </div>
                                 </template>
@@ -63,8 +64,8 @@
                                 class="no-caps bold white--text px-7"
                                 @click="uploadFile()"
                                 v-privilege="'sla_upl'"
+                                :disabled="disableUpload"
                             >Upload</v-btn>
-                                <!-- :disabled="disableUpload" -->
                         </v-card-actions>
                     </v-col>
                 </v-row>
@@ -100,9 +101,8 @@
             }),
             //For watch disable download
             disableButton() {
-                // if (this.create_assignment.sales_group_id) return false
-                // else return true
-                return false
+                if (this.create_assignment.sales_group_id) return false
+                else return true
             },
             disableUpload() {
                 if (this.create_assignment.sales_group_id && this.create_assignment.data.length>1 && !this.error_detail.length>0) return false
@@ -120,18 +120,16 @@
                 'setCreateAssignmentErrorDetail'
             ]),
             // For select sales group filter
-            // salesGroupSelected(d) {
-            //     this.sales_group_id = '';
-            //     this.clear1 = true
-            //     if(d){
-            //         this.sales_group_id = d.id
-            //         this.clear1 = false
-            //         this.errorDetail = []
-            //     }else{
-            //         this.product_template_upload = []
-            //         this.errorDetail = []
-            //     }
-            // },
+            salesGroupSelected(d) {
+                this.create_assignment.sales_group_id = '';
+                this.clear1 = true
+                if(d){
+                    this.create_assignment.sales_group_id = d.id
+                    this.clear1 = false
+                }else{
+                    this.create_assignment.data = []
+                }
+            },
             // For delete file excel
             onDeleteFile(ev) {
                 this.$store.commit('setCreateAssignment', []);
@@ -142,8 +140,13 @@
                 this.readAssignmentFile(file);
             },
             // For select upload excel
-            uploadFile() {
-                this.createAssignment()
+            async uploadFile() {
+                await this.createAssignment()
+                if(this.create_assignment.success === true){
+                    window.location.replace('/customer-relation/sales-assignment/')
+                }else{
+                    console.log('error')
+                }
             },
         },
         created() {

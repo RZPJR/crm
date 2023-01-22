@@ -18,9 +18,13 @@ import {
   LoadingBar,
   SelectSalesPerson,
   SelectSalesGroup,
+  SelectTaskTipe,
+  DetailRowNew,
   UploadExcel,
+  DisplayPhotoOverlay
 } from "@vue-mf/global";
 import Vuetify from "vuetify/lib";
+Vue.use(require('vue-moment'));
 
 Vue.config.productionTip = false;
 Vue.use(VueToast);
@@ -47,7 +51,10 @@ Vue.mixin({
     LoadingBar,
     SelectSalesPerson,
     SelectSalesGroup,
+    SelectTaskTipe,
+    DetailRowNew,
     UploadExcel,
+    DisplayPhotoOverlay
   },
   data: function() {
     return {
@@ -62,10 +69,9 @@ Vue.mixin({
         },
         {
           text: "Archived",
-          value: 2
+          value: 7
         }
       ],
-
       salable: [
         {
           text: "Salable",
@@ -417,6 +423,39 @@ Vue.mixin({
         str = "#333333";
       }
       return str;
+    },
+    formatDate(val) {
+      if (val) {
+          return this.$moment(val).utcOffset('+0700').format('YYYY-MM-DD')
+      }
+    },
+    formatDateRange(val) {
+        if (val.length > 0) {
+            let ret = ''
+            if (val.length == 1) {
+                let date = val[0]
+                ret = this.$moment(date).format('YYYY-MM-DD')
+            } else {
+                let date = val[0]
+                let date2 = val[1]
+                if (date > date2) {
+                    ret = this.$moment(date2).format('YYYY-MM-DD') + ' to ' + this.$moment(date).format('YYYY-MM-DD')
+                } else {
+                    ret = this.$moment(date).format('YYYY-MM-DD') + ' to ' + this.$moment(date2).format('YYYY-MM-DD')
+                }
+            }
+            return ret
+        }
+    },
+    formatTime(val) {
+        if (val) {
+            return this.$moment(val).format('HH:mm')
+        }
+    },
+    formatDateTime(val) {
+        if (val) {
+            return this.$moment(val).format('YYYY-MM-DD HH:mm:ss')
+        }
     },
     formatPrice(value) {
       let val = (value / 1).toFixed(2).replace(".", ",");

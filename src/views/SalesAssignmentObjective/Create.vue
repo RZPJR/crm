@@ -32,14 +32,14 @@
                 </v-col>
                 <v-col cols="12" md="6" class="mtn24">
                     <v-textarea
-                        name="survei_link"
-                        v-model="form.survei_link"
+                        name="survey_link"
+                        v-model="form.survey_link"
                         maxlength="250"
                         outlined
                         rows="3"
                         class="pt-0 mt-0"
                         :counter="250"
-                        :error-messages="errorSurveyLink ? errorSurveyLink : error.surveylink"
+                        :error-messages="errorSurveyLink ? errorSurveyLink : error.survey_link"
                     >
                         <template v-slot:label>Survey Link</template>
                     </v-textarea>
@@ -77,7 +77,7 @@
                 form:{
                     name: '',
                     objective: '',
-                    survei_link: '',
+                    survey_link: '',
                 },
                 sendForm: {},
                 error:{},
@@ -88,7 +88,7 @@
         computed : {
             //For watch disable update
             disableButton() {
-                if (this.hasWhiteSpace(this.form.survei_link)) {
+                if (this.hasWhiteSpace(this.form.survey_link)) {
                     this.errorSurveyLink = 'Please ensure the Survey Link is valid and contains no space between words'
                     return true
                 } else {
@@ -100,11 +100,11 @@
         methods:{
             // For Confirm Action
             confirmButton() {
-                if(this.form.survei_link){
+                if(this.form.survey_link){
                     this.sendForm = {
                         name: this.form.name,
                         objective: this.form.objective,
-                        surveylink: this.form.survei_link
+                        survey_link: this.form.survey_link
                     }
                 }else{
                     this.sendForm = {
@@ -116,8 +116,8 @@
                     model : true,
                     title : "Create Assignment Objective",
                     text : "Are you sure want to create this Assignment Objective?",
-                    urlApi : "/sales/assignment/objective",// sesuaikan dengan API
-                    nextPage : "/sales/assignment/objective",
+                    urlApi : "/crm/v1/sales/assignment/objective",// sesuaikan dengan API
+                    nextPage : "/customer-relation/sales-assignment-objective",
                     post : true,
                     data : this.sendForm
                 }

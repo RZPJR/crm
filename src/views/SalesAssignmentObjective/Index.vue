@@ -92,9 +92,9 @@
                         <td>{{props.item.name ? props.item.name : '-'}}</td>
                         <td>{{props.item.objective ? props.item.objective : '-'}}</td>
                         <td>
-                            <a :href="props.item.surveylink" class="routerLink linkReload" target="_blank">{{props.item.surveylink ? props.item.surveylink : '-'}}</a>
+                            <a :href="props.item.survey_link" class="routerLink linkReload" target="_blank">{{props.item.survey_link ? props.item.survey_link : '-'}}</a>
                         </td>
-                        <td>{{props.item.created_by ? (props.item.created_by.display_name ? props.item.created_by.display_name : '-') : '-'}}</td>
+                        <td>{{props.item.created_by ? (props.item.created_by.name ? props.item.created_by.name : '-') : '-'}}</td>
                         <td>
                             <div v-if="props.item.status == 1">
                                 <v-chip
@@ -102,7 +102,7 @@
                                     small
                                 ><span class="pa-md-2">Active</span></v-chip>
                             </div>
-                            <div v-if="props.item.status == 2">
+                            <div v-if="props.item.status == 7">
                                 <v-chip
                                     :color="statusMaster('archived')"
                                     small
@@ -118,7 +118,7 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'sla_obj_upd'" :to="`/customer-relation/sales-assignment-objective/update`" v-if="props.item.status == 1">
+                                    <v-list-item v-privilege="'sla_obj_upd'" :to="`/customer-relation/sales-assignment-objective/update/`+props.item.id" v-if="props.item.status == 1">
                                         <v-list-item-title>Update</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
@@ -193,7 +193,7 @@
                         statusMsg : "Success to Archive this assignment objective",
                         title : "Archive",
                         text : "Are you sure want to Archive this assignment objective?",
-                        urlApi : '/sales/assignment/objective/archive/'+id,
+                        urlApi : '/crm/v1/sales/assignment/objective/archive/'+id,
                         data : {}
                     }
                 } else {
@@ -203,7 +203,7 @@
                         statusMsg : "Success to Unarchive this assignment objective",
                         title : "Unarchive",
                         text : "Are you sure want to Unarchive this assignment objective?",
-                        urlApi : '/sales/assignment/objective/unarchive/'+id,
+                        urlApi : '/crm/v1/sales/assignment/objective/unarchive/'+id,
                         data : {}
                     }
                 }

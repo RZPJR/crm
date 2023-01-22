@@ -18,7 +18,7 @@
                             >
                             </v-text-field>
                         </template>
-                        <span>Search by outlet name & phone number</span>
+                        <span>Search by customer name</span>
                     </v-tooltip>
                 </v-col>
             </v-row>
@@ -65,14 +65,14 @@
                         @selected="salespersonSelected"
                         v-privilege="'filter_rdl'"
                     ></SelectSalesPerson>
-                </v-col>
-                <v-col cols="12" md="3">
+                </v-col> -->
+                <!-- <v-col cols="12" md="3">
                     <SelectSalesGroup
                         v-model="sales_group_id"
                         @selected="salesGroupSelected"
                         :norequired="true"
                         :dense="true"
-                        v-privilege="'filter_rdl'"
+                        :label="'Territory'"
                     ></SelectSalesGroup>
                 </v-col> -->
                 <v-col cols="12" md="3">
@@ -90,6 +90,7 @@
                                     prepend-inner-icon="mdi-calendar"
                                     outlined
                                     maxlength="24"
+                                    @click:clear="submitted_date.value1= [],submitted_date.value2= [],submitted_date.input = '',renderData()"
                                     v-model="submitted_date.input"
                                     dense
                                     clearable
@@ -103,7 +104,16 @@
                         <v-date-picker
                             range
                             v-model="submitted_date.value"
-                        ></v-date-picker>
+                        >
+                        <v-spacer></v-spacer>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="submitted_date.model = false,renderData()"
+                            >
+                                OK
+                            </v-btn>
+                        </v-date-picker>
                     </v-menu>
                 </v-col>
             </v-row>
@@ -122,7 +132,7 @@
                         <td>{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
                         <td>{{ props.item.address_name ? props.item.address_name : '-'}}</td>
                         <td>{{ props.item.salesperson?.display_name ? props.item.salesperson.display_name : '-'}}</td>
-                        <td>{{ props.item.sales_group ? (props.item.sales_group.name ? props.item.sales_group.name : '-') : '-'}}</td>
+                        <td>{{ props.item.territory ? (props.item.territory.description ? props.item.territory.description : '-') : '-'}}</td>
                         <td>{{ props.item.submit_date == '0001-01-01T00:00:00Z' ? '-' : props.item.submit_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
                         <td>
                             <v-menu offset-y>
@@ -133,7 +143,7 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'ca_rdd'" :to="{ name: 'AcquisitionDetail', params: { id: props.item.id } }">
+                                    <v-list-item v-privilege="'ca_rdd'" :to="{ name: 'CustomerAcquisitionDetail', params: { id: props.item.id } }">
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
@@ -178,22 +188,6 @@
             renderData(){
                 this.fetchCustomerAcquisition();
             },
-            //For Filter Salesperson
-            // salespersonSelected(d) {
-            //     this.salesperson = '';
-            //     if (d) {
-            //         this.salesperson = d.id;
-            //     }
-            //     this.renderData()
-            // },
-            //  // For Filter Sales Group
-            //  salesGroupSelected(d) {
-            //     this.sales_group_id = '';
-            //     if(d){
-            //         this.sales_group_id = d.id
-            //     }
-            //     this.renderData()
-            // },
         },
         watch: {
             'filter.search': {
@@ -212,11 +206,7 @@
                         if (val.length == 10) {
                             let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
                             if (valid == true) {
-                                this.submitted_date.value[0] = this.$moment(val).format('YYYY-MM-DD')
-                                Vue.nextTick(() => {
-                                    // this.items = []
-                                    this.renderData()
-                                });
+                                this.submitted_date.value1[0] = this.$moment(val).format('YYYY-MM-DD')
                             }
                         } else if (val.length == 24) {
                             let date1 = val.substr(0, 10)
@@ -224,22 +214,12 @@
                             let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
                             let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
                             if (valid1 == true && valid2 == true) {
-                                this.submitted_date.value[0] = this.$moment(date1).format('YYYY-MM-DD')
-                                this.submitted_date.value[1] = this.$moment(date2).format('YYYY-MM-DD')
-                                if (this.submitted_date.length == 2) {
-                                    Vue.nextTick(() => {
-                                        // this.items = []
-                                        this.renderData()
-                                    });
-                                }
+                                this.submitted_date.value1[0] = this.$moment(date1).format('YYYY-MM-DD')
+                                this.submitted_date.value2[1] = this.$moment(date2).format('YYYY-MM-DD')
                             }
                         }
                     } else if (val == "") {
                         this.submitted_date.value = []
-                        Vue.nextTick(() => {
-                            this.items = []
-                            this.renderData()
-                        });
                     }
                 },
                 deep: true

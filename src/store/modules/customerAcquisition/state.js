@@ -10,12 +10,13 @@ const state = {
             submitted_date: {
                 model: '',
                 input: '',
-                value: [],
+                value1: [],
+                value2: [],
             },
         },
         table_header: [
             {
-                text:'Outlet Name',
+                text:'Customer Name',
                 width:'20%',
                 class: 'grey--text text--darken-4',
                 sortable: false,
@@ -39,13 +40,13 @@ const state = {
                 sortable: false
             },
             {
-                text:'Sales Group',
+                text:'Territory',
                 width:'10%',
                 class: 'grey--text text--darken-4',
                 sortable: false
             },
             {
-                text:'Submit Date',
+                text:'Submitted Date',
                 width:'13%',
                 class: 'grey--text text--darken-4',
                 sortable: false

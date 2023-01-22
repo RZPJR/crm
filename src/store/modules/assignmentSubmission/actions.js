@@ -2,7 +2,7 @@ import http from "../../../services/http";
 
 const actions = {
     // Readlist Customer Acquisition
-    fetchCustomerAcquisition: async ({ state, commit, dispatch }, payload) => {
+    fetchAssignmentSubmission: async ({ state, commit, dispatch }, payload) => {
         commit('setPreloadCustomerAcquisition', true);
         commit('setCustomerAcquisition', []);
         try {

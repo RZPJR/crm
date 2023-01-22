@@ -5,16 +5,36 @@ const state = {
         data: [],
         filter: {
             status: 999,
+            statuses: [
+                {
+                    text: 'All Status',
+                    value: 999
+                },
+                {
+                    text: 'Active',
+                    value: 1
+                },
+                {
+                    text: 'Finished',
+                    value: 2
+                },
+                {
+                    text: 'Cancelled',
+                    value: 3
+                },
+            ],
             sales_group_id: '',
             start_date: {
                 model: '',
                 input: '',
-                value: [],
+                value1: [],
+                value2: [],
             },
             end_date: {
                 model: '',
                 input: '',
-                value: [],
+                value1: [],
+                value2: [],
             },
         },
         table_header: [
@@ -25,13 +45,13 @@ const state = {
                 sortable: false,
             },
             {
-                text:'Sales Group',
+                text:'Territory',
                 width: "20%",
                 class: 'grey--text text--darken-4',
                 sortable: false
             },
             {
-                text:'Sales Manager',
+                text:'Supervisor',
                 width: "20%",
                 class: 'grey--text text--darken-4',
                 sortable: false
@@ -68,8 +88,9 @@ const state = {
         data: [],
         error: {},
         error_detail: [],
-        sales_group_id: 1,
+        sales_group_id: '',
         clear: false,
+        success: false,
     },
 
     // Detail Sales Assignment
@@ -82,7 +103,8 @@ const state = {
             finish_date: {
                 model: '',
                 input: '',
-                value: [],
+                value1: [],
+                value2: [],
             },
         },
         table_header: [
