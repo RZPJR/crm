@@ -7,7 +7,6 @@ const actions = {
         commit('setOverlaySubmission', true);
         commit('setSubmission', []);
         try {
-            console.log(state.assignment_submission.task_type,'lllllllll')
             let territory_id = ''
             if(state.assignment_submission.sales_group_id){
                 territory_id = state.assignment_submission.sales_group_id
