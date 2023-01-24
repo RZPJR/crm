@@ -27,14 +27,12 @@ const state = {
             start_date: {
                 model: '',
                 input: '',
-                value1: [],
-                value2: [],
+                value: []
             },
             end_date: {
                 model: '',
                 input: '',
-                value1: [],
-                value2: [],
+                value: []
             },
         },
         table_header: [
