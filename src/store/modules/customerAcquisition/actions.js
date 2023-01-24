@@ -11,21 +11,18 @@ const actions = {
             // let sales_group = state.customer_acquisition.filter.sales_group_id === '' ? '' : "|sales_group_id.e:"+state.customer_acquisition.filter.sales_group_id
             let submitted_date = ''
             let submitted_date2 = ''
-            if (state.customer_acquisition.filter.submitted_date.value1.length > 0 && state.customer_acquisition.filter.submitted_date.value2.length > 0 ) {
-                if (state.customer_acquisition.filter.submitted_date.value1.length == 1 && state.customer_acquisition.filter.submitted_date.value2.length == 1) {
-                    submitted_date = state.customer_acquisition.filter.submitted_date.value1[0]
-                    submitted_date2 = state.customer_acquisition.filter.submitted_date.value2[0]
-                    submitted_date = state.customer_acquisition.filter.submitted_date.value1[0]+'T00:00:00Z'
-                    submitted_date2 = state.customer_acquisition.filter.submitted_date.value2[0]+'T23:59:59Z'
+            if (state.customer_acquisition.filter.submitted_date.value.length > 0) {
+                if (state.customer_acquisition.filter.submitted_date.value.length == 1) {
+                    submitted_date = state.customer_acquisition.filter.submitted_date.value[0]
                 } else {
-                    let date = state.customer_acquisition.filter.submitted_date.value1[0]
-                    let date2 = state.customer_acquisition.filter.submitted_date.value2[1]
+                    let date = state.customer_acquisition.filter.submitted_date.value[0]
+                    let date2 = state.customer_acquisition.filter.submitted_date.value[1]
                     if (date > date2) {
-                        submitted_date = date2+'T00:00:00Z'
-                        submitted_date2 = date+'T23:59:59Z'
+                        submitted_date = date2
+                        submitted_date2 = date
                     } else {
-                        submitted_date = date+'T00:00:00Z'
-                        submitted_date2 = date2+'T23:59:59Z'
+                        submitted_date = date
+                        submitted_date2 = date2
                     }
                 }
             }
