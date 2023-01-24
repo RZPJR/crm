@@ -10,8 +10,7 @@ const state = {
             submitted_date: {
                 model: '',
                 input: '',
-                value1: [],
-                value2: [],
+                value: []
             },
         },
         table_header: [

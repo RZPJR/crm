@@ -12,13 +12,12 @@ const actions = {
             let sales_group = state.assignment_list.filter.sales_group_id === '' ? '' : state.assignment_list.filter.sales_group_id
             let start_date1 = ''
             let start_date2 = ''
-            if (state.assignment_list.filter.start_date.value1.length > 0 && state.assignment_list.filter.start_date.value2.length > 0) {
-                if (state.assignment_list.filter.start_date.value1.length == 1 && state.assignment_list.filter.start_date.value2.length == 1) {
-                start_date1 = state.assignment_list.filter.start_date.value1[0]
-                start_date2 = state.assignment_list.filter.start_date.value2[0]
+            if (state.assignment_list.filter.start_date.value.length > 0) {
+                if (state.assignment_list.filter.start_date.value.length == 1) {
+                start_date1 = state.assignment_list.filter.start_date.value[0]
                 } else {
-                    let date = state.assignment_list.filter.start_date.value1[0]
-                    let date2 = state.assignment_list.filter.start_date.value2[1]
+                    let date = state.assignment_list.filter.start_date.value[0]
+                    let date2 = state.assignment_list.filter.start_date.value[1]
                     if (date > date2) {
                         start_date1 = date2
                         start_date2 = date
@@ -30,13 +29,13 @@ const actions = {
             }
             let end_date1 = ''
             let end_date2 = ''
-            if (state.assignment_list.filter.end_date.value1.length > 0 && state.assignment_list.filter.end_date.value2.length > 0) {
-                if (state.assignment_list.filter.end_date.value1.length == 1 && state.assignment_list.filter.end_date.value2.length == 1) {
-                end_date1 = state.assignment_list.filter.end_date.value1[0]
-                end_date2 = state.assignment_list.filter.end_date.value2[0]
+            if (state.assignment_list.filter.end_date.value.length > 0) {
+                if (state.assignment_list.filter.end_date.value.length == 1) {
+                end_date1 = state.assignment_list.filter.end_date.value[0]
+                end_date2 = state.assignment_list.filter.end_date.value[0]
                 } else {
-                    let date = state.assignment_list.filter.end_date.value1[0]
-                    let date2 = state.assignment_list.filter.end_date.value2[1]
+                    let date = state.assignment_list.filter.end_date.value[0]
+                    let date2 = state.assignment_list.filter.end_date.value[1]
                     if (date > date2) {
                         end_date1 = date2
                         end_date2 = date
