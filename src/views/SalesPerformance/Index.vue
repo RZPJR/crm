@@ -9,6 +9,7 @@
                         x-small
                         @click="showFilter = !showFilter"
                         v-if="showFilter"
+                        data-unq="switch-filter-hide"
                         class="no-caps fs12"
                     >
                         Hide
@@ -23,6 +24,7 @@
                         x-small
                         @click="showFilter = !showFilter"
                         v-else
+                        data-unq="switch-filter-hide"
                         class="no-caps fs12"
                     >
                         Show

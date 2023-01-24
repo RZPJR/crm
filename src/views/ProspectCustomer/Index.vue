@@ -12,6 +12,7 @@
                                 placeholder="Search..."
                                 v-on="{ ...tooltip }"
                                 outlined
+                                data-unq="search-filter"
                                 dense
                                 filled
                                 v-privilege="'filter_rdl'"
@@ -30,6 +31,7 @@
                         x-small
                         @click="showFilter = !showFilter"
                         v-if="showFilter"
+                        data-unq="switch-filter-hide"
                         class="no-caps fs12"
                     >
                         Hide
@@ -42,6 +44,7 @@
                         x-small
                         @click="showFilter = !showFilter"
                         v-else
+                        data-unq="switch-filter-show"
                         class="no-caps fs12"
                     >
                         Show
@@ -51,7 +54,7 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="showFilter">
                 <v-col cols="12" md="3">
                     <v-select
                         v-model="statuses"
