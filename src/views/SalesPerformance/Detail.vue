@@ -93,7 +93,7 @@
                         dense
                     ></v-select>
                 </v-col>
-                <!-- <v-col cols="12" md="3" class="mt24">
+                <v-col cols="12" md="3" class="mt24">
                     <v-menu
                         ref="menu"
                         v-model="submitted_date_model"
@@ -125,7 +125,7 @@
                             :max="allowedDate[1]"
                         ></v-date-picker>
                     </v-menu>
-                </v-col> -->
+                </v-col>
                 <v-col cols="12" md="3" class="mt24">
                     <v-select
                         v-show="task_type != 3"
@@ -400,28 +400,24 @@
                 this.loading = true;
                 this.overlay = true;
                 this.items = []
-                // if (this.submitted_date.length > 0) {
-                //     if (this.submitted_date.length == 1) {
-                //             assigmentDate = this.submitted_date[0]+ this.submitted_date[0]
-                //             submittedDate = this.submitted_date[0]+this.submitted_date[0]
-                //             fromdate = this.submitted_date[0]
-                //             todate = this.submitted_date[0]
-                //     } else {
-                //         let date = this.submitted_date[0]
-                //         let date2 = this.submitted_date[1]
-                //         if (date > date2) {
-                //             assigmentDate = date2+ date
-                //             submittedDate = date2+date
-                //             fromdate = date2
-                //             todate = date
-                //         } else {
-                //             assigmentDate = date+ date2
-                //             submittedDate = date+date2
-                //             fromdate = date
-                //             todate = date2
-                //         }
-                //     }
-                // }
+                let fromdate = ''
+                let todate = ''
+                if (this.submitted_date.length > 0) {
+                    if (this.submitted_date.length == 1) {
+                            fromdate = this.submitted_date[0]
+                            todate = this.submitted_date[0]
+                    } else {
+                        let date = this.submitted_date[0]
+                        let date2 = this.submitted_date[1]
+                        if (date > date2) {
+                            fromdate = date2
+                            todate = date
+                        } else {
+                            fromdate = date
+                            todate = date2
+                        }
+                    }
+                }
                 let taskType = ''
                 if(this.task_type){
                     if(this.task_type == 1){
@@ -445,13 +441,28 @@
                     params: {
                         per_page: 100,
                         status: status,
-                        task: taskType
+                        task: taskType,
+                        start_date_from: fromdate,
+                        start_date_to: todate
+
                     }
                 }).then(response => {
                     this.loading = false;
                     this.items = response.data.data
                     if (this.items === null) {
                         this.items = []
+                    }
+                    if (this.items.visit_tracker === null) {
+                        this.items.visit_tracker = []
+                    }
+                    if (this.items.follow_up_tracker === null) {
+                        this.items.follow_up_tracker = []
+                    }
+                    if (this.items.sales_assignment_submissions === null) {
+                        this.items.sales_assignment_submissions = []
+                    }
+                    if (this.items.customer_acquisitions === null) {
+                        this.items.customer_acquisitions = []
                     }
                     this.overlay = false;
                 });
@@ -481,52 +492,52 @@
                 },
                 deep: true
             },
-            // 'submitted_date_input': {
-            //     handler: function (val) {
-            //         if (val) {
-            //             if (val.length == 10) {
-            //                 let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
-            //                 if (valid == true) {
-            //                     this.submitted_date[0] = this.$moment(val).format('YYYY-MM-DD')
-            //                     Vue.nextTick(() => {
-            //                         this.items = []
-            //                         this.renderData()
-            //                     });
-            //                 }
-            //             } else if (val.length == 24) {
-            //                 let date1 = val.substr(0, 10)
-            //                 let date2 = val.substr(14, 23)
-            //                 let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
-            //                 let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
-            //                 if (valid1 == true && valid2 == true) {
-            //                     this.submitted_date[0] = this.$moment(date1).format('YYYY-MM-DD')
-            //                     this.submitted_date[1] = this.$moment(date2).format('YYYY-MM-DD')
-            //                     if (this.submitted_date.length == 2) {
-            //                         Vue.nextTick(() => {
-            //                             this.items = []
-            //                             this.renderData()
-            //                         });
-            //                     }
-            //                 }
-            //             }
-            //         } else if (val == "") {
-            //             this.submitted_date = []
-            //             Vue.nextTick(() => {
-            //                 this.items = []
-            //                 this.renderData()
-            //             });
-            //         }
-            //     },
-            //     deep: true
-            // },
-            // 'submitted_date': {
-            //     handler: function (val) {
-            //         if (val) {
-            //             this.submitted_date_input = this.formatDateRange(val)
-            //         }
-            //     },
-            //     deep: true
-            // },
+            'submitted_date_input': {
+                handler: function (val) {
+                    if (val) {
+                        if (val.length == 10) {
+                            let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
+                            if (valid == true) {
+                                this.submitted_date[0] = this.$moment(val).format('YYYY-MM-DD')
+                                Vue.nextTick(() => {
+                                    this.items = []
+                                    this.renderData()
+                                });
+                            }
+                        } else if (val.length == 24) {
+                            let date1 = val.substr(0, 10)
+                            let date2 = val.substr(14, 23)
+                            let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
+                            let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
+                            if (valid1 == true && valid2 == true) {
+                                this.submitted_date[0] = this.$moment(date1).format('YYYY-MM-DD')
+                                this.submitted_date[1] = this.$moment(date2).format('YYYY-MM-DD')
+                                if (this.submitted_date.length == 2) {
+                                    Vue.nextTick(() => {
+                                        this.items = []
+                                        this.renderData()
+                                    });
+                                }
+                            }
+                        }
+                    } else if (val == "") {
+                        this.submitted_date = []
+                        Vue.nextTick(() => {
+                            this.items = []
+                            this.renderData()
+                        });
+                    }
+                },
+                deep: true
+            },
+            'submitted_date': {
+                handler: function (val) {
+                    if (val) {
+                        this.submitted_date_input = this.formatDateRange(val)
+                    }
+                },
+                deep: true
+            },
             'task_type': {
                 handler: function (val) {
                     let that = this

@@ -71,7 +71,7 @@
                                     prepend-inner-icon="mdi-calendar"
                                     outlined
                                     maxlength="24"
-                                    @click:clear="submitted_date.value1 = [],submitted_date.value2 = [],submitted_date.input = '',fetchSalesPerformanceList()"
+                                    @click:clear="submitted_date.value = [],submitted_date.input = '',fetchSalesPerformanceList()"
                                     v-model="submitted_date.input"
                                     data-unq="crm-filter-assignmentDate"
                                     dense
@@ -134,18 +134,8 @@
                                         v-on="{ ...menu }"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
-                                <!-- <v-list class="bg-white">
-                                    <v-list-item  :to="`/customer-relation/sales-performance/detail/${convert_date}/${props.item.salesperson.id}`">
-                                        <v-list-item-content>
-                                            <v-list-item-title>Detail</v-list-item-title>
-                                        </v-list-item-content>
-                                        <v-list-item-icon>
-                                            <v-icon>mdi-open-in-new</v-icon>
-                                        </v-list-item-icon>
-                                    </v-list-item>
-                                </v-list> -->
                                 <v-list class="bg-white">
-                                    <v-list-item data-unq="crm-button-detailPerformance" :to="`/customer-relation/sales-performance/detail/${props.item.salesperson.id}`">
+                                    <v-list-item  :to="`/customer-relation/sales-performance/detail/${convert_date}/${props.item.salesperson.id}`">
                                         <v-list-item-content>
                                             <v-list-item-title>Detail</v-list-item-title>
                                         </v-list-item-content>
@@ -214,15 +204,15 @@
             // For encrypt date
             encryptDate(){
                 let arrDate = []
-                if(this.submitted_date.value1.length == 1 && this.submitted_date.value2.length == 1){
+                if(this.submitted_date.value.length == 1){
                     arrDate = [
-                        this.submitted_date.value1[0],
-                        this.submitted_date.value1[0]
+                        this.submitted_date.value[0],
+                        this.submitted_date.value[0]
                     ]
-                } else if (this.submitted_date.value1.length == 2 && this.submitted_date.value2.length == 2) {
+                } else if (this.submitted_date.value.length == 2) {
                     arrDate = [
-                        this.submitted_date.value1[0],
-                        this.submitted_date.value2[1]
+                        this.submitted_date.value[0],
+                        this.submitted_date.value[1]
                     ]
                 }
                 arrDate = arrDate.toString()
@@ -238,7 +228,7 @@
                         if (val.length == 10) {
                             let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
                             if (valid == true) {
-                                this.submitted_date.value1[0] = this.$moment(val).format('YYYY-MM-DD')
+                                this.submitted_date.value[0] = this.$moment(val).format('YYYY-MM-DD')
                             }
                         } else if (val.length == 24) {
                             let date1 = val.substr(0, 10)
@@ -246,9 +236,10 @@
                             let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
                             let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
                             if (valid1 == true && valid2 == true) {
-                                this.submitted_date.value1[0] = this.$moment(date1).format('YYYY-MM-DD')
-                                this.submitted_date.value2[1] = this.$moment(date2).format('YYYY-MM-DD')
+                                this.submitted_date.value[0] = this.$moment(date1).format('YYYY-MM-DD')
+                                this.submitted_date.value[1] = this.$moment(date2).format('YYYY-MM-DD')
                             }
+                           
                         }
                     }else if (val == "") {
                         this.start_date.value = []

@@ -90,6 +90,7 @@
                     <SelectArea
                         :aux_data="2"
                         :dense="true"
+                        :label="'Region'"
                         data-unq="proscus-filter-area"
                         @selected="areaSelected"
                     ></SelectArea>

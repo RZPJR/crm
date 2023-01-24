@@ -10,13 +10,12 @@ const actions = {
             let sales_group = state.performance_readlist.filter.sales_group_id === '' ? '' : state.performance_readlist.filter.sales_group_id
             let submitted_date = ''
             let submitted_date2 = ''
-            if (state.performance_readlist.filter.submitted_date.value1.length > 0 && state.performance_readlist.filter.submitted_date.value2.length > 0 ) {
-                if (state.performance_readlist.filter.submitted_date.value1.length == 1 && state.performance_readlist.filter.submitted_date.value2.length == 1) {
-                    submitted_date = state.performance_readlist.filter.submitted_date.value1[0]
-                    submitted_date2 = state.performance_readlist.filter.submitted_date.value2[0]
+            if (state.performance_readlist.filter.submitted_date.value.length > 0 ) {
+                if (state.performance_readlist.filter.submitted_date.value.length == 1) {
+                    submitted_date = state.performance_readlist.filter.submitted_date.value[0]
                 } else {
-                    let date = state.performance_readlist.filter.submitted_date.value1[0]
-                    let date2 = state.performance_readlist.filter.submitted_date.value2[1]
+                    let date = state.performance_readlist.filter.submitted_date.value[0]
+                    let date2 = state.performance_readlist.filter.submitted_date.value[1]
                     if (date > date2) {
                         submitted_date = date2
                         submitted_date2 = date
