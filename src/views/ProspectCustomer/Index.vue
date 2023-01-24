@@ -12,6 +12,7 @@
                                 placeholder="Search..."
                                 v-on="{ ...tooltip }"
                                 outlined
+                                data-unq="search-filter"
                                 dense
                                 filled
                                 v-privilege="'filter_rdl'"
@@ -30,6 +31,7 @@
                         x-small
                         @click="showFilter = !showFilter"
                         v-if="showFilter"
+                        data-unq="switch-filter-hide"
                         class="no-caps fs12"
                     >
                         Hide
@@ -42,6 +44,7 @@
                         x-small
                         @click="showFilter = !showFilter"
                         v-else
+                        data-unq="switch-filter-show"
                         class="no-caps fs12"
                     >
                         Show
@@ -51,7 +54,7 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="showFilter">
                 <v-col cols="12" md="3">
                     <v-select
                         v-model="statuses"
@@ -59,6 +62,7 @@
                         item-text="text"
                         item-value="value"
                         label="Status"
+                        data-unq="proscus-filter-status"
                         dense
                         outlined
                     ></v-select>
@@ -68,6 +72,7 @@
                         :aux_data="2"
                         :norequired="true"
                         :dense="true"
+                        data-unq="proscus-filter-archetype"
                         @selected="archetypeSelected"
                     ></SelectArchetype>
                 </v-col>
@@ -77,6 +82,7 @@
                         :label="'Type'"
                         :norequired="true"
                         :dense="true"
+                        data-unq="proscus-filter-businesstype"
                         @selected="typeSelected"
                     ></SelectBusinessType>
                 </v-col>
@@ -84,6 +90,8 @@
                     <SelectArea
                         :aux_data="2"
                         :dense="true"
+                        :label="'Region'"
+                        data-unq="proscus-filter-area"
                         @selected="areaSelected"
                     ></SelectArea>
                 </v-col>
@@ -95,6 +103,7 @@
                         item-value="value"
                         label="Requested By"
                         dense
+                        data-unq="proscus-filter-requestby"
                         outlined
                         clearable
                     ></v-autocomplete>
@@ -105,6 +114,7 @@
                         :clear="clearSalesperson"
                         :disabled="disableSalesperson"
                         :dense="true"
+                        data-unq="proscus-filter-salesperson"
                         @selected="salespersonSelected"
                     ></SelectSalesPerson>
                 </v-col>
@@ -146,19 +156,19 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.phone_1 }}</td>
-                        <td>{{ props.item.archetype.description }}</td>
-                        <td>{{ props.item.business_type.description }}</td>
-                        <td>{{ props.item.region.description }}</td>
-                        <td>
+                        <td :data-unq="`proscus-value-name-${props.item.id}`">{{ props.item.name }}</td>
+                        <td :data-unq="`proscus-value-phonenumber-${props.item.id}`">{{ props.item.phone_1 }}</td>
+                        <td :data-unq="`proscus-value-archetype-${props.item.id}`">{{ props.item.archetype.description }}</td>
+                        <td :data-unq="`proscus-value-business_type-${props.item.id}`">{{ props.item.business_type.description }}</td>
+                        <td :data-unq="`proscus-value-region-${props.item.id}`">{{ props.item.region.description }}</td>
+                        <td :data-unq="`proscus-value-sub_district-${props.item.id}`">
                             {{ props.item.sub_district.district.province }} - {{
                             props.item.sub_district.district.city }}<br>
                             <span class="second-color">
                                 {{ props.item.sub_district.district.district }} - {{ props.item.sub_district.description }}
                             </span>
                         </td>
-                        <td>
+                        <td :data-unq="`proscus-value-customer_upgrade-${props.item.id}`">
                             <div v-if="props.item.customer_upgrade == 1">
                                 Yes
                             </div>
@@ -166,7 +176,7 @@
                                 No
                             </div>
                         </td>
-                        <td>
+                        <td :data-unq="`proscus-value-salesperson-${props.item.id}`">
                             <div v-if="props.item.salesperson">
                                 Salesperson<br>
                                 <span class="second-color">
@@ -182,6 +192,7 @@
                         <td>
                             <v-chip
                                 class="ma-2"
+                                :data-unq="`proscus-button-status-${props.item.reg_status === 6 ? 'new' : props.item.reg_status === 11 ? 'registered' : 'decline'}-${props.item.id}`"
                                 :color="statusMaster(props.item.reg_status === 6 ? 'new' : props.item.reg_status === 11 ? 'registered' : 'decline')"
                                 :text-color="statusMasterText(props.item.reg_status === 6 ? 'new' : props.item.reg_status === 11 ? 'registered' : 'decline')"
                                 small
@@ -194,7 +205,7 @@
                             <v-menu>
                                 <template v-slot:activator="{ on: menu }">
                                     <template>
-                                        <v-btn icon v-on="{ ...menu }">
+                                        <v-btn :data-unq="`proscus-button-actionButton-${props.item.id}`" icon v-on="{ ...menu }">
                                             <v-icon dark>mdi-dots-vertical</v-icon>
                                         </v-btn>
                                     </template>
@@ -219,7 +230,7 @@
                                     <div v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 1">
                                         <hr>
                                     </div> -->
-                                    <v-list-item v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 6"
+                                    <v-list-item data-unq="proscus-button-decline" v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 6"
                                         @click="openDeclineDialog(props.item.id)"
                                     >
                                         <v-list-item-title>Decline</v-list-item-title>
@@ -289,6 +300,7 @@
                         :clear="clearDeclineType"
                         :error="error.decline_type"
                         :dense="true"
+                        data-unq="proscus-select-declinetype"
                         class="mt-6"
                     />
                     <v-textarea
@@ -300,6 +312,7 @@
                         dense
                         :error-messages="error.decline_note"
                         required
+                        data-unq="proscus-input-note"
                     >
                         <template v-slot:label>
                             Note
@@ -313,6 +326,7 @@
                         outlined
                         color="#EBEBEB"
                         class="main-btn"
+                        data-unq="proscus-button-cancel"
                         @click="declineDialog = false,clearDeclineType = true"
                     ><span class="text-black80">Cancel</span></v-btn>
                     <v-btn
@@ -321,6 +335,7 @@
                         class="no-caps bold px-7"
                         @click="decline(decline_id)"
                         elevation="0"
+                        data-unq="proscus-button-save"
                     ><span class="text-white">Save</span></v-btn>
                 </v-card-actions>
             </v-card>

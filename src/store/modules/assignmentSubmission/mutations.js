@@ -1,11 +1,15 @@
 const mutations = {
-    // Readlist Sales Assignment
-    setPreloadCustomerAcquisition: function(state, payload) {
-        state.customer_acquisition.isLoading = payload;
+    // Readlist 
+    setPreloadSubmission: function(state, payload) {
+        state.assignment_submission.loading = payload;
     return state;
     },
-    setCustomerAcquisition: function(state, payload) {
-        state.customer_acquisition.data = payload;
+    setOverlaySubmission: function(state, payload) {
+        state.assignment_submission.overlay = payload;
+    return state;
+    },
+    setSubmission: function(state, payload) {
+        state.assignment_submission.items = payload;
         return state;
     },
 };

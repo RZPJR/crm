@@ -206,7 +206,7 @@
                         if (val.length == 10) {
                             let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
                             if (valid == true) {
-                                this.submitted_date.value1[0] = this.$moment(val).format('YYYY-MM-DD')
+                                this.submitted_date.value[0] = this.$moment(val).format('YYYY-MM-DD')
                             }
                         } else if (val.length == 24) {
                             let date1 = val.substr(0, 10)
@@ -214,8 +214,8 @@
                             let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
                             let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
                             if (valid1 == true && valid2 == true) {
-                                this.submitted_date.value1[0] = this.$moment(date1).format('YYYY-MM-DD')
-                                this.submitted_date.value2[1] = this.$moment(date2).format('YYYY-MM-DD')
+                                this.submitted_date.value[0] = this.$moment(date1).format('YYYY-MM-DD')
+                                this.submitted_date.value[1] = this.$moment(date2).format('YYYY-MM-DD')
                             }
                         }
                     } else if (val == "") {
