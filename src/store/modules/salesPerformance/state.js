@@ -10,9 +10,7 @@ const state = {
             submitted_date: {
                 model: '',
                 input: new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10),
-                value1: [new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10)],
-                value2: [new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10)],
-                mergedVal: []
+                value: [new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10)],
             }
         },
         overlay: false,
