@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const actions = {
-    // Readlist Prospect Customer
+    // Readlist Prospect Customer 
     fetchProspectCustomer: async ({ state, commit, dispatch }, payload) => {
         commit('setPreloadProspectCustomer', true);
         commit('setProspectCustomer', []);
