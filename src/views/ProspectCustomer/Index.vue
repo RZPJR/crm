@@ -155,12 +155,12 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.phone_1 }}</td>
-                        <td>{{ props.item.archetype.description }}</td>
-                        <td>{{ props.item.business_type.description }}</td>
-                        <td>{{ props.item.region.description }}</td>
-                        <td>
+                        <td :data-unq="`proscus-value-name-${props.item.id}`">{{ props.item.name }}</td>
+                        <td :data-unq="`proscus-value-phonenumber-${props.item.id}`">{{ props.item.phone_1 }}</td>
+                        <td :data-unq="`proscus-value-archetype-${props.item.id}`">{{ props.item.archetype.description }}</td>
+                        <td :data-unq="`proscus-value-business_type-${props.item.id}`">{{ props.item.business_type.description }}</td>
+                        <td :data-unq="`proscus-value-region-${props.item.id}`">{{ props.item.region.description }}</td>
+                        <td :data-unq="`proscus-value-sub_district-${props.item.id}`">
                             <!-- {{ props.item.sub_district.district.city.province.name }} - {{
                             props.item.sub_district.district.city.name }}<br>
                             <span class="second-color">
@@ -168,7 +168,7 @@
                             </span> -->
                             {{ props.item.sub_district.description }}
                         </td>
-                        <td>
+                        <td :data-unq="`proscus-value-customer_upgrade-${props.item.id}`">
                             <div v-if="props.item.customer_upgrade == 1">
                                 Yes
                             </div>
@@ -176,7 +176,7 @@
                                 No
                             </div>
                         </td>
-                        <td>
+                        <td :data-unq="`proscus-value-salesperson-${props.item.id}`">
                             <div v-if="props.item.salesperson">
                                 Salesperson<br>
                                 <span class="second-color">
@@ -192,6 +192,7 @@
                         <td>
                             <v-chip
                                 class="ma-2"
+                                :data-unq="`proscus-button-status-${props.item.reg_status === 6 ? 'new' : props.item.reg_status === 11 ? 'registered' : 'decline'}-${props.item.id}`"
                                 :color="statusMaster(props.item.reg_status === 6 ? 'new' : props.item.reg_status === 11 ? 'registered' : 'decline')"
                                 :text-color="statusMasterText(props.item.reg_status === 6 ? 'new' : props.item.reg_status === 11 ? 'registered' : 'decline')"
                                 small
@@ -204,7 +205,7 @@
                             <v-menu>
                                 <template v-slot:activator="{ on: menu }">
                                     <template>
-                                        <v-btn icon v-on="{ ...menu }">
+                                        <v-btn :data-unq="`proscus-button-actionButton-${props.item.id}`" icon v-on="{ ...menu }">
                                             <v-icon dark>mdi-dots-vertical</v-icon>
                                         </v-btn>
                                     </template>
