@@ -152,12 +152,11 @@
                         <td>{{ props.item.business_type.description }}</td>
                         <td>{{ props.item.region.description }}</td>
                         <td>
-                            <!-- {{ props.item.sub_district.district.city.province.name }} - {{
-                            props.item.sub_district.district.city.name }}<br>
+                            {{ props.item.sub_district.district.province }} - {{
+                            props.item.sub_district.district.city }}<br>
                             <span class="second-color">
-                                {{ props.item.sub_district.district.name }} - {{ props.item.sub_district.name }}
-                            </span> -->
-                            {{ props.item.sub_district.description }}
+                                {{ props.item.sub_district.district.district }} - {{ props.item.sub_district.description }}
+                            </span>
                         </td>
                         <td>
                             <div v-if="props.item.customer_upgrade == 1">
