@@ -15,17 +15,17 @@ const actions = {
             let submittedDate2 = ''
             if (state.assignment_submission.submitted_date.length > 0) {
                 if (state.assignment_submission.submitted_date.length == 1) {
-                        submittedDate1 = state.assignment_submission.submitted_date[0]+'T00:00:00Z'
-                        submittedDate2 = state.assignment_submission.submitted_date[0]+'T23:59:59Z'
+                        submittedDate1 = state.assignment_submission.submitted_date[0]
+                        submittedDate2 = state.assignment_submission.submitted_date[0]
                 } else {
                     let date = state.assignment_submission.submitted_date[0]
                     let date2 = state.assignment_submission.submitted_date[1]
                     if (date > date2) {
-                        submittedDate1 = date2+'T00:00:00Z'
-                        submittedDate2 = date+'T23:59:59Z'
+                        submittedDate1 = date2
+                        submittedDate2 = date
                     } else {
-                        submittedDate1 = date+'T00:00:00Z'
-                        submittedDate2 = date2+'T23:59:59Z'
+                        submittedDate1 = date
+                        submittedDate2 = date2
                     }
                 }
             }
@@ -47,9 +47,9 @@ const actions = {
             }
             const response = await http.get("/sales/assignment/submission", {
                 params: {
-                    perpage: 100,
+                    per_page: 100,
                     task: taskType,
-                    orderby: '-submit_date',
+                    order_by: '-submit_date',
                     status: status,
                     submit_date_start: submittedDate1,
                     submit_date_end: submittedDate2,
