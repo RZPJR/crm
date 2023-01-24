@@ -17,6 +17,7 @@ export default new Vuex.Store({
     prospectCustomer,
     assignmentObjective,
     customerAcquisition,
-    salesPerformance
+    salesPerformance,
+    assignmentSubmission
   }
 });

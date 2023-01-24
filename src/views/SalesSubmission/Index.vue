@@ -1,14 +1,14 @@
 <template>
     <v-container fill-height class="main-container">
         <div class="box-start">
-            <v-row :class="showFilter?'mb24':''">
+            <v-row :class="submission_list.showFilter?'mb24':''">
                 <v-col>
                     Filter 
                     <v-btn 
                         depressed
                         x-small
-                        @click="showFilter = !showFilter"
-                        v-if="showFilter"
+                        @click="submission_list.showFilter = !submission_list.showFilter"
+                        v-if="submission_list.showFilter"
                         class="no-caps fs12"
                     >
                         Hide
@@ -21,7 +21,7 @@
                     <v-btn 
                         depressed
                         x-small
-                        @click="showFilter = !showFilter"
+                        @click="submission_list.showFilter = !submission_list.showFilter"
                         v-else
                         class="no-caps fs12"
                     >
@@ -34,21 +34,21 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <v-row v-if="showFilter">
-                <v-col cols="12" md="3" class="mt24">
+            <v-row v-if="submission_list.showFilter">
+                <v-col cols="12" md="3">
                     <SelectSalesGroup
-                        v-model="sales_group_id"
+                        v-model="submission_list.sales_group_id"
                         @selected="salesGroupSelected"
                         :norequired="true"
                         :dense="true"
-                        :clear="clearGroup"
+                        :clear="submission_list.clearGroup"
                         :label="'Territory'"
                     ></SelectSalesGroup>
                 </v-col>
-                <v-col cols="12" md="3" class="mt24">
+                <v-col cols="12" md="3">
                     <v-menu
                         ref="menu"
-                        v-model="submitted_date_model"
+                        v-model="submission_list.submitted_date_model"
                         :close-on-content-click="false"
                         transition="scale-transition"
                         offset-y
@@ -60,7 +60,7 @@
                                     prepend-inner-icon="mdi-calendar"
                                     outlined
                                     maxlength="24"
-                                    v-model="submitted_date_input"
+                                    v-model="submission_list.submitted_date_input"
                                     dense
                                 >
                                     <template v-slot:label>
@@ -71,31 +71,29 @@
                         </template>
                         <v-date-picker
                             range
-                            v-model="submitted_date"
-                        ></v-date-picker>
+                            v-model="submission_list.submitted_date"
+                        >
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                text
+                                color="primary"
+                                @click="submission_list.submitted_date_model = false,fetchAssignmentSubmission()"
+                            >OK</v-btn>    
+                        </v-date-picker>
                     </v-menu>
                 </v-col>
-                <!-- <v-col cols="12" md="3" class="mt24">
-                    <SelectSalesPerson
-                        v-model="salesperson"
-                        :norequired="true"
-                        :dense="true"
-                        @selected="salespersonSelected"
-                        disabled
-                    ></SelectSalesPerson>
-                </v-col> -->
-                <v-col cols="12" md="3" class="mt24">
+                <v-col cols="12" md="3">
                     <SelectTaskTipe
-                        v-model="task_type"
+                        v-model="submission_list.task_type"
                         :default="1"
                         :dense="true"
                         @selected="taskTypeSelected"
                     ></SelectTaskTipe>
                 </v-col>
-                <v-col cols="12" md="3" class="mt24">
+                <v-col cols="12" md="3">
                     <v-select
-                        v-model="statuses"
-                        :items="status"
+                        v-model="submission_list.statuses"
+                        :items="submission_list.status"
                         label="Status"
                         item-text="text"
                         item-value="value"
@@ -105,8 +103,8 @@
                 </v-col>
                 <v-col cols="12" md="3" class="-mt24">
                     <v-select
-                        v-model="out_of_route"
-                        :items="out_of_route_options"
+                        v-model="submission_list.out_of_route"
+                        :items="submission_list.out_of_route_options"
                         label="Out Of Route"
                         item-text="text"
                         item-value="value"
@@ -119,9 +117,9 @@
         <div class="box-table">
             <v-data-table
                 :mobile-breakpoint="0"
-                :headers="table.fields"
-                :items="items"
-                :loading="loading"
+                :headers="table_header"
+                :items="submission_list.items"
+                :loading="submission_list.loading"
                 :items-per-page="10"
             >
                 <template v-slot:item="props">
@@ -155,7 +153,7 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item  :to="`/customer-relation/sales-assignment-submission/detail/${props.item.id}/`+task_type" v-privilege="'sla_sub_rdd'">
+                                    <v-list-item  :to="`/customer-relation/sales-assignment-submission/detail/${props.item.id}/`+submission_list.task_type" v-privilege="'sla_sub_rdd'">
                                         <v-list-item-content>
                                             <v-list-item-title>Detail</v-list-item-title>
                                         </v-list-item-content>
@@ -170,240 +168,75 @@
                 </template>
             </v-data-table>
         </div>
-        <LoadingBar :value="overlay"/>
+        <LoadingBar :value="submission_list.overlay"/>
     </v-container>
 </template>
 <script>
     import Vue from 'vue'
-    import HTTP from '../../services/http'
+    import { mapState, mapActions } from 'vuex';
+
     export default {
         name: "SubmissionList",
         data() {
             return {
-                id: '',
-                showFilter : false,
-                loading: false,
-                items: [],
-                overlay: false,
-                statuses: 999,
-                status: [
-                    {
-                        text: 'All Status',
-                        value: 999
-                    },
-                    {
-                        text: 'Finished',
-                        value: 2
-                    },
-                    {
-                        text: 'Failed',
-                        value: 27
-                    }
-                ],
-                out_of_route: 999,
-                out_of_route_options: [
-                    {
-                        text: 'Show All',
-                        value: 999
-                    },
-                    {
-                        text: 'Yes',
-                        value: 1
-                    },
-                    {
-                        text: 'No',
-                        value: 0
-                    }
-                ],
-                table: {
-                    fields: [
-                        {
-                            text: 'Territory',
-                            width: "20%",
-                            class: 'grey--text text--darken-4',
-                            sortable: false,
-                        },
-                        {
-                            text: 'Salesperson',
-                            width: "30%",
-                            class: 'grey--text text--darken-4',
-                            sortable: false,
-                        },
-                        {
-                            text: 'Task',
-                            width: "10%",
-                            class: 'grey--text text--darken-4',
-                            sortable: false
-                        },
-                        {
-                            text: 'Out of Route',
-                            width: "10%",
-                            class: 'grey--text text--darken-4',
-                            sortable: false
-                        },
-                        {
-                            text: 'Submitted Date',
-                            width: "15%",
-                            class: 'grey--text text--darken-4',
-                            sortable: false
-                        },
-                        {
-                            text: 'Finished Date',
-                            width: "15%",
-                            class: 'grey--text text--darken-4',
-                            sortable: false
-                        },
-                        {
-                            text: 'Status',
-                            width: "5%",
-                            class: 'grey--text text--darken-4',
-                            sortable: false
-                        },
-                        {
-                            width: "2%",
-                            sortable: false
-                        },
-                    ],
-                },
-                sales_group_id: "",
-                submitted_date_model: '',
-                submitted_date: [new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10)],
-                submitted_date_input: new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10),
-                salesperson: '',
-                task_type:1,
-                clearGroup:false,
-                error: {},
             }
         },
         mounted() {
-            this.renderData('')
+            this.fetchAssignmentSubmission()
+        },
+        computed: {
+            ...mapState({
+                submission_list: state => state.assignmentSubmission.assignment_submission,
+                table_header: state => state.assignmentSubmission.assignment_submission.table.fields,
+            }),
         },
         methods: {
-            // For get data from API
-            renderData() {
-                this.loading = true;
-                this.overlay = true;
-                this.items = []
-                let salesGroup = ''
-                if (this.sales_group_id) {
-                    if (this.task_type == 3){
-                        salesGroup = '|salesperson.sales_group_id.e:' + this.sales_group_id
-                    } else {
-                        salesGroup = '|salesperson.sales_group_id.e:' + this.sales_group_id
-                    }
-                }
-                let submittedDate1 = ''
-                let submittedDate2 = ''
-                if (this.submitted_date.length > 0) {
-                    if (this.submitted_date.length == 1) {
-                            submittedDate1 = this.submitted_date[0]+'T00:00:00Z'
-                            submittedDate2 = this.submitted_date[0]+'T23:59:59Z'
-                    } else {
-                        let date = this.submitted_date[0]
-                        let date2 = this.submitted_date[1]
-                        if (date > date2) {
-                            submittedDate1 = date2+'T00:00:00Z'
-                            submittedDate2 = date+'T23:59:59Z'
-                        } else {
-                            submittedDate1 = date+'T00:00:00Z'
-                            submittedDate2 = date2+'T23:59:59Z'
-                        }
-                    }
-                }
-                let salespersonID = ''
-                if (this.salesperson) {
-                    salespersonID = "|salesperson_id.e:" + this.salesperson
-                }
-                let taskType = ''
-                if(this.task_type){
-                    taskType = this.task_type
-                }
-                let status = ''
-                if(this.statuses === 999){
-                    status = ''
-                }else{
-                    status= this.statuses
-                }
-                let oor = ''
-                if(this.out_of_route === 999){
-                    oor = ''
-                }else{
-                    oor = this.out_of_route 
-                }
-                let territory_id = ''
-                if(this.sales_group_id){
-                    territory_id = this.sales_group_id
-                }
-                HTTP.get("/sales/assignment/submission", {
-                    params: {
-                        perpage: 100,
-                        task: taskType,
-                        orderby: '-submit_date',
-                        status: status,
-                        submit_date_start: submittedDate1,
-                        submit_date_end: submittedDate2,
-                        out_of_route: oor,
-                        territory_id: territory_id
-                    }
-                }).then(response => {
-                    this.loading = false;
-                    this.items = response.data.data
-                    if (this.items === null) {
-                        this.items = []
-                    }
-                    this.overlay = false;
-                });
-            },
-            //For Filter Salesperson
-            salespersonSelected(d) {
-                this.salesperson = '';
-                if (d) {
-                    this.salesperson = d.id;
-                }
-                this.renderData()
-            },
-            // For select sales group filter
+            ...mapActions ([
+                'fetchAssignmentSubmission',
+            ]),
             salesGroupSelected(d) {
-                this.sales_group_id = '';
+                this.submission_list.sales_group_id = '';
                 if(d){
-                    this.sales_group_id = d.id
+                    this.submission_list.sales_group_id = d.id
                 }
-                this.renderData()
+                this.fetchAssignmentSubmission()
             },
-            // For select task type filter
             taskTypeSelected(val) {
-                this.task_type = null;
+                this.submission_list.task_type = null;
                 if (val){
-                    this.task_type = val.value;
-                    if(this.task_type == 3){
-                        this.sales_group_id = '';
-                        this.clearGroup = true
+                    this.submission_list.task_type = val.value;
+                    if(this.submission_list.task_type == 3){
+                        this.submission_list.sales_group_id = '';
+                        this.submission_list.clearGroup = true
                     }else{
-                        this.clearGroup = false
+                        this.submission_list.clearGroup = false
                     }
                 }
+                this.fetchAssignmentSubmission()
             },
         },
         watch: {
-            'statuses': {
+            'submission_list.statuses': {
                 handler: function (val) {
                     Vue.nextTick(() => {
-                        this.renderData()
+                        this.fetchAssignmentSubmission()
                     });
                 },
                 deep: true
             },
-            'submitted_date_input': {
+            'submission_list.out_of_route': {
+                handler: function (val) {
+                    this.fetchAssignmentSubmission()
+                },
+                deep: true
+            },
+            'submission_list.submitted_date_input': {
                 handler: function (val) {
                     if (val) {
                         if (val.length == 10) {
                             let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
                             if (valid == true) {
-                                this.submitted_date[0] = this.$moment(val).format('YYYY-MM-DD')
-                                Vue.nextTick(() => {
-                                    this.items = []
-                                    this.renderData()
-                                });
+                                this.submission_list.submitted_date[0] = this.$moment(val).format('YYYY-MM-DD')
                             }
                         } else if (val.length == 24) {
                             let date1 = val.substr(0, 10)
@@ -411,48 +244,22 @@
                             let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
                             let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
                             if (valid1 == true && valid2 == true) {
-                                this.submitted_date[0] = this.$moment(date1).format('YYYY-MM-DD')
-                                this.submitted_date[1] = this.$moment(date2).format('YYYY-MM-DD')
-                                if (this.submitted_date.length == 2) {
-                                    Vue.nextTick(() => {
-                                        this.items = []
-                                        this.renderData()
-                                    });
-                                }
+                                this.submission_list.submitted_date[0] = this.$moment(date1).format('YYYY-MM-DD')
+                                this.submission_list.submitted_date[1] = this.$moment(date2).format('YYYY-MM-DD')
                             }
                         }
-                    } else if (val == "") {
-                        this.submitted_date = []
-                        Vue.nextTick(() => {
-                            this.items = []
-                            this.renderData()
-                        });
                     }
                 },
                 deep: true
             },
-            'submitted_date': {
+            'submission_list.submitted_date': {
                 handler: function (val) {
                     if (val) {
-                        this.submitted_date_input = this.formatDateRange(val)
+                        this.submission_list.submitted_date_input = this.formatDateRange(val)
                     }
                 },
                 deep: true
             },
-            'task_type': {
-                handler: function (val) {
-                    let that = this
-                    that.renderData()
-                },
-                deep: true
-            },
-            'out_of_route': {
-                handler: function (val) {
-                    let that = this
-                    that.renderData()
-                },
-                deep: true
-            },
-        },
+        }
     }
 </script>

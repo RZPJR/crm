@@ -3,46 +3,67 @@ import http from "../../../services/http";
 const actions = {
     // Readlist Customer Acquisition
     fetchAssignmentSubmission: async ({ state, commit, dispatch }, payload) => {
-        commit('setPreloadCustomerAcquisition', true);
-        commit('setCustomerAcquisition', []);
+        commit('setPreloadSubmission', true);
+        commit('setOverlaySubmission', true);
+        commit('setSubmission', []);
         try {
-            let search = state.customer_acquisition.filter.search
-            // let sales_person = state.customer_acquisition.filter.salesperson === 999 ? '' : "|salesperson_id.e:"+state.customer_acquisition.filter.salesperson      
-            // let sales_group = state.customer_acquisition.filter.sales_group_id === '' ? '' : "|sales_group_id.e:"+state.customer_acquisition.filter.sales_group_id
-            let submitted_date = ''
-            let submitted_date2 = ''
-            if (state.customer_acquisition.filter.submitted_date.value1.length > 0 && state.customer_acquisition.filter.submitted_date.value2.length > 0 ) {
-                if (state.customer_acquisition.filter.submitted_date.value1.length == 1 && state.customer_acquisition.filter.submitted_date.value2.length == 1) {
-                    submitted_date = state.customer_acquisition.filter.submitted_date.value1[0]
-                    submitted_date2 = state.customer_acquisition.filter.submitted_date.value2[0]
-                    submitted_date = state.customer_acquisition.filter.submitted_date.value1[0]+'T00:00:00Z'
-                    submitted_date2 = state.customer_acquisition.filter.submitted_date.value2[0]+'T23:59:59Z'
+            let territory_id = ''
+            if(state.assignment_submission.sales_group_id){
+                territory_id = state.assignment_submission.sales_group_id
+            }
+            let submittedDate1 = ''
+            let submittedDate2 = ''
+            if (state.assignment_submission.submitted_date.length > 0) {
+                if (state.assignment_submission.submitted_date.length == 1) {
+                        submittedDate1 = state.assignment_submission.submitted_date[0]+'T00:00:00Z'
+                        submittedDate2 = state.assignment_submission.submitted_date[0]+'T23:59:59Z'
                 } else {
-                    let date = state.customer_acquisition.filter.submitted_date.value1[0]
-                    let date2 = state.customer_acquisition.filter.submitted_date.value2[1]
+                    let date = state.assignment_submission.submitted_date[0]
+                    let date2 = state.assignment_submission.submitted_date[1]
                     if (date > date2) {
-                        submitted_date = date2+'T00:00:00Z'
-                        submitted_date2 = date+'T23:59:59Z'
+                        submittedDate1 = date2+'T00:00:00Z'
+                        submittedDate2 = date+'T23:59:59Z'
                     } else {
-                        submitted_date = date+'T00:00:00Z'
-                        submitted_date2 = date2+'T23:59:59Z'
+                        submittedDate1 = date+'T00:00:00Z'
+                        submittedDate2 = date2+'T23:59:59Z'
                     }
                 }
             }
-            const response = await http.get("/customer/acquisition", {
+            let taskType = ''
+            if(state.assignment_submission.task_type){
+                taskType = state.assignment_submission.task_type
+            }
+            let status = ''
+            if(state.assignment_submission.statuses === 999){
+                status = ''
+            }else{
+                status= state.assignment_submission.statuses
+            }
+            let oor = ''
+            if(state.assignment_submission.out_of_route === 999){
+                oor = ''
+            }else{
+                oor = state.assignment_submission.out_of_route 
+            }
+            const response = await http.get("/sales/assignment/submission", {
                 params: {
-                  per_page:1000,
-                  order_by:'-id',
-                  search: search,
-                  submit_date_start: submitted_date,
-                  submit_date_end: submitted_date2
+                    perpage: 100,
+                    task: taskType,
+                    orderby: '-submit_date',
+                    status: status,
+                    submit_date_start: submittedDate1,
+                    submit_date_end: submittedDate2,
+                    territory_id: territory_id,
+                    out_of_route: oor,
                 }
             });
-            if (response.data.data) commit('setCustomerAcquisition', response.data.data);
-            commit('setPreloadCustomerAcquisition', false);
+            if (response.data.data) commit('setSubmission', response.data.data);
+            commit('setPreloadSubmission', false);
+            commit('setOverlaySubmission', false);
         } catch (error) {
             console.log(error);
-            commit('setPreloadCustomerAcquisition', false);
+            commit('setPreloadSubmission', false);
+            commit('setOverlaySubmission', false);
         }
     },
 };
