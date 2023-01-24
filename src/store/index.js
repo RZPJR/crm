@@ -14,6 +14,7 @@ export default new Vuex.Store({
     assignment,
     assignmentObjective,
     customerAcquisition,
+    salesPerformance,
     assignmentSubmission
   }
 });
