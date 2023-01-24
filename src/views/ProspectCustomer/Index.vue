@@ -518,7 +518,7 @@
                     this.fetchProspectCustomer()
                 }).catch(e => {
                     this.error = e.errors
-                });
+                })
             },
             //For get selected decline type
             selectedDeclineType(d) {
