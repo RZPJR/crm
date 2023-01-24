@@ -2,6 +2,7 @@ module.exports = {
   lintOnSave: false,
   configureWebpack: {
     devServer: {
+      proxy: process.env.VUE_APP_API_URL,
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
