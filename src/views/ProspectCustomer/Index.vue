@@ -59,6 +59,7 @@
                         item-text="text"
                         item-value="value"
                         label="Status"
+                        data-unq="proscus-filter-status"
                         dense
                         outlined
                     ></v-select>
@@ -68,6 +69,7 @@
                         :aux_data="2"
                         :norequired="true"
                         :dense="true"
+                        data-unq="proscus-filter-archetype"
                         @selected="archetypeSelected"
                     ></SelectArchetype>
                 </v-col>
@@ -77,6 +79,7 @@
                         :label="'Type'"
                         :norequired="true"
                         :dense="true"
+                        data-unq="proscus-filter-businesstype"
                         @selected="typeSelected"
                     ></SelectBusinessType>
                 </v-col>
@@ -84,6 +87,7 @@
                     <SelectArea
                         :aux_data="2"
                         :dense="true"
+                        data-unq="proscus-filter-area"
                         @selected="areaSelected"
                     ></SelectArea>
                 </v-col>
@@ -95,6 +99,7 @@
                         item-value="value"
                         label="Requested By"
                         dense
+                        data-unq="proscus-filter-requestby"
                         outlined
                         clearable
                     ></v-autocomplete>
@@ -105,6 +110,7 @@
                         :clear="clearSalesperson"
                         :disabled="disableSalesperson"
                         :dense="true"
+                        data-unq="proscus-filter-salesperson"
                         @selected="salespersonSelected"
                     ></SelectSalesPerson>
                 </v-col>
@@ -220,7 +226,7 @@
                                     <div v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 1">
                                         <hr>
                                     </div> -->
-                                    <v-list-item v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 6"
+                                    <v-list-item data-unq="proscus-button-decline" v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 6"
                                         @click="openDeclineDialog(props.item.id)"
                                     >
                                         <v-list-item-title>Decline</v-list-item-title>
@@ -290,6 +296,7 @@
                         :clear="clearDeclineType"
                         :error="error.decline_type"
                         :dense="true"
+                        data-unq="proscus-select-declinetype"
                         class="mt-6"
                     />
                     <v-textarea
@@ -301,6 +308,7 @@
                         dense
                         :error-messages="error.decline_note"
                         required
+                        data-unq="proscus-input-note"
                     >
                         <template v-slot:label>
                             Note
@@ -314,6 +322,7 @@
                         outlined
                         color="#EBEBEB"
                         class="main-btn"
+                        data-unq="proscus-button-cancel"
                         @click="declineDialog = false,clearDeclineType = true"
                     ><span class="text-black80">Cancel</span></v-btn>
                     <v-btn
@@ -322,6 +331,7 @@
                         class="no-caps bold px-7"
                         @click="decline(decline_id)"
                         elevation="0"
+                        data-unq="proscus-button-save"
                     ><span class="text-white">Save</span></v-btn>
                 </v-card-actions>
             </v-card>
