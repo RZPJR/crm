@@ -70,7 +70,7 @@ const state = {
                     sortable: false
                 },
                 {
-                    text: 'Area',
+                    text: 'Region',
                     width: "10%",
                     class: 'grey--text text--darken-4',
                     sortable: false
