@@ -6,7 +6,7 @@ const actions = {
         commit('setPreloadSalesPerformance', true);
         commit('setSalesPerformance', []);
         try {
-            let sales_person = state.performance_readlist.filter.salesperson === 999 ? '' : state.performance_readlist.filter.salesperson      
+            let sales_person = state.performance_readlist.filter.salesperson === '' ? '' : state.performance_readlist.filter.salesperson      
             let sales_group = state.performance_readlist.filter.sales_group_id === '' ? '' : state.performance_readlist.filter.sales_group_id
             let submitted_date = ''
             let submitted_date2 = ''
