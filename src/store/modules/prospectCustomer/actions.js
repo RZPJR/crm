@@ -37,10 +37,11 @@ const actions = {
             commit('setPreloadProspectCustomer', false);
         }
     },
+
     // Detail
     fetchProspectCustomerDetail: async ({ state, commit, dispatch }, payload) => {
         commit('setPreloadProspectCustomerDetail', true);
-        commit('setDataProspectCustomerDetail', []);
+        // commit('setDataProspectCustomerDetail', []);
         try {
             let API_URL = process.env.VUE_APP_API_URL_BASE;
             const response = await axios.get(API_URL+"/bridge/v1/prospective_customer/" + payload.id, {
@@ -49,7 +50,7 @@ const actions = {
                 },
             });
             if (response.data.data) {
-                commit('setDataProspectCustomerDetail', response.data.data);
+                // commit('setDataProspectCustomerDetail', response.data.data);
                 commit('setPreloadProspectCustomerDetail', false);
             }
         } catch (error) {
