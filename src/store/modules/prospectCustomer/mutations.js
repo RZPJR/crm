@@ -36,6 +36,17 @@ const mutations = {
         state.prospect_customer.SelectRequest = payload;
         return state;
     },
+
+    // Detail
+    setPreloadProspectCustomerDetail: function(state, payload) {
+        state.detail_prospect_customer.isLoadingDetail = payload;
+        return state;
+    },
+    setDataProspectCustomerDetail: function(state, payload) {
+        state.detail_prospect_customer.data = payload;
+        return state;
+    }
+    
 };
 
 export default mutations;

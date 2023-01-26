@@ -211,7 +211,7 @@
                                     </template>
                                 </template>
                                 <v-list class="bg-white">
-                                    <!-- <v-list-item v-privilege="'pro_cst_rdl'" :to="'/customer/prospect-customer/'+props.item.id ">
+                                    <v-list-item v-privilege="'pro_cst_rdl'" :to="'/customer-relation/prospective-customer/'+ props.item.id ">
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
@@ -229,7 +229,7 @@
                                     </v-list-item>
                                     <div v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 1">
                                         <hr>
-                                    </div> -->
+                                    </div>
                                     <v-list-item data-unq="proscus-button-decline" v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 6"
                                         @click="openDeclineDialog(props.item.id)"
                                     >
