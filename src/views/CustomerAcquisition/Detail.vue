@@ -3,34 +3,34 @@
         <div class="box-start">
             <v-row class="mb24">
                 <v-col class="fs24 bold">
-                    {{items.name}}
+                    {{form.name}}
                 </v-col>
             </v-row>
-            <v-row>
-                <v-col cols="12" md="6" class="mt24">
-                    <DetailRowNew :name="'Salesperson'" :value="items.salesperson.name"/>
-                </v-col>
-                <v-col cols="12" md="6" class="mt24">
-                    <DetailRowNew :name="'Teritory'" :value="items.territory.description"/>
+            <v-row class="mt-6">
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew :name="'Salesperson'" :value="form.salesperson.name"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Phone Number'" :value="items.phone_number ? items.phone_number : '-'"/>
+                    <DetailRowNew :name="'Teritory'" :value="form.territory.description"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Submitted Date'" :value="items.submit_date ? items.submit_date : '-' | moment('YYYY-MM-DD HH:mm:ss')"/>
+                    <DetailRowNew :name="'Phone Number'" :value="form.phone_number ? form.phone_number : '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Address'" :value="items.address_name ? items.address_name : '-'"/>
+                    <DetailRowNew :name="'Submitted Date'" :value="form.submit_date ? form.submit_date : '-' | moment('YYYY-MM-DD HH:mm:ss')"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew v-if="items.latitude && items.longitude" :name="'Latlong'" :value="items.latitude+', '+items.longitude" :crossURL="'https://www.google.com/maps/search/?api=1&query='+items.latitude+','+items.longitude"/>
+                    <DetailRowNew :name="'Address'" :value="form.address_name ? form.address_name : '-'"/>
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew v-if="form.latitude && form.longitude" :name="'Latlong'" :value="form.latitude+', '+form.longitude" :crossURL="'https://www.google.com/maps/search/?api=1&query='+form.latitude+','+form.longitude"/>
                     <DetailRowNew v-else :name="'Latlong'" :value="'-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Leads from Food App'" :value="items.food_app ? (items.food_app == 1 ? 'No' : 'Yes') : '-'"/>
+                    <DetailRowNew :name="'Leads from Food App'" :value="form.food_app ? (form.food_app == 1 ? 'No' : 'Yes') : '-'"/>
                 </v-col>
                  <v-col cols="12" md="6" class="-mt24">
-                     <DetailRowNew :name="'Potential Revenue'" :value="items.potential_revenue ? 'Rp. '+formatPrice(items.potential_revenue) : 'Rp. 0,00'"/>
+                     <DetailRowNew :name="'Potential Revenue'" :value="form.potential_revenue ? 'Rp. '+formatPrice(form.potential_revenue) : 'Rp. 0,00'"/>
                 </v-col>
             </v-row>
         </div>
@@ -40,8 +40,8 @@
         <div class="box-body-table">
             <v-data-table
                 :mobile-breakpoint="0"
-                :headers="table.fields"
-                :items="items.customer_acquisition_items"
+                :headers="header"
+                :items="form.customer_acquisition_items"
                 :hide-default-footer="true"
                 :items-per-page="-1"
             >
@@ -54,71 +54,38 @@
                 </template>
             </v-data-table>
         </div>
-        <LoadingBar :value="overlay"/>
     </v-container>
 </template>
 <script>
-    import HTTP from '../../services/http'
+    import Vue from 'vue'
+    import { mapState, mapActions } from 'vuex';
+
     export default {
         name: "CustomerAcquisitionDetail",
         data() {
             return {
-                table: {
-                    fields: [
-                        {
-                            text:'No',
-                            width:"5%",
-                            sortable: false,
-                        },
-                        {
-                            text:'Product',
-                            width:"70%",
-                            sortable: false,
-                        },
-                        {
-                            text:'Top Product',
-                            width:"25%",
-                            sortable: false,
-                        }
-                    ],
-                },
-                items: {
-                    salesperson: {
-                        display_name: '',
-                    },
-                    sales_group: {
-                        name: '',
-                    },
-                    phone_number: '',
-                    business_type_credit_limit: '',
-                    remaining_credit_limit_amount: 0,
-                },
-                loading:true,
-                overlay: false,
-            }
+                ConfirmData: {},
+            };
         },
-        methods:{
-            // Render Data From API
-            async renderData(){
-                this.overlay = true
-                await HTTP.get("/customer/acquisition/"+ this.$route.params.id).then(response => {
-                    this.items = response.data.data
-                    if(this.items === null){
-                        this.items = []
-                    }
-                    this.loading= false
-                    this.overlay = false
-                });
-            }
-        },
-        mounted() {
-            this.renderData()
-            let self = this
-            this.$root.$on('event_success', function(res) {
+        async created() {
+            await this.fetchCustomerAcquisitionDetail({id: this.$route.params.id});
+            this.$root.$on('event_success', function(res){
                 if (res) {
-                    self.renderData()
+                    self.fetchCustomerAcquisitionDetail({id: self.$route.params.id})
                 }
             });
         },
+        computed: {
+            ...mapState({
+                header: state =>state.customerAcquisition.detail_customer_acquisition.table_header,
+                form: state =>state.customerAcquisition.detail_customer_acquisition.form,
+            })
+        },
+        methods: {
+            ...mapActions([
+                "fetchCustomerAcquisitionDetail"
+            ]),
+        }
     }
+
 </script>

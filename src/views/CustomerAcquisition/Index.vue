@@ -143,7 +143,11 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'ca_rdd'" :to="{ name: 'CustomerAcquisitionDetail', params: { id: props.item.id } }">
+                                    <!-- <v-list-item v-privilege="'ca_rdd'" :to="{ name: 'CustomerAcquisitionDetail', params: { id: props.item.id } }">
+                                        <v-list-item-title>Detail</v-list-item-title>
+                                        <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
+                                    </v-list-item> -->
+                                    <v-list-item v-privilege="'ca_rdd'" :to="'/customer-relation/customer-acquisition/detail/'+ props.item.id ">
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>

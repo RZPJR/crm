@@ -1,5 +1,5 @@
 const state = {
-    // Readlist Sales Assignment
+    // Readlist Customer Acquisition
     customer_acquisition: {
         isLoading: false,
         data: [],
@@ -54,6 +54,32 @@ const state = {
                 width:'2%',
                 sortable: false
             },
+        ],
+    },
+
+    // Detail Customer Acquisition
+    detail_customer_acquisition: {
+        isLoadingDetail: false,
+        form: {},
+        table_header: [
+            {
+                text:'No',
+                width:"5%",
+                class: 'grey--text text--darken-4',
+                sortable: false,
+            },
+            {
+                text:'Product',
+                width:"70%",
+                class: 'grey--text text--darken-4',
+                sortable: false,
+            },
+            {
+                text:'Top Product',
+                width:"25%",
+                class: 'grey--text text--darken-4',
+                sortable: false,
+            }
         ],
     },
 };
