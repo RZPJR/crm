@@ -108,10 +108,10 @@ const actions = {
             });
             if (response.data.data) 
             commit('setDataProspectCustomerDetail', response.data.data);
-            commit('setPreloadSubmission', false);
+            commit('setPreloadProspectCustomerDetail', false);
         } catch (error) {
             console.log(error);
-            commit('setPreloadSubmission', false);
+            commit('setPreloadProspectCustomerDetail', false);
         }
     },
 };
