@@ -2,7 +2,7 @@
     <v-container fill-height class="main-container">
         <div class="box">
             <v-row class="mb24">
-                <v-col class="fs24 bold">
+                <v-col data-unq="proscus-label-name" class="fs24 bold">
                     {{ detail_prospect_customer.name }}
                 </v-col>
                 <v-col class="d-flex justify-end align-end">
@@ -33,7 +33,7 @@
             </v-row>
             <v-row class="px-5 mt-8">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Business Type'" :value="detail_prospect_customer.business_type_name ? detail_prospect_customer.business_type_name : '-'" />
+                    <DetailRowNew :data-unq="`proscus-link-businessType`" :name="'Business Type'" :value="detail_prospect_customer.business_type_name ? detail_prospect_customer.business_type_name : '-'" />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Archetype'" :value="detail_prospect_customer.archetype ? detail_prospect_customer.archetype.description : '-'" />
@@ -126,6 +126,7 @@
             <v-row class="px-5 mt-10">
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew 
+                        :data-unq="`proscus-link-companyContract`"
                         :name="'Contract Signing Power of Attorney'" 
                         :value="detail_prospect_customer.company_contract_doc_name ? detail_prospect_customer.company_contract_doc_name : '-'" 
                         :crossURL="detail_prospect_customer.company_contract_doc_url" 
@@ -133,6 +134,7 @@
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew 
+                        :data-unq="`proscus-link-idCard`"
                         :name="'ID Card'" 
                         :value="detail_prospect_customer.id_card_doc_name ? detail_prospect_customer.id_card_doc_name : '-'" 
                         :crossURL="detail_prospect_customer.id_card_doc_url"
@@ -140,6 +142,7 @@
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew 
+                        :data-unq="`proscus-link-notarialDeed`"
                         :name="'Notary Deed of Establishment'" 
                         :value="detail_prospect_customer.notarial_deed_doc_name ? detail_prospect_customer.notarial_deed_doc_name : '-'" 
                         :crossURL="detail_prospect_customer.notarial_deed_doc_url"
@@ -147,6 +150,7 @@
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew 
+                        :data-unq="`proscus-link-taxpayer`"
                         :name="'Taxpayer'" 
                         :value="detail_prospect_customer.taxpayer_doc_name ? detail_prospect_customer.taxpayer_doc_name : '-'"
                         :crossURL="detail_prospect_customer.taxpayer_doc_url"
@@ -154,6 +158,7 @@
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew 
+                        :data-unq="`proscus-link-taxableEntrepeneur`"
                         :name="'Taxable Entrepreneur Confirmation Number'" 
                         :value="detail_prospect_customer.taxable_entrepeneur_doc_name ? detail_prospect_customer.taxable_entrepeneur_doc_name : '-'" 
                         :crossURL="detail_prospect_customer.taxable_entrepeneur_doc_url"
@@ -161,6 +166,7 @@
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew 
+                        :data-unq="`proscus-link-companyCertificate`"
                         :name="'Certificate of Company Registration'" 
                         :value="detail_prospect_customer.company_certificate_reg_name ? detail_prospect_customer.company_certificate_reg_name : '-'" 
                         :crossURL="detail_prospect_customer.company_certificate_reg_url"
@@ -184,7 +190,7 @@
                     <DetailRowNew :name="'Payment Term'" :value="detail_prospect_customer.payment_term.description ? detail_prospect_customer.payment_term.description : '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Exchange Invoice'" :value="detail_prospect_customer.exchange_invoice ? (detail_prospect_customer.exchange_invoice == '1' ? 'Yes' : 'No') : '-'"/>
+                    <DetailRowNew :data-unq="`proscus-link-exchangeInvoice`" :name="'Exchange Invoice'" :value="detail_prospect_customer.exchange_invoice ? (detail_prospect_customer.exchange_invoice == '1' ? 'Yes' : 'No') : '-'"/>
                 </v-col>
             </v-row>
             <v-row class="px-5" v-if="detail_prospect_customer.exchange_invoice == '1'">
