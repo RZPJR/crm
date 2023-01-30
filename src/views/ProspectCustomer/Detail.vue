@@ -22,10 +22,14 @@
                             </v-btn>
                         </template>
                         <v-list class="bg-white">
-                            <v-list-item :data-unq="`prospectCustomer-button-decline`">
-                                <v-list-item-content>
-                                    <v-list-item-title>Decline</v-list-item-title>
-                                </v-list-item-content>
+                            <v-list-item
+                                :data-unq="`prospectCustomer-button-decline`"
+                                v-privilege="'pro_cst_dec'"
+                                v-if="detail_prospect_customer.reg_status === 6"
+                                @click="openDeclineDialog()"
+                            >
+                                <v-list-item-title>Decline</v-list-item-title>
+                                <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                             </v-list-item>
                         </v-list>
                     </v-menu>
@@ -210,36 +214,116 @@
                 </v-col>
             </v-row>
         </div>
+        <v-dialog
+            v-model="detail_decline.declineDialog"
+            persistent
+            max-width="470px"
+        >
+            <v-card class="OpenSans">
+                <v-card-title>
+                    <span class="text-title-modal">Decline</span>
+                </v-card-title>
+                <v-card-text>
+                    <span class="fs16 mt-1">Why was this prospective customer declined?</span>
+                    <SelectDeclineType
+                        @selected="selectedDeclineType"
+                        :clear="detail_decline.clearDeclineType"
+                        :error="detail_decline.error.decline_type"
+                        :dense="true"
+                        data-unq="proscus-select-declinetype"
+                        class="mt-6"
+                    />
+                    <v-textarea
+                        name="note"
+                        v-model="detail_decline.decline_note"  
+                        :namecounter="250"
+                        maxlength="250"
+                        outlined
+                        :error-messages="detail_decline.error.decline_note"
+                        required
+                        dense
+                        rows="3"
+                    >
+                        <template v-slot:label>
+                            Note
+                        </template>
+                    </v-textarea>
+                </v-card-text>
+                <v-card-actions class="pb-4">
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        depressed
+                        outlined
+                        color="#EBEBEB"
+                        class="main-btn"
+                        @click="detail_decline.declineDialog=false, detail_decline.clearDeclineType=true"
+                    ><span class="text-black80">Cancel</span></v-btn>
+                    <v-btn
+                        @click="declineAction(detail_prospect_customer.id)"
+                        class="main-btn white--text"
+                        depressed
+                        color="#50ABA3"
+                    >Save
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 <script>
+    import http from "../../services/http";
     import Vue from 'vue'
     import { mapState, mapActions } from 'vuex';
-
     export default {
         name: "ProspectCustomerDetail",
         data() {
             return {
                 ConfirmData: {},
+                dataAuditLog: {},
             };
         },
-        async created() {
+        async mounted() {
             await this.fetchProspectCustomerDetail({id: this.$route.params.id});
-            this.$root.$on('event_success', function(res){
-                if (res) {
-                    this.fetchProspectCustomerDetail({id: this.$route.params.id})
-                }
-            });
         },
         computed: {
             ...mapState({
-                detail_prospect_customer: state => state.prospectCustomer.detail_prospect_customer.data
+                detail_prospect_customer: state => state.prospectCustomer.detail_prospect_customer.data,
+                detail_decline: state => state.prospectCustomer.detail_prospect_customer,
             })
         },
         methods: {
             ...mapActions([
                 "fetchProspectCustomerDetail"
             ]),
+            selectedDeclineType(d) {
+                this.detail_decline.decline_type = ""
+                if (d) {
+                    this.detail_decline.decline_type = d.value_int
+                }
+            },
+            openDeclineDialog(){
+                this.detail_decline.decline_type = 0
+                this.detail_decline.decline_note = ""
+                this.detail_decline.clearDeclineType = false
+                this.detail_decline.declineDialog = true
+            },
+            declineAction(id) {
+                http.put("/prospective_customer/decline/"+id,{
+                    decline_type: this.detail_decline.decline_type,
+                    decline_note: this.detail_decline.decline_note,
+                }).then(responseDec => {
+                    this.detail_decline.declineDialog = false
+                    Vue.$toast.open({
+                        position: 'top-right',
+                        message: 'Data has been declined successfully',
+                        type: 'success',
+                    });
+                    this.detail_decline.clearDeclineType = true
+                    this.fetchProspectCustomerDetail({id: this.$route.params.id});
+                }).catch(e => {
+                    this.detail_decline.error = e.errors
+                });
+            },
         }
     }
 </script>

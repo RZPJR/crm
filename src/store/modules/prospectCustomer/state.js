@@ -145,13 +145,13 @@ const state = {
             pic_business_contact: "",
             taxpayer_number: "",
             pic_finance_name: "",
-            outlet_pictures: [],
-            declineDialog: false,
-            decline_type: "",
-            decline_note: "",
-            clearDeclineType:false,
-            error: {},
-        }
+        },
+        outlet_pictures: [],
+        declineDialog: false,
+        decline_type: "",
+        decline_note: "",
+        clearDeclineType:false,
+        error: {},
     }
 
 };
