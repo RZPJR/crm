@@ -106,6 +106,8 @@ const state = {
             ],
         },
     },
+
+    // Detail prospect_customer
     detail_prospect_customer: {
         isLoadingDetail: false,
         register: false,
@@ -151,6 +153,7 @@ const state = {
             error: {},
         }
     }
+
 };
 
 export default state;

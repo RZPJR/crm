@@ -1,25 +1,78 @@
 <template>
     <v-container fill-height class="main-container">
         <div class="box">
-            <v-row class="mb2">
-                <v-col class="fs24 bold">
-                    {{ detail_prospect_customer.code }}
+            <v-row class="mb24">
+                <v-col data-unq="proscus-label-name" class="fs24 bold">
+                    {{ detail_prospect_customer.name }}
                 </v-col>
-                <v-col>
-                    <pre>
-                        {{detail_prospect_customer}}
-                    </pre>
+                <v-col class="d-flex justify-end align-end">
+                    <v-chip
+                        :data-unq="`proscus-button-status`"
+                        :color="statusMaster( detail_prospect_customer.reg_status === 6 ? 'new' :  detail_prospect_customer.reg_status === 11 ? 'registered' : 'decline')"
+                        :text-color="statusMasterText( detail_prospect_customer.reg_status === 6 ? 'new' :  detail_prospect_customer.reg_status === 11 ? 'registered' : 'decline')"
+                        small
+                        class="mb6"
+                    >
+                        {{ detail_prospect_customer.reg_status === 6 ? 'New' :  detail_prospect_customer.reg_status === 11 ? 'Registered' : 'Decline'}}
+                    </v-chip>
+                    <v-menu offset-y>
+                        <template v-slot:activator="{ on }">
+                            <v-btn :data-unq="`notification-button-actionButton`" icon v-on="on">
+                                <v-icon>mdi-dots-vertical</v-icon>
+                            </v-btn>
+                        </template>
+                        <v-list class="bg-white">
+                            <v-list-item :data-unq="`prospectCustomer-button-decline`">
+                                <v-list-item-content>
+                                    <v-list-item-title>Decline</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </v-col>
             </v-row>
-            <v-row class="px-5 mt-5">
+            <v-row class="px-5 mt-8">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Archetype'" :value="detail_prospect_customer.archetype != null ? detail_prospect_customer.archetype.name : '-'" />
+                    <DetailRowNew :data-unq="`proscus-link-businessType`" :name="'Business Type'" :value="detail_prospect_customer.business_type_name ? detail_prospect_customer.business_type_name : '-'" />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'PIC Name'" :value="detail_prospect_customer.pic_name != null ? detail_prospect_customer.pic_name : '-' "/>
+                    <DetailRowNew :name="'Archetype'" :value="detail_prospect_customer.archetype ? detail_prospect_customer.archetype.description : '-'" />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Phone Number'" :value="detail_prospect_customer.phone_number != null ? detail_prospect_customer.phone_number : '-' "/>
+                    <DetailRowNew :name="'Brand Name'" :value="detail_prospect_customer.brand_name ? detail_prospect_customer.brand_name : '-'" />
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.customer_upgrade == 1">
+                    <DetailRowNew :name="'Previous Customer'" :value="detail_prospect_customer.customer ? detail_prospect_customer.customer.name : '-'" />
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew :name="'Region'" :value="detail_prospect_customer.region ? detail_prospect_customer.customer.name : '-'" />
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew :name="'Postal Code'" :value="detail_prospect_customer.zip_code ? detail_prospect_customer.zip_code : '-'" />
+                </v-col>
+                <v-col cols="12" class="-mt24">
+                    <DetailRowNew :name="'Company Address'" :value="detail_prospect_customer.company_address.description ? detail_prospect_customer.company_address.description : '-'" :align="true"/>
+                </v-col>
+                <v-col cols="12" class="-mt24">
+                    <DetailRowNew :name="'Shipping Address'" :value="detail_prospect_customer.ship_to_address.description ? detail_prospect_customer.ship_to_address.description : '-'" :align="true"/>
+                </v-col>
+                <v-col cols="12" class="-mt24" v-if="detail_prospect_customer.outlet_image && detail_prospect_customer.outlet_image.length > 0">
+                    <span class="text-black60">Photo Outlet :</span>
+                    <v-card
+                        class="d-flex align-content-start flex-wrap my-2"
+                        flat
+                        tile
+                    >
+                        <v-card
+                            v-for="(item, idx) in detail_prospect_customer.outlet_image" 
+                            :key="idx" 
+                            class="pr-2 mb-2"
+                            flat
+                            tile
+                        >
+                            <DisplayPhotoOverlay :title="'Photo Outlet'" :src="item"/>
+                        </v-card>
+                    </v-card>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew
@@ -28,59 +81,17 @@
                             ? 'Morning'
                             : detail_prospect_customer.time_consent === 2
                             ? 'Afternoon'
-                            : 'Night'
+                            : detail_prospect_customer.time_consent === 3
+                            ? 'Night'
+                            : '-'
                         "
                     />
                 </v-col>
-                <v-col cols="12" class="-mt24">
-                    <DetailRowNew :name="'Address'" :value="detail_prospect_customer.street_address != null ? detail_prospect_customer.street_address : '-'" :align="true"/>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew :name="'Reference Info'" :value="detail_prospect_customer.reference_info_convert ? detail_prospect_customer.reference_info_convert : '-'" />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Subdistrict'" :value="detail_prospect_customer.sub_district != null ? detail_prospect_customer.sub_district.name : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'District'" :value="detail_prospect_customer.sub_district != null ? detail_prospect_customer.sub_district.district.name : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'City'" :value="detail_prospect_customer.sub_district != null ? detail_prospect_customer.sub_district.district.city.name : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Province'" :value="detail_prospect_customer.sub_district != null ? detail_prospect_customer.sub_district.district.city.province.name : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Area'" :value="detail_prospect_customer.sub_district != null ? detail_prospect_customer.sub_district.area.name : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Postal Code'" :value="detail_prospect_customer.sub_district != null ? detail_prospect_customer.sub_district.postal_code : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Reference Info'" :value="detail_prospect_customer.reference_info != null ? detail_prospect_customer.reference_info : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Referrer Code'" :value="detail_prospect_customer.referrer_code != null ? detail_prospect_customer.referrer_code : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Salesperson'" :value="detail_prospect_customer.salesperson != null ? detail_prospect_customer.salesperson : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Previous Merchant'" :value="detail_prospect_customer.merchant != null ? detail_prospect_customer.merchant.name : '-'"/>
-                </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Registration Channel'" :value="detail_prospect_customer.reg_channel_name != null ? detail_prospect_customer.reg_channel_name : '-'"/>
-                </v-col>
-                <v-col cols="12" class="-mt24" v-if="detail_prospect_customer.outlet_photo_list != null && detail_prospect_customer.outlet_photo_list.length > 0">
-                    <span class="text-black60">Photo Outlet :</span>
-                    <div class="flex-display py8">
-                        <div v-for="(item, idx) in detail_prospect_customer.outlet_photo_list" :key="idx" class="mr8">
-                            <DisplayPhotoOverlay :title="'Photo Outlet'" :src="detail_prospect_customer"/>
-                        </div>
-                    </div>
-                </v-col>
-                <v-col cols="6" class="pr-13" v-if="detail_prospect_customer.decline_type">
-                    <DetailRowNew :name="'Decline Type'" :value="detail_prospect_customer.decline_type"/>
-                </v-col>
-                <v-col cols="6" class="pl-13" v-if="detail_prospect_customer.decline_note">
-                    <DetailRowNew :name="'Decline Note'" :value="detail_prospect_customer.decline_note"/>
+                    <DetailRowNew :name="'Referrer Code'" :value="detail_prospect_customer.referrer_code ? detail_prospect_customer.referrer_code : '-'"/>
                 </v-col>
             </v-row>
         </div>
@@ -91,30 +102,75 @@
             <div class="hr-title mx-1 mb30"/>
             <v-row class="px-5 mt-5">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'PIC Business Name'" :value="detail_prospect_customer.pic_business_name != null ? detail_prospect_customer.pic_business_name : '-' "/>
+                    <DetailRowNew :name="'Contract Signing Name'" :value="detail_prospect_customer.owner_name ? detail_prospect_customer.owner_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'PIC Business Contact'" :value="detail_prospect_customer.pic_business_contact != null ? detail_prospect_customer.pic_business_contact : '-'"/>
+                    <DetailRowNew :name="'Contract Signing Position'" :value="detail_prospect_customer.owner_role ? detail_prospect_customer.owner_role : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'PIC Business ID Number'" :value="detail_prospect_customer.id_card_number != null ? detail_prospect_customer.id_card_number : '-' "/>
+                    <DetailRowNew :name="'Email'" :value="detail_prospect_customer.email ? detail_prospect_customer.email : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Tax Number'" :value="detail_prospect_customer.taxpayer_number != null ? detail_prospect_customer.taxpayer_number : '-' "/>
+                    <DetailRowNew :name="'Recipient of Orders Name'" :value="detail_prospect_customer.pic_order_name ? detail_prospect_customer.pic_order_name : '-' "/>
                 </v-col>
-                <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.id_card_image || detail_prospect_customer.selfie_image || detail_prospect_customer.taxpayer_image">
-                    <span class="text-black60">Photo Identity :</span>
-                    <div class="flex-display py8">
-                        <div class="mr8">
-                            <DisplayPhotoOverlay :title="'Photo Identity'" :src="detail_prospect_customer.id_card_image"/>
-                        </div>
-                        <div class="mr8">
-                            <DisplayPhotoOverlay :title="'Photo Identity'" :src="detail_prospect_customer.selfie_image"/>
-                        </div>
-                        <div class="mr8">
-                            <DisplayPhotoOverlay :title="'Photo Identity'" :src="detail_prospect_customer.taxpayer_image"/>
-                        </div>
-                    </div>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew :name="'Recipient of Orders Contact'" :value="detail_prospect_customer.phone_1 ? detail_prospect_customer.phone_1 : '-' "/>
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew :name="'ID Card Number'" :value="detail_prospect_customer.id_card_doc_number ? detail_prospect_customer.id_card_doc_number : '-' "/>
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew :name="'Taxpayer Number'" :value="detail_prospect_customer.taxpayer_doc_number ? detail_prospect_customer.taxpayer_doc_number : '-' "/>
+                </v-col>
+            </v-row>
+            <v-row class="px-5 mt-10">
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew 
+                        :data-unq="`proscus-link-companyContract`"
+                        :name="'Contract Signing Power of Attorney'" 
+                        :value="detail_prospect_customer.company_contract_doc_name ? detail_prospect_customer.company_contract_doc_name : '-'" 
+                        :crossURL="detail_prospect_customer.company_contract_doc_url" 
+                    />
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew 
+                        :data-unq="`proscus-link-idCard`"
+                        :name="'ID Card'" 
+                        :value="detail_prospect_customer.id_card_doc_name ? detail_prospect_customer.id_card_doc_name : '-'" 
+                        :crossURL="detail_prospect_customer.id_card_doc_url"
+                    />
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew 
+                        :data-unq="`proscus-link-notarialDeed`"
+                        :name="'Notary Deed of Establishment'" 
+                        :value="detail_prospect_customer.notarial_deed_doc_name ? detail_prospect_customer.notarial_deed_doc_name : '-'" 
+                        :crossURL="detail_prospect_customer.notarial_deed_doc_url"
+                    />
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew 
+                        :data-unq="`proscus-link-taxpayer`"
+                        :name="'Taxpayer'" 
+                        :value="detail_prospect_customer.taxpayer_doc_name ? detail_prospect_customer.taxpayer_doc_name : '-'"
+                        :crossURL="detail_prospect_customer.taxpayer_doc_url"
+                    />
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew 
+                        :data-unq="`proscus-link-taxableEntrepeneur`"
+                        :name="'Taxable Entrepreneur Confirmation Number'" 
+                        :value="detail_prospect_customer.taxable_entrepeneur_doc_name ? detail_prospect_customer.taxable_entrepeneur_doc_name : '-'" 
+                        :crossURL="detail_prospect_customer.taxable_entrepeneur_doc_url"
+                    />
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew 
+                        :data-unq="`proscus-link-companyCertificate`"
+                        :name="'Certificate of Company Registration'" 
+                        :value="detail_prospect_customer.company_certificate_reg_name ? detail_prospect_customer.company_certificate_reg_name : '-'" 
+                        :crossURL="detail_prospect_customer.company_certificate_reg_url"
+                    />
                 </v-col>
             </v-row>
         </div>
@@ -125,22 +181,32 @@
             <div class="hr-title mx-1 mb30"/>
             <v-row class="px-5 mt-5">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'PIC Finance Name'" :value="detail_prospect_customer.pic_finance_name != null ? detail_prospect_customer.pic_finance_name : '-' "/>
+                    <DetailRowNew :name="'PIC Finance Name'" :value="detail_prospect_customer.pic_finance_name ? detail_prospect_customer.pic_finance_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'PIC Finance Contact'" :value="detail_prospect_customer.pic_finance_contact ? detail_prospect_customer.pic_finance_contact : '-'"/>
+                    <DetailRowNew :name="'PIC Finance Contact'" :value="detail_prospect_customer.phone_2 ? detail_prospect_customer.phone_2 : '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Payment Term'" :value="detail_prospect_customer.payment_term != null ? detail_prospect_customer.payment_term.name : '-'"/>
+                    <DetailRowNew :name="'Payment Term'" :value="detail_prospect_customer.payment_term.description ? detail_prospect_customer.payment_term.description : '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Invoice Term'" :value="detail_prospect_customer.invoice_term != null ? detail_prospect_customer.invoice_term.name : '-' "/>
+                    <DetailRowNew :data-unq="`proscus-link-exchangeInvoice`" :name="'Exchange Invoice'" :value="detail_prospect_customer.exchange_invoice ? (detail_prospect_customer.exchange_invoice == '1' ? 'Yes' : 'No') : '-'"/>
+                </v-col>
+            </v-row>
+            <v-row class="px-5" v-if="detail_prospect_customer.exchange_invoice == '1'">
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew :name="'Exchange Invoice Time'" :value="detail_prospect_customer.exchange_invoice_time ? detail_prospect_customer.exchange_invoice_time : '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Billing Address'" :value="detail_prospect_customer.billing_address != null ? detail_prospect_customer.billing_address : '-'"/>
+                    <DetailRowNew :name="'Email'" :value="detail_prospect_customer.finance_email ? detail_prospect_customer.finance_email : '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Note'" :value="detail_prospect_customer.note != null ? detail_prospect_customer.note : '-'"/>
+                    <DetailRowNew :name="'Invoice Term'" :value="detail_prospect_customer.invoice_term_convert ? detail_prospect_customer.invoice_term_convert : '-' "/>
+                </v-col>
+                <v-col cols="12" class="-mt24">
+                    <DetailRowNew :name="'Billing Address'" :value="
+                        detail_prospect_customer.bill_to_address.description ? detail_prospect_customer.bill_to_address.description : '-'
+                    " :align="true"/>
                 </v-col>
             </v-row>
         </div>
@@ -161,7 +227,7 @@
             await this.fetchProspectCustomerDetail({id: this.$route.params.id});
             this.$root.$on('event_success', function(res){
                 if (res) {
-                    self.fetchProspectCustomerDetail({id: self.$route.params.id})
+                    this.fetchProspectCustomerDetail({id: this.$route.params.id})
                 }
             });
         },
