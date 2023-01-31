@@ -55,11 +55,11 @@
                     <DetailRowNew :name="'Postal Code'" :value="detail_prospect_customer.zip_code ? detail_prospect_customer.zip_code : '-'" />
                 </v-col>
                 <v-col cols="12" class="-mt24">
-                    <DetailRowNew v-if="detail_prospect_customer.business_type_name=='Business Entity'" :name="'Company Address'" :value="detail_prospect_customer.company_address.description ? detail_prospect_customer.company_address.description : '-'" :align="true"/>
-                    <DetailRowNew v-else :name="'Business Address'" :value="detail_prospect_customer.company_address.description ? detail_prospect_customer.company_address.description : '-'" :align="true"/>
+                    <DetailRowNew v-if="detail_prospect_customer.business_type_name=='Business Entity'" :name="'Company Address'" :value="detail_prospect_customer.company_address.concat_address ? detail_prospect_customer.company_address.concat_address : '-'" :align="true"/>
+                    <DetailRowNew v-else :name="'Business Address'" :value="detail_prospect_customer.company_address.concat_address ? detail_prospect_customer.company_address.concat_address : '-'" :align="true"/>
                 </v-col>
                 <v-col cols="12" class="-mt24" v-if="detail_prospect_customer.business_type_name=='Business Entity'">
-                    <DetailRowNew :name="'Shipping Address'" :value="detail_prospect_customer.ship_to_address.description ? detail_prospect_customer.ship_to_address.description : '-'" :align="true"/>
+                    <DetailRowNew :name="'Shipping Address'" :value="detail_prospect_customer.ship_to_address.concat_address ? detail_prospect_customer.ship_to_address.concat_address : '-'" :align="true"/>
                 </v-col>
                 <v-col cols="12" class="-mt24" v-if="detail_prospect_customer.outlet_image && detail_prospect_customer.outlet_image.length > 0">
                     <span class="text-black60">Shipping Goods Place/Outlet Image :</span>
@@ -214,7 +214,7 @@
                 </v-col>
                 <v-col cols="12" class="-mt24">
                     <DetailRowNew :name="'Billing Address'" :value="
-                        detail_prospect_customer.bill_to_address.description ? detail_prospect_customer.bill_to_address.description : '-'
+                        detail_prospect_customer.bill_to_address.concat_address ? detail_prospect_customer.bill_to_address.concat_address : '-'
                     " :align="true"/>
                 </v-col>
             </v-row>
