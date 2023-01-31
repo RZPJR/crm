@@ -49,7 +49,7 @@
                     <DetailRowNew :name="'Previous Customer'" :value="detail_prospect_customer.customer ? detail_prospect_customer.customer.name : '-'" />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Region'" :value="detail_prospect_customer.region ? detail_prospect_customer.customer.name : '-'" />
+                    <DetailRowNew :name="'Region'" :value="detail_prospect_customer.region ? detail_prospect_customer.region.description : '-'" />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Postal Code'" :value="detail_prospect_customer.zip_code ? detail_prospect_customer.zip_code : '-'" />
