@@ -79,7 +79,7 @@
                 <v-col cols="12" md="3">
                     <SelectBusinessType
                         :aux_data="2"
-                        :label="'Business Type'"
+                        :label="'Customer Type'"
                         :norequired="true"
                         :dense="true"
                         data-unq="proscus-filter-businesstype"

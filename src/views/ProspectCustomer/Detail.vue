@@ -42,26 +42,27 @@
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Archetype'" :value="detail_prospect_customer.archetype ? detail_prospect_customer.archetype.description : '-'" />
                 </v-col>
-                <v-col cols="12" md="6" class="-mt24">
+                <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.business_type_name=='Business Entity'">
                     <DetailRowNew :name="'Brand Name'" :value="detail_prospect_customer.brand_name ? detail_prospect_customer.brand_name : '-'" />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.customer_upgrade == 1">
                     <DetailRowNew :name="'Previous Customer'" :value="detail_prospect_customer.customer ? detail_prospect_customer.customer.name : '-'" />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Region'" :value="detail_prospect_customer.region ? detail_prospect_customer.customer.name : '-'" />
+                    <DetailRowNew :name="'Region'" :value="detail_prospect_customer.region ? detail_prospect_customer.region.description : '-'" />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Postal Code'" :value="detail_prospect_customer.zip_code ? detail_prospect_customer.zip_code : '-'" />
                 </v-col>
                 <v-col cols="12" class="-mt24">
-                    <DetailRowNew :name="'Company Address'" :value="detail_prospect_customer.company_address.description ? detail_prospect_customer.company_address.description : '-'" :align="true"/>
+                    <DetailRowNew v-if="detail_prospect_customer.business_type_name=='Business Entity'" :name="'Company Address'" :value="detail_prospect_customer.company_address.description ? detail_prospect_customer.company_address.description : '-'" :align="true"/>
+                    <DetailRowNew v-else :name="'Business Address'" :value="detail_prospect_customer.company_address.description ? detail_prospect_customer.company_address.description : '-'" :align="true"/>
                 </v-col>
-                <v-col cols="12" class="-mt24">
+                <v-col cols="12" class="-mt24" v-if="detail_prospect_customer.business_type_name=='Business Entity'">
                     <DetailRowNew :name="'Shipping Address'" :value="detail_prospect_customer.ship_to_address.description ? detail_prospect_customer.ship_to_address.description : '-'" :align="true"/>
                 </v-col>
                 <v-col cols="12" class="-mt24" v-if="detail_prospect_customer.outlet_image && detail_prospect_customer.outlet_image.length > 0">
-                    <span class="text-black60">Photo Outlet :</span>
+                    <span class="text-black60">Shipping Goods Place/Outlet Image :</span>
                     <v-card
                         class="d-flex align-content-start flex-wrap my-2"
                         flat
@@ -106,19 +107,23 @@
             <div class="hr-title mx-1 mb30"/>
             <v-row class="px-5 mt-5">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Contract Signing Name'" :value="detail_prospect_customer.owner_name ? detail_prospect_customer.owner_name : '-' "/>
+                    <DetailRowNew v-if="detail_prospect_customer.business_type_name=='Business Entity'" :name="'Contract Signing Name'" :value="detail_prospect_customer.owner_name ? detail_prospect_customer.owner_name : '-' "/>
+                    <DetailRowNew :name="'Business Owner Name'" :value="detail_prospect_customer.owner_name ? detail_prospect_customer.owner_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Contract Signing Position'" :value="detail_prospect_customer.owner_role ? detail_prospect_customer.owner_role : '-' "/>
+                    <DetailRowNew v-if="detail_prospect_customer.business_type_name=='Business Entity'" :name="'Contract Signing Position'" :value="detail_prospect_customer.owner_role ? detail_prospect_customer.owner_role : '-' "/>
+                    <DetailRowNew v-else :name="'Business Owner Contact'" :value="detail_prospect_customer.phone_1 ? detail_prospect_customer.phone_1 : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Email'" :value="detail_prospect_customer.email ? detail_prospect_customer.email : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Recipient of Orders Name'" :value="detail_prospect_customer.pic_order_name ? detail_prospect_customer.pic_order_name : '-' "/>
+                    <DetailRowNew v-if="detail_prospect_customer.business_type_name=='Business Entity'" :name="'Recipient of Orders Name'" :value="detail_prospect_customer.pic_order_name ? detail_prospect_customer.pic_order_name : '-' "/>
+                    <DetailRowNew v-else :name="'PIC Order Name'" :value="detail_prospect_customer.pic_order_name ? detail_prospect_customer.pic_order_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Recipient of Orders Contact'" :value="detail_prospect_customer.phone_1 ? detail_prospect_customer.phone_1 : '-' "/>
+                    <DetailRowNew v-if="detail_prospect_customer.business_type_name=='Business Entity'" :name="'Recipient of Orders Contact'" :value="detail_prospect_customer.phone_1 ? detail_prospect_customer.phone_1 : '-' "/>
+                    <DetailRowNew v-else :name="'PIC Orders Contact'" :value="detail_prospect_customer.phone_1 ? detail_prospect_customer.phone_1 : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'ID Card Number'" :value="detail_prospect_customer.id_card_doc_number ? detail_prospect_customer.id_card_doc_number : '-' "/>
@@ -127,8 +132,8 @@
                     <DetailRowNew :name="'Taxpayer Number'" :value="detail_prospect_customer.taxpayer_doc_number ? detail_prospect_customer.taxpayer_doc_number : '-' "/>
                 </v-col>
             </v-row>
-            <v-row class="px-5 mt-10">
-                <v-col cols="12" md="6" class="-mt24">
+            <v-row class="px-5 mt-15">
+                <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.business_type_name=='Business Entity'">
                     <DetailRowNew 
                         :data-unq="`proscus-link-companyContract`"
                         :name="'Contract Signing Power of Attorney'" 
@@ -144,7 +149,7 @@
                         :crossURL="detail_prospect_customer.id_card_doc_url"
                     />
                 </v-col>
-                <v-col cols="12" md="6" class="-mt24">
+                <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.business_type_name=='Business Entity'">
                     <DetailRowNew 
                         :data-unq="`proscus-link-notarialDeed`"
                         :name="'Notary Deed of Establishment'" 
@@ -160,7 +165,7 @@
                         :crossURL="detail_prospect_customer.taxpayer_doc_url"
                     />
                 </v-col>
-                <v-col cols="12" md="6" class="-mt24">
+                <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.business_type_name=='Business Entity'">
                     <DetailRowNew 
                         :data-unq="`proscus-link-taxableEntrepeneur`"
                         :name="'Taxable Entrepreneur Confirmation Number'" 
@@ -168,8 +173,8 @@
                         :crossURL="detail_prospect_customer.taxable_entrepeneur_doc_url"
                     />
                 </v-col>
-                <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew 
+                <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.business_type_name=='Business Entity'">
+                    <DetailRowNew
                         :data-unq="`proscus-link-companyCertificate`"
                         :name="'Certificate of Company Registration'" 
                         :value="detail_prospect_customer.company_certificate_reg_name ? detail_prospect_customer.company_certificate_reg_name : '-'" 

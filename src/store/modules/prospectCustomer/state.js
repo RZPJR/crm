@@ -64,7 +64,7 @@ const state = {
                     sortable: false
                 },
                 {
-                    text: 'Business Type',
+                    text: 'Customer Type',
                     width: "10%",
                     class: 'grey--text text--darken-4',
                     sortable: false
