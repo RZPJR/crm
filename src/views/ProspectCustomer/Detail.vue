@@ -98,6 +98,9 @@
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Referrer Code'" :value="detail_prospect_customer.referrer_code ? detail_prospect_customer.referrer_code : '-'"/>
                 </v-col>
+                <v-col cols="12" md="6" class="-mt24">
+                    <DetailRowNew :name="'Salesperson'" :value="detail_prospect_customer.salesperson ? detail_prospect_customer.salesperson.name : '-'"/>
+                </v-col>
             </v-row>
         </div>
         <div class="box">
@@ -108,7 +111,7 @@
             <v-row class="px-5 mt-5">
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew v-if="detail_prospect_customer.business_type_name=='Business Entity'" :name="'Contract Signing Name'" :value="detail_prospect_customer.owner_name ? detail_prospect_customer.owner_name : '-' "/>
-                    <DetailRowNew :name="'Business Owner Name'" :value="detail_prospect_customer.owner_name ? detail_prospect_customer.owner_name : '-' "/>
+                    <DetailRowNew v-else :name="'Business Owner Name'" :value="detail_prospect_customer.owner_name ? detail_prospect_customer.owner_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew v-if="detail_prospect_customer.business_type_name=='Business Entity'" :name="'Contract Signing Position'" :value="detail_prospect_customer.owner_role ? detail_prospect_customer.owner_role : '-' "/>
@@ -171,6 +174,14 @@
                         :name="'Taxable Entrepreneur Confirmation Number'" 
                         :value="detail_prospect_customer.taxable_entrepeneur_doc_name ? detail_prospect_customer.taxable_entrepeneur_doc_name : '-'" 
                         :crossURL="detail_prospect_customer.taxable_entrepeneur_doc_url"
+                    />
+                </v-col>
+                <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.business_type_name=='Business Entity'">
+                    <DetailRowNew 
+                        :data-unq="`proscus-link-businessLicense`"
+                        :name="'Business License'" 
+                        :value="detail_prospect_customer.business_license_doc_name ? detail_prospect_customer.business_license_doc_name : '-'" 
+                        :crossURL="detail_prospect_customer.business_license_doc_url"
                     />
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24" v-if="detail_prospect_customer.business_type_name=='Business Entity'">
