@@ -33,6 +33,21 @@ const actions = {
             commit('setPreloadMainOutlet', false);
         }
     },
+
+    
+    // Detail Main Outlet 
+    fetchMainOutletDetail: async ({ state, commit, dispatch }, payload) => {
+        commit('setPreloadMainOutletDetail', true);
+        commit('setMainOutletDetail', []);
+        try {
+            // const response = await http.get("/main_outlet/" + payload.id);
+            // if (response.data.data) commit('setMainOutletDetail', response.data.data);
+            commit('setPreloadMainOutletDetail', false);
+        } catch (error) {
+            console.log(error);
+            commit('setPreloadMainOutletDetail', false);
+        }
+    },
 };
 
 export default actions;
