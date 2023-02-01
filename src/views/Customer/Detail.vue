@@ -221,7 +221,7 @@
             }
         },
         mounted() {
-            this.fetchMainOutletDetail()
+            this.fetchCustomerDetail()
         },
         computed: {
             ...mapState({
@@ -230,7 +230,7 @@
         },
         methods: {
             ...mapActions ([
-                'fetchMainOutletDetail',
+                'fetchCustomerDetail',
             ]),
             // Handling image size by class
             imageSizeHandler(item){ 
