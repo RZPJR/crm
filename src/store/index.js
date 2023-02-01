@@ -7,7 +7,7 @@ import assignmentObjective from "./modules/assignmentObjective";
 import assignmentSubmission from "./modules/assignmentSubmission";
 import customerAcquisition from "./modules/customerAcquisition";
 import salesPerformance from "./modules/salesPerformance";
-import mainOutlet from "./modules/mainOutlet";
+import customer from "./modules/customer";
 
 Vue.use(Vuex);
 Vue.use(require('vue-moment'));
@@ -20,6 +20,6 @@ export default new Vuex.Store({
     customerAcquisition,
     salesPerformance,
     assignmentSubmission,
-    mainOutlet,
+    customer,
   }
 });

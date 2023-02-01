@@ -64,7 +64,7 @@
                         item-text="text"
                         item-value="value"
                         label="Status"
-                        data-unq="mainoutlet-filter-status"
+                        data-unq="customer-filter-status"
                         dense
                         outlined
                     ></v-select>
@@ -75,7 +75,7 @@
                         :dense="true"
                         v-model="filter.invoice_term"
                         @selected="invoicetermSelected"
-                        data-unq="mainoutlet-filter-invoiceterm"
+                        data-unq="customer-filter-invoiceterm"
                     ></SelectInvoiceTerm>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -85,7 +85,7 @@
                         v-model="filter.payment_term"
                         :label="'Payment Term'"
                         @selected="salestermSelected"
-                        data-unq="mainoutlet-filter-salesterm"
+                        data-unq="customer-filter-salesterm"
                     ></SelectSalesTerm>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -95,7 +95,7 @@
                         :label="'Finance Area'"
                         :dense="true"
                         @selected="financeAreaSelected"
-                        data-unq="mainoutlet-filter-financearea"
+                        data-unq="customer-filter-financearea"
                     ></SelectArea>
                 </v-col>
                 <v-col cols="12" md="3" class="-mt24">
@@ -113,7 +113,7 @@
                         item-text="text"
                         item-value="value"
                         label="Status"
-                        data-unq="mainoutlet-filter-suspend"
+                        data-unq="customer-filter-suspend"
                         dense
                         outlined
                     ></v-select>
@@ -149,9 +149,9 @@
         <div class="box-body-table">
             <v-data-table
                 :mobile-breakpoint="0"
-                :headers="main_outlet.table_header"
-                :items="main_outlet.items"
-                :loading="main_outlet.isLoading"
+                :headers="customer.table_header"
+                :items="customer.items"
+                :loading="customer.isLoading"
                 :items-per-page="10"
             >
                 <template v-slot:item="props">
@@ -230,21 +230,21 @@
     import { mapState, mapActions } from "vuex";
 
     export default {
-        name: 'MainOutlet',
+        name: 'Customer',
         data() {
             return {
                 showFilter : false,
             }
         },
         mounted() {
-            this.fetchMainOutlet()
+            this.fetchCustomer()
         },
         computed: {
             ...mapState({
-                main_outlet: state => state.mainOutlet.main_outlet,
-                filter: state => state.mainOutlet.main_outlet.filter,
-                status_option: state => state.mainOutlet.main_outlet.status_option,
-                suspend_option: state => state.mainOutlet.main_outlet.suspend_option,
+                customer: state => state.customer.customer_list,
+                filter: state => state.customer.customer_list.filter,
+                status_option: state => state.customer.customer_list.status_option,
+                suspend_option: state => state.customer.customer_list.suspend_option,
             }),
             //For disable export button if required filter is empty
             disableButton() {
@@ -257,7 +257,7 @@
         },
         methods: { 
             ...mapActions([
-                'fetchMainOutlet'
+                'fetchCustomer'
             ]),
             //For Filter Invoice Term
             invoicetermSelected(val) {
@@ -294,7 +294,7 @@
                     let that = this
                     clearTimeout(this._timerId)
                     this._timerId = setTimeout(function(){
-                        that.fetchMainOutlet()
+                        that.fetchCustomer()
                     }, 1000);
                 },
                 deep: true

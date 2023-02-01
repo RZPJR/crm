@@ -2,9 +2,9 @@ import http from "../../../services/http";
 
 const actions = {
     // Readlist Main Outlet 
-    fetchMainOutlet: async ({ state, commit, dispatch }, payload) => {
-        commit('setPreloadMainOutlet', true);
-        commit('setMainOutlet', []);
+    fetchCustomer: async ({ state, commit, dispatch }, payload) => {
+        commit('setPreloadCustomer', true);
+        commit('setCustomer', []);
         try {
             // let search = state.main_outlet.filter.search
             // let status = state.main_outlet.filter.status
@@ -26,26 +26,26 @@ const actions = {
             //         suspend: suspend,
             //     }
             // });
-            // if (response.data.data) commit('setMainOutlet', response.data.data);
-            commit('setPreloadMainOutlet', false);
+            // if (response.data.data) commit('setCustomer', response.data.data);
+            commit('setPreloadCustomer', false);
         } catch (error) {
             console.log(error);
-            commit('setPreloadMainOutlet', false);
+            commit('setPreloadCustomer', false);
         }
     },
 
     
     // Detail Main Outlet 
-    fetchMainOutletDetail: async ({ state, commit, dispatch }, payload) => {
-        commit('setPreloadMainOutletDetail', true);
-        commit('setMainOutletDetail', []);
+    fetchCustomerDetail: async ({ state, commit, dispatch }, payload) => {
+        commit('setPreloadCustomerDetail', true);
+        commit('setCustomerDetail', []);
         try {
             // const response = await http.get("/main_outlet/" + payload.id);
-            // if (response.data.data) commit('setMainOutletDetail', response.data.data);
-            commit('setPreloadMainOutletDetail', false);
+            // if (response.data.data) commit('setCustomerDetail', response.data.data);
+            commit('setPreloadCustomerDetail', false);
         } catch (error) {
             console.log(error);
-            commit('setPreloadMainOutletDetail', false);
+            commit('setPreloadCustomerDetail', false);
         }
     },
 };

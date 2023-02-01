@@ -1,6 +1,6 @@
 const state = {
-    // Readlist Main Outlet
-    main_outlet: {
+    // Readlist Customer
+    customer_list: {
         isLoading: false,
         items: [],
         filter: {
@@ -94,8 +94,8 @@ const state = {
         ],
     },
 
-    // Detail Main Outlet
-    main_outlet_detail: {
+    // Detail Customer
+    customer_detail: {
         isLoading: false,
         items: [],
         merchant_acc_num: [],
