@@ -28,6 +28,8 @@ import {
   DisplayPhotoOverlay,
   SelectInvoiceTerm,
   SelectSalesTerm,
+  SelectCustomer,
+  SelectPriceSet,
 } from "@vue-mf/global";
 import Vuetify from "vuetify/lib";
 Vue.use(require('vue-moment'));
@@ -67,6 +69,8 @@ Vue.mixin({
     DisplayPhotoOverlay,
     SelectInvoiceTerm,
     SelectSalesTerm,
+    SelectCustomer,
+    SelectPriceSet,
   },
   data: function() {
     return {

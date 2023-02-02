@@ -70,23 +70,12 @@
                     ></v-select>
                 </v-col>
                 <v-col cols="12" md="3">
-                    <SelectInvoiceTerm
+                    <SelectCustomer
+                        @selected="mainOutletSelected"
                         :norequired="true"
                         :dense="true"
-                        v-model="filter.invoice_term"
-                        @selected="invoicetermSelected"
-                        data-unq="customer-filter-invoiceterm"
-                    ></SelectInvoiceTerm>
-                </v-col>
-                <v-col cols="12" md="3">
-                    <SelectSalesTerm
-                        :norequired="true"
-                        :dense="true"
-                        v-model="filter.payment_term"
-                        :label="'Payment Term'"
-                        @selected="salestermSelected"
-                        data-unq="customer-filter-salesterm"
-                    ></SelectSalesTerm>
+                        data-unq="address-filter-customer"
+                    ></SelectCustomer>
                 </v-col>
                 <v-col cols="12" md="3">
                     <SelectArea
@@ -98,25 +87,30 @@
                         data-unq="customer-filter-financearea"
                     ></SelectArea>
                 </v-col>
+                <v-col cols="12" md="3">
+                    <SelectArchetype
+                        @selected="archetypeSelected"
+                        :norequired="true"
+                        :aux_data="2"
+                        :dense="true"
+                        data-unq="customer-filter-archetype"
+                    ></SelectArchetype>
+                </v-col>
                 <v-col cols="12" md="3" class="-mt24">
-                    <SelectBusinessType
+                    <SelectPriceSet
+                        @selected="priceSetSelected"
                         :norequired="true"
                         :dense="true"
-                        v-model="filter.business_type"
-                        @selected="businessTypeSelected"
-                    ></SelectBusinessType>
+                        data-unq="customer-filter-priceset"
+                    ></SelectPriceSet>
                 </v-col>
                 <v-col cols="6" md="3" class="-mt24">
-                    <v-select
-                        v-model="filter.suspend"
-                        :items="suspend_option"
-                        item-text="text"
-                        item-value="value"
-                        label="Status"
-                        data-unq="customer-filter-suspend"
-                        dense
-                        outlined
-                    ></v-select>
+                    <SelectSalesPerson
+                        @selected="salesPersonSelected"
+                        :norequired="true"
+                        :dense="true"
+                        data-unq="customer-filter-salesperson"
+                    ></SelectSalesPerson>
                 </v-col>
             </v-row>
         </div>
@@ -142,7 +136,7 @@
                         class="no-caps bold"
                         @click="exportData()"
                         :disabled="disableButton"
-                        data-unq="customer-export-data"
+                        data-unq="address-export-data"
                     ><span class="text-white">Export</span></v-btn>
                 </v-col>
             </v-row>
@@ -150,31 +144,22 @@
         <div class="box-body-table">
             <v-data-table
                 :mobile-breakpoint="0"
-                :headers="customer.table_header"
-                :items="customer.items"
-                :loading="customer.isLoading"
+                :headers="address.table_header"
+                :items="address.items"
+                :loading="address.isLoading"
                 :items-per-page="10"
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>
-                            {{ props.item.code }}<br>
-                        <span class="second-color">{{ props.item.name ?  props.item.name : '-' }}</span>
-                        </td>
-                        <td>{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
-                        <td>{{ props.item.business_type.name ? props.item.business_type.name : '-'}}</td>
-                        <td>{{ props.item.invoice_term.name ? props.item.invoice_term.name : '-'}}</td>
-                        <td>{{ props.item.payment_term.name ? props.item.payment_term.name : '-'}}</td>
-                        <td>{{ props.item.finance_area.name ? props.item.finance_area.name : '-'}}</td>
-                        <td>{{ props.item.payment_group.name ? props.item.payment_group.name : '-'}}</td>
-                        <td>
-                            <div v-if="props.item.suspended == 1">
-                                <span style="color: red">Yes </span>
-                            </div>
-                            <div v-else>
-                                <span>No</span>
-                            </div>
-                        </td>
+                        <td>{{ props.item.code }}</td>
+                        <td>{{ props.item.name }}<br>
+                        <span class="second-color">{{ props.item.merchant.code }} - {{ props.item.merchant.name }}</span></td>
+                        <td>{{ props.item.phone_number }}</td>
+                        <td>{{ props.item.archetype.name }}</td>
+                        <td v-if="props.item.salesperson">{{ props.item.salesperson.name }}</td>
+                            <td v-else>-</td>
+                        <td>{{ props.item.price_set.name }}</td>
+                        <td>{{ props.item.area.name }}</td>
                         <td>
                             <div v-if="props.item.status == 1">
                                 <v-chip
@@ -198,24 +183,13 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'main_olt_rdd'" :to="{ name: 'MerchantDetail', params: { id: props.item.id } }">
+                                    <v-list-item :to="{ name: 'BranchDetail', params: { id: props.item.id } }" v-privilege="'olt_rdd'">
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
-                                    <v-list-item  v-privilege="'main_olt_upd'" v-if="props.item.status === 1" :to="{ name: 'MerchantUpdate', params: { id: props.item.id } }">
+                                    <v-list-item :to="{ name: 'BranchUpdate', params: { id: props.item.id } }" v-privilege="'olt_upd'">
                                         <v-list-item-title>Update</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
-                                    </v-list-item>
-                                    <div v-privilege="'main_olt_sus'">
-                                        <hr>
-                                    </div>
-                                    <v-list-item v-privilege="'main_olt_sus'" @click="changeStatus(props.item.code)">
-                                        <v-list-item-content>
-                                            <v-list-item-title>
-                                                <span v-if="props.item.suspended === 1">Unsuspend</span>
-                                                <span v-else>Suspend</span>
-                                            </v-list-item-title>
-                                        </v-list-item-content>
                                     </v-list-item>
                                 </v-list>
                             </v-menu>
@@ -238,14 +212,13 @@
             }
         },
         mounted() {
-            this.fetchCustomer()
+            this.fetchAddress()
         },
         computed: {
             ...mapState({
-                customer: state => state.customer.customer_list,
-                filter: state => state.customer.customer_list.filter,
-                status_option: state => state.customer.customer_list.status_option,
-                suspend_option: state => state.customer.customer_list.suspend_option,
+                address: state => state.address.address_list,
+                filter: state => state.address.address_list.filter,
+                status_option: state => state.address.address_list.status_option,
             }),
             //For disable export button if required filter is empty
             disableButton() {
@@ -258,20 +231,13 @@
         },
         methods: { 
             ...mapActions([
-                'fetchCustomer'
+                'fetchAddress'
             ]),
-            //For Filter Invoice Term
-            invoicetermSelected(val) {
-                this.filter.invoice_term = null;
-                if (val !== ''  && val !== undefined) {
-                    this.filter.invoice_term = val.id;
-                }
-            },
-            //For Filter Sales Term
-            salestermSelected(val) {
-                this.filter.payment_term = null;
-                if (val !== ''  && val !== undefined) {
-                    this.filter.payment_term = val.id;
+            //For Filter Customer
+            mainOutletSelected(d) {
+                this.filter.customer = ""
+                if (d) {
+                    this.filter.customer = d.id
                 }
             },
             //For Filter Finance Area
@@ -281,11 +247,25 @@
                     this.filter.finance_area = val.id;
                 }
             },
-            //For Filter Business Type
-            businessTypeSelected(val) {
-                this.filter.business_type = null;
+            //For Filter Archetype
+            archetypeSelected(val) {
+                this.filter.archetype = null;
                 if(val !== '' && val !== undefined){
-                    this.filter.business_type = val.id
+                    this.filter.archetype = val.id
+                }
+            },
+            //For Filter Price Set
+            priceSetSelected(val) {
+                this.filter.price_set = null;
+                if(val !== '' && val !== undefined){
+                    this.filter.price_set = val.id
+                }
+            },
+            //For Filter Sales Person
+            salesPersonSelected(val) {
+                this.filter.sales_person = null;
+                if(val !== '' && val !== undefined){
+                    this.filter.sales_person = val.id
                 }
             },
         },
@@ -295,7 +275,7 @@
                     let that = this
                     clearTimeout(this._timerId)
                     this._timerId = setTimeout(function(){
-                        that.fetchCustomer()
+                        that.fetchAddress()
                     }, 1000);
                 },
                 deep: true
