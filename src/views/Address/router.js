@@ -5,7 +5,7 @@ export default [
         component: () => import("./Index.vue"),
     },
     {
-        path: '/customer-relation/address/:id',
+        path: '/customer-relation/address/detail/:id',
         name: 'AddressDetail',
         component: () => import("./Detail.vue"),
     },

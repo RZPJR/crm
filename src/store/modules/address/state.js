@@ -82,26 +82,6 @@ const state = {
     address_detail: {
         isLoading: false,
         items: [],
-        merchant_acc_num: [],
-        table_header: [
-            {
-                text:'No',
-                sortable: false,
-                width:"5"
-            },
-            {
-                text:'Payment Channel',
-                sortable: false,
-            },
-            {
-                text:'Account Name',
-                sortable: false,
-            },
-            {
-                text:'Account Number',
-                sortable: false
-            },
-        ],
     },
 
 };
