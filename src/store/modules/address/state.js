@@ -12,7 +12,7 @@ const state = {
             price_set: '',
             sales_person: '',
         },
-        status_option: [
+        status_options: [
             {
                 text:'All Status',
                 value:999

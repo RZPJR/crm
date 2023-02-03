@@ -14,7 +14,7 @@
                                 outlined
                                 dense
                                 filled
-                                data-unq="search-filter"
+                                data-unq="address-input-search"
                             >
                             </v-text-field>
                         </template>
@@ -32,6 +32,7 @@
                         @click="showFilter = !showFilter"
                         v-if="showFilter"
                         class="no-caps fs12"
+                        data-unq="address-button-filterExpandLess"
                     >
                         Hide
                         <v-icon
@@ -46,6 +47,7 @@
                         @click="showFilter = !showFilter"
                         v-else
                         class="no-caps fs12"
+                        data-unq="address-button-filterExpandMore"
                     >
                         Show
                         <v-icon
@@ -56,25 +58,25 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <v-row :class="showFilter? '':'hidden'">
+            <v-row v-if="showFilter">
                 <v-col cols="12" md="3">
                     <v-select
                         v-model="filter.status"
-                        :items="status_option"
+                        :items="status_options"
                         item-text="text"
                         item-value="value"
                         label="Status"
-                        data-unq="customer-filter-status"
+                        data-unq="address-select-status"
                         dense
                         outlined
                     ></v-select>
                 </v-col>
                 <v-col cols="12" md="3">
                     <SelectCustomer
-                        @selected="mainOutletSelected"
+                        @selected="customerSelected"
                         :norequired="true"
                         :dense="true"
-                        data-unq="address-filter-customer"
+                        data-unq="address-select-customer"
                     ></SelectCustomer>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -84,7 +86,7 @@
                         :label="'Finance Area'"
                         :dense="true"
                         @selected="financeAreaSelected"
-                        data-unq="customer-filter-financearea"
+                        data-unq="address-select-financeArea"
                     ></SelectArea>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -93,7 +95,7 @@
                         :norequired="true"
                         :aux_data="2"
                         :dense="true"
-                        data-unq="customer-filter-archetype"
+                        data-unq="address-select-archetype"
                     ></SelectArchetype>
                 </v-col>
                 <v-col cols="12" md="3" class="-mt24">
@@ -101,7 +103,7 @@
                         @selected="priceSetSelected"
                         :norequired="true"
                         :dense="true"
-                        data-unq="customer-filter-priceset"
+                        data-unq="address-select-priceSet"
                     ></SelectPriceSet>
                 </v-col>
                 <v-col cols="6" md="3" class="-mt24">
@@ -109,7 +111,7 @@
                         @selected="salesPersonSelected"
                         :norequired="true"
                         :dense="true"
-                        data-unq="customer-filter-salesperson"
+                        data-unq="address-select-salesPerson"
                     ></SelectSalesPerson>
                 </v-col>
             </v-row>
@@ -118,7 +120,7 @@
             <v-row >
                 <v-col class="flex-align-end"></v-col>
                 <v-col cols="4" md="3" class="d-flex justify-end h70">
-                    <v-tooltip left> <!-- TODO privillege -->
+                    <v-tooltip left>
                         <template v-slot:activator="{ on: tooltip }">
                         <v-icon
                             v-on="{ ...tooltip }"
@@ -129,14 +131,13 @@
                         </template>
                         <span><strong>Export Button</strong><br>You have to choose filter area before export the data</span>
                     </v-tooltip>
-                    <!-- TODO privillege --> 
                     <v-btn
                         depressed
                         color="#50ABA3"
                         class="no-caps bold"
                         @click="exportData()"
                         :disabled="disableButton"
-                        data-unq="address-export-data"
+                        data-unq="address-button-export"
                     ><span class="text-white">Export</span></v-btn>
                 </v-col>
             </v-row>
@@ -178,19 +179,28 @@
                             <v-menu offset-y>
                                 <template v-slot:activator="{ on: menu }">
                                     <v-btn
+                                        :data-unq="`address-button-actionButton-${props.item.id}`"
                                         icon
                                         v-on="{ ...menu }"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item :to="{ name: 'BranchDetail', params: { id: props.item.id } }" v-privilege="'olt_rdd'">
+                                    <v-list-item 
+                                        :to="{ name: 'AddressDetail', params: { id: props.item.id } }" 
+                                        v-privilege="'olt_rdd'"
+                                        :data-unq="`address-button-detailAddress-${props.item.id}`"
+                                    >
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
-                                    <v-list-item :to="{ name: 'BranchUpdate', params: { id: props.item.id } }" v-privilege="'olt_upd'">
+                                    <!-- <v-list-item 
+                                        :to="{ name: 'AddressUpdate', params: { id: props.item.id } }" 
+                                        v-privilege="'olt_upd'"
+                                        :data-unq="`address-button-updateAddress-${props.item.id}`"
+                                    >
                                         <v-list-item-title>Update</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
-                                    </v-list-item>
+                                    </v-list-item> -->
                                 </v-list>
                             </v-menu>
                         </td>
@@ -202,7 +212,7 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from "vuex";
+    import { mapState, mapActions, mapMutations } from "vuex";
 
     export default {
         name: 'Customer',
@@ -218,7 +228,7 @@
             ...mapState({
                 address: state => state.address.address_list,
                 filter: state => state.address.address_list.filter,
-                status_option: state => state.address.address_list.status_option,
+                status_options: state => state.address.address_list.status_options,
             }),
             //For disable export button if required filter is empty
             disableButton() {
@@ -233,39 +243,57 @@
             ...mapActions([
                 'fetchAddress'
             ]),
+            ...mapMutations([
+                'setAddressFilter'
+            ]),
             //For Filter Customer
-            mainOutletSelected(d) {
+            customerSelected(d) {
                 this.filter.customer = ""
                 if (d) {
-                    this.filter.customer = d.id
+                    this.$store.commit('setAddressFilter', {
+                        ...this.filter,
+                        customer: val.id
+                    })
                 }
             },
             //For Filter Finance Area
             financeAreaSelected(val) {
-                this.filter.finance_area = null;
-                if (val !== ''  && val !== undefined) {
-                    this.filter.finance_area = val.id;
+                this.filter.finance_area = '';
+                if (val !== ''  && val !== undefined && val !== null) {
+                    this.$store.commit('setAddressFilter', {
+                        ...this.filter,
+                        finance_area: val.id
+                    })
                 }
             },
             //For Filter Archetype
             archetypeSelected(val) {
-                this.filter.archetype = null;
-                if(val !== '' && val !== undefined){
-                    this.filter.archetype = val.id
+                this.filter.archetype = '';
+                if(val !== '' && val !== undefined && val !== null){
+                    this.$store.commit('setAddressFilter', {
+                        ...this.filter,
+                        archetype: val.id
+                    })
                 }
             },
             //For Filter Price Set
             priceSetSelected(val) {
-                this.filter.price_set = null;
-                if(val !== '' && val !== undefined){
-                    this.filter.price_set = val.id
+                this.filter.price_set = '';
+                if(val !== '' && val !== undefined && val !== null){
+                    this.$store.commit('setAddressFilter', {
+                        ...this.filter,
+                        price_set: val.id
+                    })
                 }
             },
             //For Filter Sales Person
             salesPersonSelected(val) {
-                this.filter.sales_person = null;
-                if(val !== '' && val !== undefined){
-                    this.filter.sales_person = val.id
+                this.filter.sales_person = '';
+                if(val !== '' && val !== undefined && val !== null){
+                    this.$store.commit('setAddressFilter', {
+                        ...this.filter,
+                        sales_person: val.id
+                    })
                 }
             },
         },

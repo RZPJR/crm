@@ -8,6 +8,10 @@ const mutations = {
         state.address_list.items = payload;
         return state;
     },
+    setAddressFilter: function(state, payload) {
+        state.address_list.filter = payload;
+        return state;
+    },
 
     // Detail Address
     setPreloadAddressDetail: function(state, payload) {
