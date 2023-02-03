@@ -6,8 +6,7 @@ const actions = {
         commit('setPreloadDistributionNetwork', true);
         commit('setDistributionNetwork', []);
         try {
-            // let search = state.main_outlet.filter.search
-            // let status = state.main_outlet.filter.status
+            let search = state.distribution_network_list.filter.search
             // const response = await http.get("/distribution-network", {
             //     params: {
             //         per_page:1000,
@@ -42,8 +41,9 @@ const actions = {
         commit('setPreloadOrderPerformance', true);
         commit('setTopProduct', {id: '', name: ''});
         try {
-            // let from_date = state.distribution_network_detail.order_performance.filter.input.substr(0,10)
-            // let to_date = state.distribution_network_detail.order_performance.filter.input.substr(14,23)
+            let filter = state.distribution_network_detail.order_performance.filter
+            let from_date = filter.input.substr(0,10)
+            let to_date = filter.input.substr(14,23)
             // const response = await http.get("/distribution-network/" + payload.id, {
             //     params: {
             //         fromdate: from_date,
@@ -65,9 +65,10 @@ const actions = {
         commit('setPreloadOrderPerformance', true);
         commit('setOrderPerformance', {});
         try {
-            // let top_product = state.distribution_network_detail.order_performance.top_product.id
-            // let from_date = state.distribution_network_detail.order_performance.filter.input.substr(0,10)
-            // let to_date = state.distribution_network_detail.order_performance.filter.input.substr(14,23)
+            let order_performance = state.distribution_network_detail.order_performance
+            let top_product = order_performance.top_product.id
+            let from_date = order_performance.filter.input.substr(0,10)
+            let to_date = order_performance.filter.input.substr(14,23)
             // const response = await http.get("/distribution-network/" + payload.id, {
             //     params: {
             //         top_product_id: top_product
@@ -102,12 +103,12 @@ const actions = {
         commit('setPreloadOrderPayment', true);
         commit('setOrderPayment', []);
         try {
-            // let filter = state.distribution_network_detail.order_payment.filter
-            // let search = filter.search
-            // let status = filter.status === 999 ? '' : filter.status
-            // let sortBy = filter.sortBy
-            // let invoice_date = filter.invoice_date.date
-            // let overdue_date = filter.overdue_date.date
+            let filter = state.distribution_network_detail.order_payment.filter
+            let search = filter.search
+            let status = filter.status === 999 ? '' : filter.status
+            let sortBy = filter.sortBy
+            let invoice_date = filter.invoice_date.date
+            let overdue_date = filter.overdue_date.date
             // const response = await http.get("/distribution-network/" + payload.id, {
             //     params: {
             //         search: search,

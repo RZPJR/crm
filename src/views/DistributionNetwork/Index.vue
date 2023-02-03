@@ -14,6 +14,7 @@
                                 outlined
                                 dense
                                 filled
+                                data-unq='distributionNetwork-input-search'
                             >
                             </v-text-field>
                         </template>
@@ -30,6 +31,7 @@
                         color="#50ABA3"
                         class="no-caps bold mr20"
                         to="/customer-relation/distribution-network/create"
+                        data-unq='distributionNetwork-button-createDistributionNetwork'
                     >
                         <span class="text-white">Create Outlet</span>
                     </v-btn>
@@ -60,14 +62,23 @@
                                     <v-btn
                                         icon
                                         v-on="{ ...menu }"
+                                        :data-unq="`distributionNetwork-button-actionButton-${props.item.id}`"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'dis_net_rdd'" :to="{ name: 'DistributionNetworkDetail', params: { id: props.item.id } }">
+                                    <v-list-item 
+                                        v-privilege="'dis_net_rdd'" 
+                                        :to="{ name: 'DistributionNetworkDetail', params: { id: props.item.id } }"
+                                        :data-unq="`distributionNetwork-button-detailDistributionNetwork-${props.item.id}`"
+                                    >
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
-                                    <v-list-item  v-privilege="'dis_net_upd'" v-if="props.item.status === 1" :to="{ name: 'DistributionNetworkUpdate', params: { id: props.item.id } }">
+                                    <v-list-item  
+                                        v-privilege="'dis_net_upd'" 
+                                        v-if="props.item.status === 1" :to="{ name: 'DistributionNetworkUpdate', params: { id: props.item.id } }"                                        
+                                        :data-unq="`distributionNetwork-button-updateDistributionNetwork-${props.item.id}`"
+                                    >
                                         <v-list-item-title>Update</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
