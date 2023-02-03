@@ -12,7 +12,7 @@ const state = {
             business_type: '',
             suspend: 999,
         },
-        status_option: [
+        status_options: [
             {
                 text:'All Status',
                 value:999

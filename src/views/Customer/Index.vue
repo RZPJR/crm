@@ -14,7 +14,7 @@
                                 outlined
                                 dense
                                 filled
-                                data-unq="search-filter"
+                                data-unq="customer-input-search"
                             >
                             </v-text-field>
                         </template>
@@ -32,13 +32,10 @@
                         @click="showFilter = !showFilter"
                         v-if="showFilter"
                         class="no-caps fs12"
+                        data-unq="customer-button-filterExpandLess"
                     >
                         Hide
-                        <v-icon
-                            right
-                        >
-                            mdi-chevron-up
-                        </v-icon>
+                        <v-icon right>mdi-chevron-up</v-icon>
                     </v-btn>
                     <v-btn 
                         depressed
@@ -46,25 +43,21 @@
                         @click="showFilter = !showFilter"
                         v-else
                         class="no-caps fs12"
+                        data-unq="customer-button-filterExpandMore"
                     >
-                        Show
-                        <v-icon
-                            right
-                        >
-                            mdi-chevron-down
-                        </v-icon>
+                        Show<v-icon right>mdi-chevron-down</v-icon>
                     </v-btn>
                 </v-col>
             </v-row>
-            <v-row :class="showFilter? '':'hidden'">
+            <v-row v-if='showFilter'>
                 <v-col cols="12" md="3">
                     <v-select
                         v-model="filter.status"
-                        :items="status_option"
+                        :items="status_options"
                         item-text="text"
                         item-value="value"
                         label="Status"
-                        data-unq="customer-filter-status"
+                        data-unq="customer-select-status"
                         dense
                         outlined
                     ></v-select>
@@ -75,7 +68,7 @@
                         :dense="true"
                         v-model="filter.invoice_term"
                         @selected="invoicetermSelected"
-                        data-unq="customer-filter-invoiceterm"
+                        data-unq="customer-select-invoiceTerm"
                     ></SelectInvoiceTerm>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -85,7 +78,7 @@
                         v-model="filter.payment_term"
                         :label="'Payment Term'"
                         @selected="salestermSelected"
-                        data-unq="customer-filter-salesterm"
+                        data-unq="customer-select-paymentTerm"
                     ></SelectSalesTerm>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -95,7 +88,7 @@
                         :label="'Finance Area'"
                         :dense="true"
                         @selected="financeAreaSelected"
-                        data-unq="customer-filter-financearea"
+                        data-unq="customer-select-financeArea"
                     ></SelectArea>
                 </v-col>
                 <v-col cols="12" md="3" class="-mt24">
@@ -104,6 +97,7 @@
                         :dense="true"
                         v-model="filter.business_type"
                         @selected="businessTypeSelected"
+                        data-unq="customer-select-businessType"
                     ></SelectBusinessType>
                 </v-col>
                 <v-col cols="6" md="3" class="-mt24">
@@ -113,7 +107,7 @@
                         item-text="text"
                         item-value="value"
                         label="Status"
-                        data-unq="customer-filter-suspend"
+                        data-unq="customer-select-suspend"
                         dense
                         outlined
                     ></v-select>
@@ -124,7 +118,7 @@
             <v-row >
                 <v-col class="flex-align-end"></v-col>
                 <v-col cols="4" md="3" class="d-flex justify-end h70">
-                    <v-tooltip left> <!-- TODO privillege -->
+                    <v-tooltip left>
                         <template v-slot:activator="{ on: tooltip }">
                         <v-icon
                             v-on="{ ...tooltip }"
@@ -135,14 +129,13 @@
                         </template>
                         <span><strong>Export Button</strong><br>You have to choose filter area before export the data</span>
                     </v-tooltip>
-                    <!-- TODO privillege --> 
                     <v-btn
                         depressed
                         color="#50ABA3"
                         class="no-caps bold"
                         @click="exportData()"
                         :disabled="disableButton"
-                        data-unq="customer-export-data"
+                        data-unq="customer-button-export"
                     ><span class="text-white">Export</span></v-btn>
                 </v-col>
             </v-row>
@@ -195,21 +188,33 @@
                                     <v-btn
                                         icon
                                         v-on="{ ...menu }"
+                                        :data-unq="`customer-button-actionButton-${props.item.id}`"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'main_olt_rdd'" :to="{ name: 'MerchantDetail', params: { id: props.item.id } }">
+                                    <v-list-item 
+                                        v-privilege="'main_olt_rdd'" 
+                                        :to="{ name: 'CustomerDetail', params: { id: props.item.id } }"                                        
+                                        :data-unq="`customer-button-detailCustomer-${props.item.id}`"
+                                    >
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
-                                    <v-list-item  v-privilege="'main_olt_upd'" v-if="props.item.status === 1" :to="{ name: 'MerchantUpdate', params: { id: props.item.id } }">
+                                    <v-list-item  
+                                        v-privilege="'main_olt_upd'" 
+                                        v-if="props.item.status === 1" 
+                                        :to="{ name: 'CustomerUpdate', params: { id: props.item.id } }"
+                                        :data-unq="`customer-button-updateCustomer-${props.item.id}`"
+                                    >
                                         <v-list-item-title>Update</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
-                                    <div v-privilege="'main_olt_sus'">
-                                        <hr>
-                                    </div>
-                                    <v-list-item v-privilege="'main_olt_sus'" @click="changeStatus(props.item.code)">
+                                    <div v-privilege="'main_olt_sus'"><hr></div>
+                                    <v-list-item 
+                                        v-privilege="'main_olt_sus'" 
+                                        @click="changeStatus(props.item.code)"
+                                        :data-unq="`customer-button-suspendCustomer-${props.item.id}`"
+                                    >
                                         <v-list-item-content>
                                             <v-list-item-title>
                                                 <span v-if="props.item.suspended === 1">Unsuspend</span>
@@ -228,7 +233,7 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from "vuex";
+    import { mapState, mapActions, mapMutations } from "vuex";
 
     export default {
         name: 'Customer',
@@ -244,7 +249,7 @@
             ...mapState({
                 customer: state => state.customer.customer_list,
                 filter: state => state.customer.customer_list.filter,
-                status_option: state => state.customer.customer_list.status_option,
+                status_options: state => state.customer.customer_list.status_options,
                 suspend_option: state => state.customer.customer_list.suspend_option,
             }),
             //For disable export button if required filter is empty
@@ -260,32 +265,47 @@
             ...mapActions([
                 'fetchCustomer'
             ]),
+            ...mapMutations([
+                'setCustomerFilter'
+            ]),
             //For Filter Invoice Term
             invoicetermSelected(val) {
-                this.filter.invoice_term = null;
-                if (val !== ''  && val !== undefined) {
-                    this.filter.invoice_term = val.id;
+                this.filter.invoice_term = '';
+                if (val !== ''  && val !== undefined && val !== null) {
+                    this.$store.commit('setCustomerFilter', {
+                        ...this.filter,
+                        invoice_term: val.id
+                    })
                 }
             },
             //For Filter Sales Term
             salestermSelected(val) {
-                this.filter.payment_term = null;
-                if (val !== ''  && val !== undefined) {
-                    this.filter.payment_term = val.id;
+                this.filter.payment_term = '';
+                if (val !== ''  && val !== undefined && val !== null) {
+                    this.$store.commit('setCustomerFilter', {
+                        ...this.filter,
+                        payment_term: val.id
+                    })
                 }
             },
             //For Filter Finance Area
             financeAreaSelected(val) {
                 this.filter.finance_area = null;
-                if (val !== ''  && val !== undefined) {
-                    this.filter.finance_area = val.id;
+                if (val !== ''  && val !== undefined && val !== null) {
+                    this.$store.commit('setCustomerFilter', {
+                        ...this.filter,
+                        finance_area: val.id
+                    })
                 }
             },
             //For Filter Business Type
             businessTypeSelected(val) {
                 this.filter.business_type = null;
-                if(val !== '' && val !== undefined){
-                    this.filter.business_type = val.id
+                if(val !== '' && val !== undefined && val !== null){
+                    this.$store.commit('setCustomerFilter', {
+                        ...this.filter,
+                        business_type: val.id
+                    })
                 }
             },
         },
