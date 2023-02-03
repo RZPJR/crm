@@ -42,28 +42,111 @@ const state = {
 
     // Detail Distribution Network
     distribution_network_detail: {
-        isLoading: false,
-        items: [],
-        merchant_acc_num: [],
-        table_header: [
-            {
-                text:'No',
-                sortable: false,
-                width:"5"
+        detail: {
+            isLoading: false,
+            items: [],
+        },
+        order_performance: {
+            isLoading: false,
+            items: [],
+            filter: {
+                input : '',
+                model : '',
+                date : [],
             },
-            {
-                text:'Payment Channel',
-                sortable: false,
+            top_product: {},
+        },
+        payment_performance: {
+            isLoading: false,
+            items: [],
+        },
+        order_payment: {
+            isLoading: false,
+            items: [],
+            filter: {
+                search: '',
+                invoice_date: {
+                    input : '',
+                    model : '',
+                    date : [],
+                },
+                status: 999,
+                overdue_date: {
+                    input : '',
+                    model : '',
+                    date : [],
+                },
+                sortBy: '-due_date',
             },
-            {
-                text:'Account Name',
-                sortable: false,
-            },
-            {
-                text:'Account Number',
-                sortable: false
-            },
-        ],
+            sort_options: [
+                {
+                    text: 'Overdue Date (A-Z)',
+                    value: 'due_date'
+                },
+                {
+                    text: 'Overdue Date (Z-A)',
+                    value: '-due_date'
+                }
+            ],
+            status_options: [
+                {
+                    text:'All Status',
+                    value:999
+                },
+                {
+                    text:'Active',
+                    value:1
+                },
+                {
+                    text:'Archived',
+                    value:2
+                }
+            ],
+            table_header: [
+                {
+                    text:'Sales Order Code',
+                    sortable: false,
+                    width: "20%",
+                    class: 'grey--text text--darken-4',
+                },
+                {
+                    text:'Sales Invoice Code',
+                    sortable: false,
+                    width: "20%",
+                    class: 'grey--text text--darken-4',
+                },
+                {
+                    text:'Overdue Date',
+                    sortable: false,
+                    width: "10%",
+                    class: 'grey--text text--darken-4',
+                },
+                {
+                    text:'Sales Invoice Value',
+                    sortable: false,
+                    width: "15%",
+                    class: 'grey--text text--darken-4',
+                },
+                {
+                    text:'Total Sales Payment',
+                    sortable: false,
+                    width: "15%",
+                    class: 'grey--text text--darken-4',
+                },
+                {
+                    text:'Percentage Payment',
+                    sortable: false,
+                    width: "15%",
+                    class: 'grey--text text--darken-4',
+                },
+                {
+                    text:'Status',
+                    sortable: false,
+                    width: "5%",
+                    class: 'grey--text text--darken-4',
+                },
+            ],
+        },
     },
 
 };
