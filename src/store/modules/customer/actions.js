@@ -6,13 +6,14 @@ const actions = {
         commit('setPreloadCustomer', true);
         commit('setCustomer', []);
         try {
-            // let search = state.main_outlet.filter.search
-            // let status = state.main_outlet.filter.status
-            // let invoice_term = state.main_outlet.filter.invoice_term
-            // let payment_term = state.main_outlet.filter.payment_term
-            // let finance_area = state.main_outlet.filter.finance_area
-            // let business_type = state.main_outlet.filter.business_type
-            // let suspend = state.main_outlet.filter.suspend
+            let filter = state.customer.filter
+            let search = filter.search
+            let status = filter.status
+            let invoice_term = filter.invoice_term
+            let payment_term = filter.payment_term
+            let finance_area = filter.finance_area
+            let business_type = filter.business_type
+            let suspend = filter.suspend
             // const response = await http.get("/main_outlet", {
             //     params: {
             //         per_page:1000,
