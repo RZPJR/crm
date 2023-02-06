@@ -81,12 +81,12 @@
                 </v-col>
                 <v-col cols="12" md="3">
                     <SelectArea
-                        v-model="filter.finance_area"
+                        v-model="filter.finance_region"
                         :aux_data="2"
-                        :label="'Finance Area'"
+                        :label="'Finance Region'"
                         :dense="true"
-                        @selected="financeAreaSelected"
-                        data-unq="address-select-financeArea"
+                        @selected="financeRegionSelected"
+                        data-unq="address-select-financeRegion"
                     ></SelectArea>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -100,10 +100,10 @@
                 </v-col>
                 <v-col cols="12" md="3" class="-mt24">
                     <SelectPriceSet
-                        @selected="priceSetSelected"
+                        @selected="priceLevelSelected"
                         :norequired="true"
                         :dense="true"
-                        data-unq="address-select-priceSet"
+                        data-unq="address-select-priceLevel"
                     ></SelectPriceSet>
                 </v-col>
                 <v-col cols="6" md="3" class="-mt24">
@@ -129,7 +129,7 @@
                             info
                         </v-icon>
                         </template>
-                        <span><strong>Export Button</strong><br>You have to choose filter area before export the data</span>
+                        <span><strong>Export Button</strong><br>You have to choose filter region before export the data</span>
                     </v-tooltip>
                     <v-btn
                         depressed
@@ -232,7 +232,7 @@
             }),
             //For disable export button if required filter is empty
             disableButton() {
-                if (this.filter.finance_area) {
+                if (this.filter.finance_region) {
                     return false
                 } else {
                     return true
@@ -256,13 +256,13 @@
                     })
                 }
             },
-            //For Filter Finance Area
-            financeAreaSelected(val) {
-                this.filter.finance_area = '';
+            //For Filter Finance Region
+            financeRegionSelected(val) {
+                this.filter.finance_region = '';
                 if (val !== ''  && val !== undefined && val !== null) {
                     this.$store.commit('setAddressFilter', {
                         ...this.filter,
-                        finance_area: val.id
+                        finance_region: val.id
                     })
                 }
             },
@@ -276,13 +276,13 @@
                     })
                 }
             },
-            //For Filter Price Set
-            priceSetSelected(val) {
+            //For Filter Price Level
+            priceLevelSelected(val) {
                 this.filter.price_set = '';
                 if(val !== '' && val !== undefined && val !== null){
                     this.$store.commit('setAddressFilter', {
                         ...this.filter,
-                        price_set: val.id
+                        price_level: val.id
                     })
                 }
             },

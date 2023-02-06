@@ -7,9 +7,9 @@ const state = {
             search: '',
             status:1,
             customer:'',
-            finance_area:'',
+            finance_region:'',
             archetype: '',
-            price_set: '',
+            price_level: '',
             sales_person: '',
         },
         status_options: [
@@ -55,12 +55,12 @@ const state = {
                 sortable: false
             },
             {
-                text:'Price Set',
+                text:'Price Level',
                 class: 'grey--text text--darken-4',
                 sortable: false
             },
             {
-                text:'Area',
+                text:'Region',
                 width: "7%",
                 class: 'grey--text text--darken-4',
                 sortable: false

@@ -8,7 +8,7 @@
             <div class="hr-title mx-1 mb30"/>
             <v-row class="px-5 mt-5">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Business Type'" :value="address_detail.customer?.name"/>
+                    <DetailRowNew :name="'Customer Type'" :value="address_detail.customer?.name"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Customer'" :value="address_detail.customer?.name" :routePath="'/customer-relation/customer/detail/'+this.address_detail.customer?.id"/>
@@ -130,7 +130,7 @@
                     <DetailRowNew :name="'Salesperson'" :value="address_detail.salesperson?.name ?? '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Price Set'" :value="address_detail.price_set?.name ?? '-'"/>
+                    <DetailRowNew :name="'Price Level'" :value="address_detail.price_set?.name ?? '-'"/>
                 </v-col>
             </v-row>
             <v-row class="my2">
@@ -163,16 +163,16 @@
                     <DetailRowNew :name="'Postal Code'" :value="address_detail.sub_district?.postal_code ?? '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Default Warehouse'" :value="address_detail.warehouse?.name ?? '-'"/>
+                    <DetailRowNew :name="'Default Site'" :value="address_detail.warehouse?.name ?? '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Area'" :value="address_detail.sub_district?.area?.name ?? '-'"/>
+                    <DetailRowNew :name="'Region'" :value="address_detail.sub_district?.area?.name ?? '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Default Shipping Address'" :value="address_detail.main_branch === 1 ? 'Yes' : address_detail.main_branch === 2 ? 'No' : '-'"/>
+                    <DetailRowNew :name="'Default Address'" :value="address_detail.main_branch === 1 ? 'Yes' : address_detail.main_branch === 2 ? 'No' : '-'"/>
                 </v-col>
                 <v-col cols="12" class="-mt24">
-                    <DetailRowNew :name="'Shipping Address'" :value="address_detail.shipping_address ?? '-'" :align="true"/>
+                    <DetailRowNew :name="'Address'" :value="address_detail.shipping_address ?? '-'" :align="true"/>
                 </v-col>
                 <v-col cols="12" class="-mt24">
                     <DetailRowNew :name="'Note'" :value="address_detail.note ?? '-'" :align="true"/>

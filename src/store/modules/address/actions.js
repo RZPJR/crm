@@ -6,13 +6,14 @@ const actions = {
         commit('setPreloadAddress', true);
         commit('setAddress', []);
         try {
-            let search = state.address_list.filter.search
-            let status = state.address_list.filter.status
-            let customer = state.address_list.filter.customer
-            let finance_area = state.address_list.filter.finance_area
-            let archetype = state.address_list.filter.archetype
-            let price_set = state.address_list.filter.price_set
-            let sales_person = state.address_list.filter.sales_person
+            let filter = state.address_list
+            let search = filter.search
+            let status = filter.status
+            let customer = filter.customer
+            let finance_region = filter.finance_region
+            let archetype = filter.archetype
+            let price_set = filter.price_level
+            let sales_person = filter.sales_person
             // const response = await http.get("/address", {
             //     params: {
             //         per_page:1000,
@@ -20,9 +21,9 @@ const actions = {
             //         search: search,
             //         status: status,
             //         customer: customer,
-            //         finance_area: finance_area,
+            //         finance_region: finance_region,
             //         archetype: archetype,
-            //         price_set: price_set,
+            //         price_level: price_level,
             //         sales_person: sales_person,
             //     }
             // });
