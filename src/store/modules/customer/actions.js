@@ -1,7 +1,7 @@
 import http from "../../../services/http";
 
 const actions = {
-    // Readlist Main Outlet 
+    // Readlist Customer
     fetchCustomer: async ({ state, commit, dispatch }, payload) => {
         commit('setPreloadCustomer', true);
         commit('setCustomer', []);
@@ -36,7 +36,7 @@ const actions = {
     },
 
     
-    // Detail Main Outlet 
+    // Detail Customer
     fetchCustomerDetail: async ({ state, commit, dispatch }, payload) => {
         commit('setPreloadCustomerDetail', true);
         commit('setCustomerDetail', []);

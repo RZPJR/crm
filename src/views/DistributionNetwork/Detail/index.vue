@@ -24,7 +24,7 @@
                     </div>
                     <div v-else :class="'rounded-form text-black60'+imageSizeHandler(detail)"><p>No image</p></div> -->
                     <div :class="'rounded-form text-black60 image-box'"><p>No image</p></div>
-                    <span class="ml10">Outlet</span>
+                    <span class="ml10">Address</span>
                 </v-col>
             </v-row>
             <v-row>
