@@ -72,12 +72,12 @@
                     ></v-select>
                 </v-col>
                 <v-col cols="12" md="3">
-                    <SelectCustomer
+                    <SelectMainOutlet
                         @selected="customerSelected"
                         :norequired="true"
                         :dense="true"
                         data-unq="address-select-customer"
-                    ></SelectCustomer>
+                    ></SelectMainOutlet>
                 </v-col>
                 <v-col cols="12" md="3">
                     <SelectArea
