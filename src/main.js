@@ -25,7 +25,11 @@ import {
   SelectTaskTipe,
   DetailRowNew,
   UploadExcel,
-  DisplayPhotoOverlay
+  DisplayPhotoOverlay,
+  SelectInvoiceTerm,
+  SelectSalesTerm,
+  SelectMainOutlet,
+  SelectPriceSet,
 } from "@vue-mf/global";
 import Vuetify from "vuetify/lib";
 Vue.use(require('vue-moment'));
@@ -62,7 +66,11 @@ Vue.mixin({
     SelectTaskTipe,
     DetailRowNew,
     UploadExcel,
-    DisplayPhotoOverlay
+    DisplayPhotoOverlay,
+    SelectInvoiceTerm,
+    SelectSalesTerm,
+    SelectMainOutlet,
+    SelectPriceSet,
   },
   data: function() {
     return {
