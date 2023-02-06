@@ -103,7 +103,7 @@
             </v-row>
             <v-row>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Business Type'" :value="customer_detail.business_type?.name ?? '-'"/>
+                    <DetailRowNew :name="'Customer Type'" :value="customer_detail.business_type?.name ?? '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Code'" :value="customer_detail.code ?? '-'"/>
@@ -152,7 +152,7 @@
             </v-row>
             <v-row>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Finance Area'" :value="customer_detail.finance_area?.name ?? '-'"/>
+                    <DetailRowNew :name="'Finance Region'" :value="customer_detail.finance_area?.name ?? '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Default Payment Term'" :value="customer_detail.payment_term?.name ?? '-'"/>
@@ -164,7 +164,7 @@
                     <DetailRowNew :name="'Credit Limit'" :value="customer_detail.credit_limit_amount > 0 ? formatPrice(customer_detail.credit_limit_amount) : '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Business Type Credit Limit'" :value="customer_detail.business_type_credit_limit === 1 ? 'Badan Usaha' : 'Personal'"/>
+                    <DetailRowNew :name="'Business Type'" :value="customer_detail.business_type_credit_limit === 1 ? 'Badan Usaha' : 'Personal'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Remaining Credit Limit'" :value="handleRemainingCreditLimitAmount() ? formatPrice(customer_detail.remaining_credit_limit_amount??0) : '-'"/>

@@ -11,8 +11,8 @@ const actions = {
             let status = filter.status
             let invoice_term = filter.invoice_term
             let payment_term = filter.payment_term
-            let finance_area = filter.finance_area
-            let business_type = filter.business_type
+            let finance_region = filter.finance_region
+            let customer_type = filter.customer_type
             let suspend = filter.suspend
             // const response = await http.get("/main_outlet", {
             //     params: {
@@ -22,8 +22,8 @@ const actions = {
             //         status: status,
             //         invoice_term: invoice_term,
             //         payment_term: payment_term,
-            //         finance_area: finance_area,
-            //         business_type: business_type,
+            //         finance_region: finance_region,
+            //         customer_type: customer_type,
             //         suspend: suspend,
             //     }
             // });

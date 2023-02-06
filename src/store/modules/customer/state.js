@@ -8,8 +8,8 @@ const state = {
             status:1,
             invoice_term:'',
             payment_term:'',
-            finance_area:'',
-            business_type: '',
+            finance_region:'',
+            customer_type: '',
             suspend: 999,
         },
         status_options: [
@@ -52,7 +52,7 @@ const state = {
                 sortable: false,
             },
             {
-                text:'Business Type',
+                text:'Customer Type',
                 class: 'grey--text text--darken-4',
                 sortable: false,
             },
@@ -67,7 +67,7 @@ const state = {
                 sortable: false
             },
             {
-                text:'Finance Area',
+                text:'Finance Region',
                 class: 'grey--text text--darken-4',
                 sortable: false
             },
