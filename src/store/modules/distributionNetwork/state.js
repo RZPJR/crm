@@ -18,7 +18,7 @@ const state = {
                 sortable: false,
             },
             {
-                text:'Finance Area',
+                text:'Finance Region',
                 class: 'grey--text text--darken-4',
                 sortable: false,
             },
@@ -128,7 +128,7 @@ const state = {
                     class: 'grey--text text--darken-4',
                 },
                 {
-                    text:'Total Sales Payment',
+                    text:'Total Cash Receipt',
                     sortable: false,
                     width: "15%",
                     class: 'grey--text text--darken-4',

@@ -61,13 +61,13 @@
             <div class="mb30"/>
             <v-row class="mt-5">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Merchant Name'" :value="detail.code && detail.name ? detail.code+' - '+detail.name : '-'"/>
+                    <DetailRowNew :name="'Customer Name'" :value="detail.code && detail.name ? detail.code+' - '+detail.name : '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Phone Number'" :value="detail.phone_number ?? '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Business Type'" :value="detail.business_type?.name ?? '-'"/>
+                    <DetailRowNew :name="'Customer Type'" :value="detail.business_type?.name ?? '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Payment Term'" :value="detail.payment_term?.name ?? '-'"/>

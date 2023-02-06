@@ -74,10 +74,10 @@
                             >Use Filter</v-btn>
                         </v-col>
                         <v-col cols="12" class="-mt24">
-                            <DetailRowNew :name="'Product Name'" :value="top_product.name ?? '-'"/>
+                            <DetailRowNew :name="'Item Name'" :value="top_product.name ?? '-'"/>
                         </v-col>
                         <v-col cols="12" class="-mt24">
-                            <DetailRowNew :name="'Quantity Sell/Product'" :value="order_performance.qty_sell !== undefined ? (order_performance.qty_sell+' KG') : '-'"/>
+                            <DetailRowNew :name="'Quantity Sell/Item'" :value="order_performance.qty_sell !== undefined ? (order_performance.qty_sell+' KG') : '-'"/>
                         </v-col>
                         <v-col cols="12" class="-mt24">
                             <DetailRowNew :name="'Average Revenue'" :value="order_performance.avg_sales !== undefined ? 'Rp. '+formatPrice(order_performance.avg_sales) : '-'"/>
