@@ -196,7 +196,7 @@
             <v-data-table
                 :mobile-breakpoint="0"
                 :headers="table_ca.fields"
-                :items="items.sales_assignment_submissions"
+                :items="items.customer_acquisitions"
                 :loading="loading"
                 :items-per-page="10"
             >

@@ -64,13 +64,13 @@ const state = {
                     sortable: false
                 },
                 {
-                    text: 'Type',
+                    text: 'Customer Type',
                     width: "10%",
                     class: 'grey--text text--darken-4',
                     sortable: false
                 },
                 {
-                    text: 'Area',
+                    text: 'Region',
                     width: "10%",
                     class: 'grey--text text--darken-4',
                     sortable: false
@@ -106,6 +106,54 @@ const state = {
             ],
         },
     },
+
+    // Detail prospect_customer
+    detail_prospect_customer: {
+        isLoadingDetail: false,
+        register: false,
+        archetype: null,
+        next: "",
+        customerID: "",
+        archetype_id: "",
+        reference_info: "",
+        data: {
+            id: 0,
+            archetype: {
+                name: "",
+            },
+            name: "",
+            sub_disrict: {
+                name: "",
+                district: {
+                    name: "",
+                    city: {
+                        name: "",
+                        province: {
+                            name: "",
+                        }
+                    }
+                },
+                area: {
+                    name: ""
+                }
+            },
+            merchant: {
+                customer_group: ""
+            },
+            pic_business_name: "",
+            id_card_number: "",
+            pic_business_contact: "",
+            taxpayer_number: "",
+            pic_finance_name: "",
+        },
+        outlet_pictures: [],
+        declineDialog: false,
+        decline_type: "",
+        decline_note: "",
+        clearDeclineType:false,
+        error: {},
+    }
+
 };
 
 export default state;

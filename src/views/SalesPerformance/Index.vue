@@ -47,15 +47,15 @@
                         data-unq="crm-filter-territory"
                     ></SelectSalesGroup>
                 </v-col>
-                <!-- <v-col cols="12" md="3" class="mt24">
+                <v-col cols="12" md="3" class="mt24">
                     <SelectSalesPerson
-                        v-model="salesperson"
+                        v-model="filter.salesperson"
                         :norequired="true"
                         :dense="true"
                         @selected="salespersonSelected"
                         data-unq="crm-filter-salesperson"
                     ></SelectSalesPerson>
-                </v-col> -->
+                </v-col>
                 <v-col cols="12" md="3" class="mt24">
                     <v-menu
                         ref="menu"
@@ -187,9 +187,9 @@
             ]),
             //For Filter Salesperson
             salespersonSelected(d) {
-                this.salesperson = '';
+                this.filter.salesperson = '';
                 if (d) {
-                    this.salesperson = d.id;
+                    this.filter.salesperson = d.id;
                 }
                 this.fetchSalesPerformanceList()
             },

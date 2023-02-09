@@ -211,10 +211,9 @@ const actions = {
             let task_type = state.detail_assignment.filter.task_type === '' ? '' : state.detail_assignment.filter.task_type
             let finish_date1 = ''
             let finish_date2 = ''
-            if (state.detail_assignment.filter.finish_date.value1.length > 0 && state.detail_assignment.filter.finish_date.value2.length > 0) {
-                if (state.detail_assignment.filter.finish_date.value1.length == 1 && state.detail_assignment.filter.finish_date.value2.length == 1) {
-                    finish_date1 = state.detail_assignment.filter.finish_date.value1[0]
-                    finish_date2 = state.detail_assignment.filter.finish_date.value2[0]
+            if (state.detail_assignment.filter.finish_date.value.length > 0) {
+                if (state.detail_assignment.filter.finish_date.value.length == 1) {
+                    finish_date1 = state.detail_assignment.filter.finish_date.value[0]
                 } else {
                     let date = state.detail_assignment.filter.finish_date.value[0]
                     let date2 = state.detail_assignment.filter.finish_date.value[1]

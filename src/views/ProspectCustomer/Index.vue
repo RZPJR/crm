@@ -79,7 +79,7 @@
                 <v-col cols="12" md="3">
                     <SelectBusinessType
                         :aux_data="2"
-                        :label="'Type'"
+                        :label="'Customer Type'"
                         :norequired="true"
                         :dense="true"
                         data-unq="proscus-filter-businesstype"
@@ -162,10 +162,11 @@
                         <td :data-unq="`proscus-value-business_type-${props.item.id}`">{{ props.item.business_type.description }}</td>
                         <td :data-unq="`proscus-value-region-${props.item.id}`">{{ props.item.region.description }}</td>
                         <td :data-unq="`proscus-value-sub_district-${props.item.id}`">
-                            {{ props.item.sub_district.district.province }} - {{
-                            props.item.sub_district.district.city }}<br>
+                            {{ props.item.sub_district.district.province ?  props.item.sub_district.district.province.description : '-'}} - 
+                            {{ props.item.sub_district.district.city.description }}<br>
                             <span class="second-color">
-                                {{ props.item.sub_district.district.district }} - {{ props.item.sub_district.description }}
+                                {{ props.item.sub_district.district.description }} -
+                                {{ props.item.sub_district.description }}
                             </span>
                         </td>
                         <td :data-unq="`proscus-value-customer_upgrade-${props.item.id}`">
@@ -211,7 +212,7 @@
                                     </template>
                                 </template>
                                 <v-list class="bg-white">
-                                    <!-- <v-list-item v-privilege="'pro_cst_rdl'" :to="'/customer/prospect-customer/'+props.item.id ">
+                                    <v-list-item v-privilege="'pro_cst_rdl'" :to="'/customer-relation/prospective-customer/'+ props.item.id ">
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
@@ -229,7 +230,7 @@
                                     </v-list-item>
                                     <div v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 1">
                                         <hr>
-                                    </div> -->
+                                    </div>
                                     <v-list-item data-unq="proscus-button-decline" v-privilege="'pro_cst_dec'" v-if="props.item.reg_status == 6"
                                         @click="openDeclineDialog(props.item.id)"
                                     >

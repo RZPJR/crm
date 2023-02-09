@@ -42,6 +42,22 @@ const actions = {
             commit('setPreloadCustomerAcquisition', false);
         }
     },
+    
+    // Detail Customer Acquisition
+    fetchCustomerAcquisitionDetail: async ({ state, commit, dispatch }, payload) => {
+        commit('setPreloadCustomerAcquisitionDetail', true);
+        commit('setCustomerAcquisitionDetail', []);
+        try {
+            const response = await http.get("/customer/acquisition/" + payload.id);
+            if (response.data.data) {
+                commit('setCustomerAcquisitionDetail', response.data.data);
+                commit('setPreloadCustomerAcquisitionDetail', false);
+            }
+        } catch (error) {
+            console.log(error);
+            commit('setPreloadCustomerAcquisitionDetail', false);
+        }
+    },
 };
 
 export default actions;
