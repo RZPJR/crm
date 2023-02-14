@@ -13,24 +13,7 @@ import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 import 'vue-toast-notification/dist/theme-sugar.css';
 import '@mdi/font/css/materialdesignicons.css'
 
-import { 
-  ConfirmationDialogNew,
-  LoadingBar,
-  SelectSalesPerson,
-  SelectDeclineType,
-  SelectArchetype,
-  SelectBusinessType,
-  SelectArea,
-  SelectSalesGroup,
-  SelectTaskTipe,
-  DetailRowNew,
-  UploadExcel,
-  DisplayPhotoOverlay,
-  SelectInvoiceTerm,
-  SelectSalesTerm,
-  SelectMainOutlet,
-  SelectPriceSet,
-} from "@vue-mf/global";
+import { Components } from "@vue-mf/global";
 import Vuetify from "vuetify/lib";
 Vue.use(require('vue-moment'));
 
@@ -54,24 +37,7 @@ Vue.directive('privilege', {
 })
 
 Vue.mixin({
-  components: { 
-    ConfirmationDialogNew,
-    LoadingBar,
-    SelectSalesPerson,
-    SelectDeclineType,
-    SelectArchetype,
-    SelectBusinessType,
-    SelectArea,
-    SelectSalesGroup,
-    SelectTaskTipe,
-    DetailRowNew,
-    UploadExcel,
-    DisplayPhotoOverlay,
-    SelectInvoiceTerm,
-    SelectSalesTerm,
-    SelectMainOutlet,
-    SelectPriceSet,
-  },
+  components: Components,
   data: function() {
     return {
       status: [
