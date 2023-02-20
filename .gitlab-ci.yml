@@ -2,7 +2,7 @@ include:
   - project: 'project-version3/erp-infra/gitlab-ci'
     file:
       - 'sonarqube-check.yml'
-      - 'build-image.yml'
+      - 'build-image-test.yml'
       - 'deploy-image.yml'
       - 'importmap-shared-deps.yml'
 
