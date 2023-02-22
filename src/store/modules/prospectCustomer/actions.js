@@ -9,7 +9,7 @@ const actions = {
         commit('setProspectCustomer', []);
         try {
             let search = state.prospect_customer.search
-            let status = state.prospect_customer.status
+            let status = state.prospect_customer.statuses
             let SelectCustomerType = state.prospect_customer.SelectCustomerType
             let SelectArea = state.prospect_customer.SelectArea
             let SelectArchetype = state.prospect_customer.SelectArchetype
