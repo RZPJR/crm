@@ -230,7 +230,6 @@
                 </v-col>
             </v-row>
         </div>
-        <pre>{{ detail_prospect_customer }}</pre>
         <v-dialog
             v-model="detail_decline.declineDialog"
             persistent
