@@ -9,7 +9,7 @@ const actions = {
     //     try {
     //         let search = state.prospect_customer.search
     //         let status = state.prospect_customer.status
-    //         let SelectBusinessType = state.prospect_customer.SelectBusinessType
+    //         let SelectCustomerType = state.prospect_customer.SelectCustomerType
     //         let SelectArea = state.prospect_customer.SelectArea
     //         let SelectArchetype = state.prospect_customer.SelectArchetype
     //         let SelectSalesPerson = state.prospect_customer.SelectSalesPerson
@@ -25,7 +25,7 @@ const actions = {
     //               search: search,
     //               status: status,
     //               archetype_id: SelectArchetype,
-    //               business_type_id: SelectBusinessType,
+    //               customer_type_id: SelectCustomerType,
     //               region_id: SelectArea,
     //               salesperson_id: SelectSalesPerson,
     //               requested_by: SelectRequest,
@@ -70,7 +70,7 @@ const actions = {
         try {
             let search = state.prospect_customer.search
             let status = state.prospect_customer.status
-            let SelectBusinessType = state.prospect_customer.SelectBusinessType
+            let SelectCustomerType = state.prospect_customer.SelectCustomerType
             let SelectArea = state.prospect_customer.SelectArea
             let SelectArchetype = state.prospect_customer.SelectArchetype
             let SelectSalesPerson = state.prospect_customer.SelectSalesPerson
@@ -82,7 +82,7 @@ const actions = {
                     search: search,
                     status: status,
                     archetype_id: SelectArchetype,
-                    business_type_id: SelectBusinessType,
+                    customer_type_id: SelectCustomerType,
                     region_id: SelectArea,
                     salesperson_id: SelectSalesPerson,
                     requested_by: SelectRequest,

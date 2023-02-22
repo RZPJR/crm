@@ -16,8 +16,8 @@ const mutations = {
         state.prospect_customer.status = payload;
         return state;
     },
-    setSelectBusinessTypeProspectCustomer: function(state, payload) {
-        state.prospect_customer.SelectBusinessType = payload;
+    setSelectCustomerTypeProspectCustomer: function(state, payload) {
+        state.prospect_customer.SelectCustomerType = payload;
         return state;
     },
     setSelectAreaProspectCustomer: function(state, payload) {

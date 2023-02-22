@@ -82,7 +82,7 @@
                         :label="'Customer Type'"
                         :norequired="true"
                         :dense="true"
-                        data-unq="proscus-filter-businesstype"
+                        data-unq="proscus-filter-customerType"
                         @selected="typeSelected"
                     ></SelectBusinessType>
                 </v-col>
@@ -159,10 +159,10 @@
                         <td :data-unq="`proscus-value-name-${props.item.id}`">{{ props.item.name }}</td>
                         <td :data-unq="`proscus-value-phonenumber-${props.item.id}`">{{ props.item.phone_1 }}</td>
                         <td :data-unq="`proscus-value-archetype-${props.item.id}`">{{ props.item.archetype.description }}</td>
-                        <td :data-unq="`proscus-value-business_type-${props.item.id}`">{{ props.item.business_type.description }}</td>
+                        <td :data-unq="`proscus-value-customer_type-${props.item.id}`">{{ props.item.customer_type.description }}</td>
                         <td :data-unq="`proscus-value-region-${props.item.id}`">{{ props.item.region.description }}</td>
                         <td :data-unq="`proscus-value-sub_district-${props.item.id}`">
-                            {{ props.item.sub_district.district.province ?  props.item.sub_district.district.province.description : '-'}} - 
+                            {{ props.item.sub_district.district.city.province ?  props.item.sub_district.district.city.province.description : '-'}} - 
                             {{ props.item.sub_district.district.city.description }}<br>
                             <span class="second-color">
                                 {{ props.item.sub_district.district.description }} -
@@ -469,9 +469,9 @@
             },
             //For Filter Type
             typeSelected(d) {
-                this.$store.commit('setSelectBusinessTypeProspectCustomer', '')
+                this.$store.commit('setSelectCustomerTypeProspectCustomer', '')
                 if (d) {
-                    this.$store.commit('setSelectBusinessTypeProspectCustomer', d.id)
+                    this.$store.commit('setSelectCustomerTypeProspectCustomer', d.id)
                 }
                 this.fetchProspectCustomer()
             },

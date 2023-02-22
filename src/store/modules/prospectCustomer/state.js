@@ -10,7 +10,7 @@ const state = {
         },
         search: '',
         status: 6,
-        SelectBusinessType: '',
+        SelectCustomerType: '',
         SelectArea: '',
         SelectArchetype: '',
         SelectSalesPerson: '',
@@ -59,13 +59,13 @@ const state = {
                 },
                 {
                     text: 'Archetype',
-                    width: "5%",
+                    width: "8%",
                     class: 'grey--text text--darken-4',
                     sortable: false
                 },
                 {
                     text: 'Customer Type',
-                    width: "10%",
+                    width: "12%",
                     class: 'grey--text text--darken-4',
                     sortable: false
                 },
@@ -89,7 +89,7 @@ const state = {
                 },
                 {
                     text: 'Requested By',
-                    width: "15%",
+                    width: "10%",
                     class: 'grey--text text--darken-4',
                     sortable: false
                 },
