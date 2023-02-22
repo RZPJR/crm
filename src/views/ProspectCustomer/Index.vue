@@ -7,7 +7,7 @@
                         <template v-slot:activator="{ on: tooltip }">
                             <v-text-field
                                 name="search"
-                                v-model="prospect_customer.search"
+                                v-model="filter.search"
                                 prepend-inner-icon="search"
                                 placeholder="Search..."
                                 v-on="{ ...tooltip }"
@@ -57,7 +57,7 @@
             <v-row v-if="prospect_customer.showFilter">
                 <v-col cols="12" md="3">
                     <v-select
-                        v-model="prospect_customer.statuses"
+                        v-model="filter.statuses"
                         :items="regStatus"
                         item-text="text"
                         item-value="value"
@@ -97,7 +97,7 @@
                 </v-col>
                 <v-col cols="12" md="3" class="-mt24">
                     <v-autocomplete
-                        v-model="prospect_customer.selectRequest"
+                        v-model="filter.request_by"
                         :items="requestBy"
                         item-text="text"
                         item-value="value"
@@ -302,6 +302,7 @@
         computed: {
             ...mapState({
                 prospect_customer: state => state.prospectCustomer.prospect_customer,
+                filter: state => state.prospectCustomer.prospect_customer.filter,
                 table: state => state.prospectCustomer.prospect_customer.table,
                 requestBy: state => state.prospectCustomer.prospect_customer.requestBy,
                 regStatus: state => state.prospectCustomer.prospect_customer.regStatus,
@@ -381,7 +382,7 @@
             },
         },
         watch: {
-            'prospect_customer.search': {
+            'filter.search': {
                 handler: function (val) {
                     let that = this
                     this.$store.commit('setSearchProspectCustomer', val)
@@ -392,7 +393,7 @@
                 },
                 deep: true
             },
-            'prospect_customer.statuses': {
+            'filter.statuses': {
                 handler: function (val) {
                     this.$store.commit('setStatusProspectCustomer', val)
                     let that = this;
@@ -400,7 +401,7 @@
                 },
                 deep: true
             },
-            'prospect_customer.selectRequest': {
+            'filter.request_by': {
                 handler: function (val) {
                     this.$store.commit('setSelectRequestProspectCustomer', val)
                     if(val == 'salesperson'){

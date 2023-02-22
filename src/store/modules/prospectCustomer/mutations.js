@@ -13,31 +13,31 @@ const mutations = {
         return state;
     },
     setSearchProspectCustomer: function(state, payload) {
-        state.prospect_customer.search = payload;
+        state.prospect_customer.filter.search = payload;
         return state;
     },
     setStatusProspectCustomer: function(state, payload) {
-        state.prospect_customer.status = payload;
+        state.prospect_customer.filter.statuses = payload;
         return state;
     },
     setSelectCustomerTypeProspectCustomer: function(state, payload) {
-        state.prospect_customer.SelectCustomerType = payload;
+        state.prospect_customer.filter.customer_type = payload;
         return state;
     },
     setSelectAreaProspectCustomer: function(state, payload) {
-        state.prospect_customer.SelectArea = payload;
+        state.prospect_customer.filter.area = payload;
         return state;
     },
     setSelectArchetypeProspectCustomer: function(state, payload) {
-        state.prospect_customer.SelectArchetype = payload;
+        state.prospect_customer.filter.archetype = payload;
         return state;
     },
     setSelectSalesPersonProspectCustomer: function(state, payload) {
-        state.prospect_customer.SelectSalesPerson = payload;
+        state.prospect_customer.filter.sales_person = payload;
         return state;
     },
     setSelectRequestProspectCustomer: function(state, payload) {
-        state.prospect_customer.SelectRequest = payload;
+        state.prospect_customer.filter.request_by = payload;
         return state;
     },
 

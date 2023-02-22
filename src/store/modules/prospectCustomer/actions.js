@@ -8,24 +8,24 @@ const actions = {
         commit('setOverlayProspectCustomer', true);
         commit('setProspectCustomer', []);
         try {
-            let search = state.prospect_customer.search
-            let status = state.prospect_customer.statuses
-            let SelectCustomerType = state.prospect_customer.SelectCustomerType
-            let SelectArea = state.prospect_customer.SelectArea
-            let SelectArchetype = state.prospect_customer.SelectArchetype
-            let SelectSalesPerson = state.prospect_customer.SelectSalesPerson
-            let SelectRequest = state.prospect_customer.SelectRequest
+            let search = state.prospect_customer.filter.search
+            let status = state.prospect_customer.filter.statuses
+            let customer_type_id = state.prospect_customer.filter.customer_type
+            let region_id = state.prospect_customer.filter.area
+            let archetype_id = state.prospect_customer.filter.archetype
+            let salesperson_id = state.prospect_customer.filter.sales_person
+            let requested_by = state.prospect_customer.filter.request_by
             const response = await http.get("/prospective_customer", {
                 params: {
-                    per_page:1000,
+                    per_page:100,
                     order_by:'-id',
                     search: search,
                     status: status,
-                    archetype_id: SelectArchetype,
-                    customer_type_id: SelectCustomerType,
-                    region_id: SelectArea,
-                    salesperson_id: SelectSalesPerson,
-                    requested_by: SelectRequest,
+                    archetype_id: archetype_id,
+                    customer_type_id: customer_type_id,
+                    region_id: region_id,
+                    salesperson_id: salesperson_id,
+                    requested_by: requested_by,
                 }
             });
             if (response.data.data) commit('setProspectCustomer', response.data.data);

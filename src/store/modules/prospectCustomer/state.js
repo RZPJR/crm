@@ -3,13 +3,15 @@ const state = {
     prospect_customer: {
         isLoading: false,
         items: [],
-        search: '',
-        statuses: 6,
-        SelectCustomerType: '',
-        SelectArea: '',
-        SelectArchetype: '',
-        SelectSalesPerson: '',
-        SelectRequest: '',
+        filter: {
+            search: '',
+            statuses: 6,
+            customer_type: '',
+            area: '',
+            archetype: '',
+            sales_person: '',
+            request_by: '',
+        },
         showFilter : false,
         overlay: false,
         clearSalesperson: true,
@@ -20,9 +22,6 @@ const state = {
         decline_note: "",
         clearDeclineType:false,
         error: {},
-
-
-
         requestBy: [
             {
                 text: 'Customer',
