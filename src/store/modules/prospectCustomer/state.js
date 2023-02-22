@@ -4,17 +4,24 @@ const state = {
         isLoading: false,
         items: [],
         filter: {
-            type: '',
-            area_id: '',
-            archetype_id: ''
+            search: '',
+            statuses: 6,
+            customer_type: '',
+            area: '',
+            archetype: '',
+            sales_person: '',
+            request_by: '',
         },
-        search: '',
-        status: 6,
-        SelectBusinessType: '',
-        SelectArea: '',
-        SelectArchetype: '',
-        SelectSalesPerson: '',
-        SelectRequest: '',
+        showFilter : false,
+        overlay: false,
+        clearSalesperson: true,
+        disableSalesperson: true,
+        declineDialog: false,
+        decline_id: "",
+        decline_type: 0,
+        decline_note: "",
+        clearDeclineType:false,
+        error: {},
         requestBy: [
             {
                 text: 'Customer',
@@ -59,13 +66,13 @@ const state = {
                 },
                 {
                     text: 'Archetype',
-                    width: "5%",
+                    width: "8%",
                     class: 'grey--text text--darken-4',
                     sortable: false
                 },
                 {
                     text: 'Customer Type',
-                    width: "10%",
+                    width: "12%",
                     class: 'grey--text text--darken-4',
                     sortable: false
                 },
@@ -89,7 +96,7 @@ const state = {
                 },
                 {
                     text: 'Requested By',
-                    width: "15%",
+                    width: "10%",
                     class: 'grey--text text--darken-4',
                     sortable: false
                 },
