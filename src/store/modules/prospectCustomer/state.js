@@ -3,18 +3,26 @@ const state = {
     prospect_customer: {
         isLoading: false,
         items: [],
-        filter: {
-            type: '',
-            area_id: '',
-            archetype_id: ''
-        },
         search: '',
-        status: 6,
+        statuses: 6,
         SelectCustomerType: '',
         SelectArea: '',
         SelectArchetype: '',
         SelectSalesPerson: '',
         SelectRequest: '',
+        showFilter : false,
+        overlay: false,
+        clearSalesperson: true,
+        disableSalesperson: true,
+        declineDialog: false,
+        decline_id: "",
+        decline_type: 0,
+        decline_note: "",
+        clearDeclineType:false,
+        error: {},
+
+
+
         requestBy: [
             {
                 text: 'Customer',

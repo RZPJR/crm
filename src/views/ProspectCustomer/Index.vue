@@ -7,7 +7,7 @@
                         <template v-slot:activator="{ on: tooltip }">
                             <v-text-field
                                 name="search"
-                                v-model="search"
+                                v-model="prospect_customer.search"
                                 prepend-inner-icon="search"
                                 placeholder="Search..."
                                 v-on="{ ...tooltip }"
@@ -29,8 +29,8 @@
                     <v-btn 
                         depressed
                         x-small
-                        @click="showFilter = !showFilter"
-                        v-if="showFilter"
+                        @click="prospect_customer.showFilter = !prospect_customer.showFilter"
+                        v-if="prospect_customer.showFilter"
                         data-unq="switch-filter-hide"
                         class="no-caps fs12"
                     >
@@ -42,7 +42,7 @@
                     <v-btn 
                         depressed
                         x-small
-                        @click="showFilter = !showFilter"
+                        @click="prospect_customer.showFilter = !prospect_customer.showFilter"
                         v-else
                         data-unq="switch-filter-show"
                         class="no-caps fs12"
@@ -54,10 +54,10 @@
                     </v-btn>
                 </v-col>
             </v-row>
-            <v-row v-if="showFilter">
+            <v-row v-if="prospect_customer.showFilter">
                 <v-col cols="12" md="3">
                     <v-select
-                        v-model="statuses"
+                        v-model="prospect_customer.statuses"
                         :items="regStatus"
                         item-text="text"
                         item-value="value"
@@ -95,9 +95,9 @@
                         @selected="areaSelected"
                     ></SelectArea>
                 </v-col>
-                <v-col cols="12" md="3">
+                <v-col cols="12" md="3" class="-mt24">
                     <v-autocomplete
-                        v-model="selectRequest"
+                        v-model="prospect_customer.selectRequest"
                         :items="requestBy"
                         item-text="text"
                         item-value="value"
@@ -108,11 +108,11 @@
                         clearable
                     ></v-autocomplete>
                 </v-col>
-                <v-col cols="12" md="3">
+                <v-col cols="12" md="3" class="-mt24">
                     <SelectSalesPerson
                         :norequired="true"
-                        :clear="clearSalesperson"
-                        :disabled="disableSalesperson"
+                        :clear="prospect_customer.clearSalesperson"
+                        :disabled="prospect_customer.disableSalesperson"
                         :dense="true"
                         data-unq="proscus-filter-salesperson"
                         @selected="salespersonSelected"
@@ -123,27 +123,7 @@
         <div class="box-title">
             <v-row >
                 <v-col cols="12" md="9" class="h1"/>
-                <v-col cols="12" md="3" class="d-flex justify-end h70">
-                    <!-- <v-tooltip left v-privilege="'pro_cst_exp'">
-                        <template v-slot:activator="{ on: tooltip }">
-                            <v-icon
-                                v-on="{ ...tooltip }"
-                                dark
-                                color="gray"
-                                class="-mt7 mr-1"
-                            >mdi-information-outline</v-icon>
-                        </template>
-                        <span><strong>Export Button</strong><br>You have to choose filter area before export the data</span>
-                    </v-tooltip>
-                    <v-btn
-                        depressed
-                        color="#50ABA3"
-                        class="no-caps bold white--text"
-                        @click="exportData()"
-                        :disabled="disableButton"
-                        v-privilege="'pro_cst_exp'"
-                    >Export</v-btn> -->
-                </v-col>
+                <v-col cols="12" md="3" class="d-flex justify-end h70"></v-col>
             </v-row>
         </div>
         <div class="box-body-table">
@@ -181,9 +161,7 @@
                             <div v-if="props.item.salesperson">
                                 Salesperson<br>
                                 <span class="second-color">
-                                {{ props.item.salesperson.firstname }}
-                                {{ props.item.salesperson.namemiddle }}
-                                {{ props.item.salesperson.lastname }}
+                                {{ props.item.salesperson.name }}
                                 </span>
                             </div>
                             <div v-else>
@@ -243,50 +221,8 @@
                 </template>
             </v-data-table>
         </div>
-        <!-- <v-dialog
-            v-model="register"
-            persistent
-            max-width="402px"
-        >
-            <v-card class="OpenSans">
-                <v-card-title>
-                    <span class="text-title-modal">Register Prospective Customer</span>
-                </v-card-title>
-                <v-card-text>
-                    <div class="flex-align-center">
-                        <v-img
-                            width="235"
-                            src="/img/register-customer.png"
-                        />
-                    </div>
-                    <SelectArchetype
-                        name="archetype_name"
-                        @selected="archetypeRegister"
-                        :aux_data="2"
-                        :dense="true"
-                        class="pt-6"
-                    ></SelectArchetype>
-                </v-card-text>
-                <v-card-actions class="d-flex justify-end pb-4">
-                    <v-btn
-                        depressed
-                        outlined
-                        color="#EBEBEB"
-                        class="main-btn"
-                        @click="register = false"
-                    ><span class="text-black80">Cancel</span></v-btn>
-                    <v-btn
-                        @click="nextMethod()"
-                        class="main-btn white--text"
-                        depressed
-                        color="#50ABA3"
-                        :disabled="this.archetype ? false : true"
-                    >Next</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog> -->
         <v-dialog
-            v-model="declineDialog"
+            v-model="prospect_customer.declineDialog"
             persistent
             max-width="470px"
         >
@@ -298,7 +234,7 @@
                     <span class="fs16 mt-1">Why was this prospective customer declined?</span>
                     <SelectDeclineType
                         @selected="selectedDeclineType"
-                        :clear="clearDeclineType"
+                        :clear="prospect_customer.clearDeclineType"
                         :error="error.decline_type"
                         :dense="true"
                         data-unq="proscus-select-declinetype"
@@ -306,7 +242,7 @@
                     />
                     <v-textarea
                         name="note"
-                        v-model="decline_note"
+                        v-model="prospect_customer.decline_note"
                         :counter="250"
                         maxlength="250"
                         outlined
@@ -328,50 +264,30 @@
                         color="#EBEBEB"
                         class="main-btn"
                         data-unq="proscus-button-cancel"
-                        @click="declineDialog = false,clearDeclineType = true"
+                        @click="prospect_customer.declineDialog = false,prospect_customer.clearDeclineType = true"
                     ><span class="text-black80">Cancel</span></v-btn>
                     <v-btn
                         depressed
                         color="#50ABA3"
                         class="no-caps bold px-7"
-                        @click="decline(decline_id)"
+                        @click="decline(prospect_customer.decline_id)"
                         elevation="0"
                         data-unq="proscus-button-save"
                     ><span class="text-white">Save</span></v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <LoadingBar :value="overlay"/>
+        <LoadingBar :value="prospect_customer.overlay"/>
     </v-container>
 </template>
 <script>
-    import axios from "axios";
-    import { mapState, mapActions } from "vuex";
     import Vue from 'vue'
+    import http from "../../services/http";
+    import { mapState, mapActions } from "vuex";
     export default {
         name: "ProspectCustomer",
         data() {
             return {
-                id: '',
-                showFilter : false,
-                search: '',
-                openDialog: false,
-                overlay: false,
-                type: null,
-                archetype: '',
-                next: '',
-                customerID: '',
-                register: false,
-                statuses: 6,
-                selectRequest: '',
-                clearSalesperson: true,
-                disableSalesperson: true,
-                declineDialog: false,
-                decline_id: "",
-                decline_type: 0,
-                decline_note: "",
-                clearDeclineType:false,
-                error: {},
             }
         },
         mounted() {
@@ -386,79 +302,18 @@
         computed: {
             ...mapState({
                 prospect_customer: state => state.prospectCustomer.prospect_customer,
-                filter: state => state.prospectCustomer.prospect_customer.filter,
                 table: state => state.prospectCustomer.prospect_customer.table,
                 requestBy: state => state.prospectCustomer.prospect_customer.requestBy,
                 regStatus: state => state.prospectCustomer.prospect_customer.regStatus,
                 items: state => state.prospectCustomer.prospect_customer.items,
                 isLoading: state => state.prospectCustomer.prospect_customer.isLoading,
+                error: state => state.prospectCustomer.prospect_customer.error,
             }),
-            //For disable export button if required filter is empty
-            // disableButton() {
-            //     if (this.SelectArea) {
-            //         return false
-            //     } else {
-            //         return true
-            //     }
-            // },
         },
         methods: {
             ...mapActions([
                 "fetchProspectCustomer"
             ]),
-            // For Export Data with Filter Selected
-            // exportData() {
-            //     this.overlay = true
-            //     let statuses
-            //     if (this.statuses === 999) {
-            //         statuses = ''
-            //     } else {
-            //         statuses = this.statuses
-            //     }
-            //     let areaID = ''
-            //     if (this.SelectArea) {
-            //         areaID = this.SelectArea
-            //     }
-            //     let archetypeID = ''
-            //     if (this.SelectArchetype) {
-            //         archetypeID = this.SelectArchetype
-            //     }
-            //     let salespersonID = ''
-            //     if (this.salesperson) {
-            //         salespersonID = this.salesperson
-            //     }
-            //     this.$http.get("/report/cms/prospective-customer?export=1", {
-            //         params: {
-            //             area: areaID,
-            //             status: statuses,
-            //             archetype: archetypeID,
-            //             salesperson: salespersonID,
-            //         }
-            //     }).then(response => {
-            //         this.overlay = false
-            //         window.location.href = response.data.file
-            //     }).catch(e => {
-            //         this.overlay = false
-            //         Vue.$toast.open({
-            //             position: 'top-right',
-            //             message: 'Something Wrong',
-            //             type: 'error',
-            //         });
-            //     });
-            // },
-            //Select Archetype for Register Customer
-            archetypeRegister(d) {
-                this.archetype = '';
-                this.next = '';
-                if (d) {
-                    this.archetype = d
-                    if (d.customer_group == 1) {
-                        this.next = 'outlet'
-                    } else if (d.customer_group == 2) {
-                        this.next = 'agent'
-                    }
-                }
-            },
             //For Filter Archetype
             archetypeSelected(d) {
                 this.$store.commit('setSelectArchetypeProspectCustomer', '')
@@ -494,32 +349,24 @@
             //For Decline Customer Registration
             openDeclineDialog(recordID){
                 this.error.decline_type_id = ""
-                this.decline_id = ""
-                this.decline_type = 0
-                this.decline_note = ""
-                this.clearDeclineType = false
-                this.decline_id = recordID
-                this.declineDialog = true
+                this.prospect_customer.decline_type = 0
+                this.prospect_customer.decline_note = ""
+                this.prospect_customer.clearDeclineType = false
+                this.prospect_customer.decline_id = recordID
+                this.prospect_customer.declineDialog = true
             },
             decline(id) {
-                let API_URL = process.env.VUE_APP_API_URL_BASE;
-                axios.put(API_URL+"/bridge/v1/prospective_customer/decline/"+id,{
-                    decline_type: this.decline_type,
-                    decline_note: this.decline_note,
-                },
-                {
-                    headers : {
-                        Authorization : `Bearer ${localStorage.getItem("bearer")}`
-                    }
-                }
-                ).then(response => {
-                    this.declineDialog = false
+                http.put("/prospective_customer/decline/"+id,{
+                    decline_type: this.prospect_customer.decline_type,
+                    decline_note: this.prospect_customer.decline_note,
+                }).then(response => {
                     Vue.$toast.open({
                         position: 'top-right',
                         message: 'Data has been declined successfully',
                         type: 'success',
                     });
-                    this.clearDeclineType = true
+                    this.prospect_customer.declineDialog = false
+                    this.prospect_customer.clearDeclineType = true
                     this.fetchProspectCustomer()
                 }).catch(e => {
                     this.error = e.errors
@@ -527,41 +374,14 @@
             },
             //For get selected decline type
             selectedDeclineType(d) {
-                this.decline_type = 0
+                this.prospect_customer.decline_type = 0
                 if (d) {
-                    this.decline_type = d.value_int
+                    this.prospect_customer.decline_type = d.value_int
                 }
             },
-            //For Show Register Popup Dialog
-            // regis(val) {
-            //     this.customerID = val
-            //     this.register = true
-            // },
-            //Next step if want to register
-            // nextMethod() {
-            //     let data = {
-            //         customer: this.customerID,
-            //         archetype: this.archetype
-            //     }
-            //     this.$store.commit('setProspectCustomer', data);
-            //     if (this.next == 'agent') {
-            //         this.$router.push('/customer/agent/create')
-            //     } else if (this.next == 'outlet') {
-            //         this.$router.push('/customer/branch/create')
-            //     }
-            // },
-            //For upgrade existing customer
-            // upgrade(val) {
-            //     let data = {
-            //         customer: val,
-            //         archetype: ""
-            //     }
-            //     this.$store.commit('setProspectCustomer', data);
-            //     this.$router.push('/customer/branch/create')
-            // }
         },
         watch: {
-            'search': {
+            'prospect_customer.search': {
                 handler: function (val) {
                     let that = this
                     this.$store.commit('setSearchProspectCustomer', val)
@@ -572,7 +392,7 @@
                 },
                 deep: true
             },
-            'statuses': {
+            'prospect_customer.statuses': {
                 handler: function (val) {
                     this.$store.commit('setStatusProspectCustomer', val)
                     let that = this;
@@ -580,15 +400,16 @@
                 },
                 deep: true
             },
-            'selectRequest': {
+            'prospect_customer.selectRequest': {
                 handler: function (val) {
                     this.$store.commit('setSelectRequestProspectCustomer', val)
                     if(val == 'salesperson'){
-                        this.clearSalesperson = false
-                        this.disableSalesperson = false
+                        console.log(val,'salesperson')
+                        this.prospect_customer.clearSalesperson = false
+                        this.prospect_customer.disableSalesperson = false
                     }else{
-                        this.clearSalesperson = true
-                        this.disableSalesperson = true
+                        this.prospect_customer.clearSalesperson = true
+                        this.prospect_customer.disableSalesperson = true
                     }
                     this.fetchProspectCustomer()
                 },

@@ -4,6 +4,10 @@ const mutations = {
         state.prospect_customer.isLoading = payload;
         return state;
     },
+    setOverlayProspectCustomer: function(state, payload) {
+        state.prospect_customer.overlay = payload;
+        return state;
+    },
     setProspectCustomer: function(state, payload) {
         state.prospect_customer.items = payload;
         return state;
