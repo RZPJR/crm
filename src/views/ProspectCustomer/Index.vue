@@ -78,11 +78,11 @@
                 </v-col>
                 <v-col cols="12" md="3">
                     <SelectBusinessType
+                        :data_unq="`proscus-filter-customerType`"
                         :aux_data="2"
                         :label="'Customer Type'"
                         :norequired="true"
                         :dense="true"
-                        data-unq="proscus-filter-customerType"
                         @selected="typeSelected"
                     ></SelectBusinessType>
                 </v-col>
