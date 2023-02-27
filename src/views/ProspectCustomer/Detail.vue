@@ -31,6 +31,12 @@
                                 <v-list-item-title>Decline</v-list-item-title>
                                 <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                             </v-list-item>
+                            <v-list-item 
+                                @click="seeHistory()"
+                                :data-unq="`prospectCustomer-button-history`"
+                            >
+                                <v-list-item-title>History</v-list-item-title>
+                            </v-list-item>
                         </v-list>
                     </v-menu>
                 </v-col>
@@ -284,6 +290,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <AuditLogNew :data="data_audit_log"/>
     </v-container>
 </template>
 <script>
@@ -294,8 +301,7 @@
         name: "ProspectCustomerDetail",
         data() {
             return {
-                ConfirmData: {},
-                dataAuditLog: {},
+                data_audit_log: {},
             };
         },
         async mounted() {
@@ -339,6 +345,13 @@
                 }).catch(e => {
                     this.detail_decline.error = e.errors
                 });
+            },
+            seeHistory() {
+                this.data_audit_log = {
+                    model: true,
+                    id: this.$route.params.id,
+                    type: "prospect_customer",
+                };
             },
         }
     }
