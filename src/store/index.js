@@ -7,8 +7,6 @@ import assignmentObjective from "./modules/assignmentObjective";
 import assignmentSubmission from "./modules/assignmentSubmission";
 import customerAcquisition from "./modules/customerAcquisition";
 import salesPerformance from "./modules/salesPerformance";
-import customer from "./modules/customer";
-import address from "./modules/address";
 import distributionNetwork from "./modules/distributionNetwork";
 
 Vue.use(Vuex);
@@ -22,8 +20,6 @@ export default new Vuex.Store({
     customerAcquisition,
     salesPerformance,
     assignmentSubmission,
-    customer,
-    address,
     distributionNetwork,
   }
 });
