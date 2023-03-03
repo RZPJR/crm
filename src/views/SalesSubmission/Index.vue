@@ -10,6 +10,7 @@
                         @click="submission_list.showFilter = !submission_list.showFilter"
                         v-if="submission_list.showFilter"
                         class="no-caps fs12"
+                        data-unq="salesSubmission-button-hide"
                     >
                         Hide
                         <v-icon
@@ -24,6 +25,7 @@
                         @click="submission_list.showFilter = !submission_list.showFilter"
                         v-else
                         class="no-caps fs12"
+                        data-unq="salesSubmission-button-show"
                     >
                         Show
                         <v-icon
@@ -43,6 +45,7 @@
                         :dense="true"
                         :clear="submission_list.clearGroup"
                         :label="'Territory'"
+                        data-unq="salesSubmission-select-territory"
                     ></SelectSalesGroup>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -62,6 +65,7 @@
                                     maxlength="24"
                                     v-model="submission_list.submitted_date_input"
                                     dense
+                                    data-unq="salesSubmission-input-submittedDate"
                                 >
                                     <template v-slot:label>
                                         Submitted Date
@@ -88,6 +92,7 @@
                         :default="1"
                         :dense="true"
                         @selected="taskTypeSelected"
+                        data-unq="salesSubmission-select-taskType"
                     ></SelectTaskTipe>
                 </v-col>
                 <v-col cols="12" md="3">
@@ -99,6 +104,7 @@
                         item-value="value"
                         outlined
                         dense
+                        data-unq="salesSubmission-select-status"
                     ></v-select>
                 </v-col>
                 <v-col cols="12" md="3" class="-mt24">
@@ -110,6 +116,7 @@
                         item-value="value"
                         outlined
                         dense
+                        data-unq="salesSubmission-select-oorOptions"
                     ></v-select>
                 </v-col>
             </v-row>
@@ -124,13 +131,13 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{ props.item.territory.description}}</td>
-                        <td>{{ props.item.salesperson ? props.item.salesperson.name : "-" }}</td>
-                        <td>{{ props.item.task === 1 ? "Visit" : props.item.task === 2 ? 'Follow Up' : 'Customer Acquisition' }}</td>
-                        <td>{{ props.item.out_of_route === 1 ? "Yes" : "No" }}</td>
-                        <td>{{ props.item.submit_date == '0001-01-01T00:00:00Z' ? '-' : props.item.submit_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
-                        <td>{{ props.item.finish_date == '0001-01-01T00:00:00Z' ? '-' : props.item.finish_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
-                        <td>
+                        <td :data-unq="`salesSubmission-value-description-${props.index}`">{{ props.item.territory.description}}</td>
+                        <td :data-unq="`salesSubmission-value-salesperson-${props.index}`">{{ props.item.salesperson ? props.item.salesperson.name : "-" }}</td>
+                        <td :data-unq="`salesSubmission-value-task-${props.index}`">{{ props.item.task === 1 ? "Visit" : props.item.task === 2 ? 'Follow Up' : 'Customer Acquisition' }}</td>
+                        <td :data-unq="`salesSubmission-value-oor-${props.index}`">{{ props.item.out_of_route === 1 ? "Yes" : "No" }}</td>
+                        <td :data-unq="`salesSubmission-value-submitDate-${props.index}`">{{ props.item.submit_date == '0001-01-01T00:00:00Z' ? '-' : props.item.submit_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
+                        <td :data-unq="`salesSubmission-value-finishDate-${props.index}`">{{ props.item.finish_date == '0001-01-01T00:00:00Z' ? '-' : props.item.finish_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
+                        <td :data-unq="`salesSubmission-value-status-${props.index}`">
                             <div v-if="props.item.status == 2">
                                 <v-chip
                                     :color="statusMaster('finished')"
@@ -150,10 +157,15 @@
                                     <v-btn
                                         icon
                                         v-on="{ ...menu }"
+                                        :data-unq="`salesSubmission-button-actionButton-${props.index}`"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item  :to="`/customer-relation/sales-assignment-submission/detail/${props.item.id}/`+submission_list.task_type" v-privilege="'sla_sub_rdd'">
+                                    <v-list-item  
+                                        :to="`/customer-relation/sales-assignment-submission/detail/${props.item.id}/`+submission_list.task_type" 
+                                        v-privilege="'sla_sub_rdd'"
+                                        :data-unq="`salesSubmission-button-detail-${props.index}`"
+                                    >
                                         <v-list-item-content>
                                             <v-list-item-title>Detail</v-list-item-title>
                                         </v-list-item-content>

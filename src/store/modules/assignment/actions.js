@@ -1,6 +1,5 @@
-import http from "../../../services/http";
 import Vue from 'vue'
-import router from '../../../router/index'
+import http from "../../../services/http";
 
 const actions = {
     // Readlist Sales Assignment
@@ -8,16 +7,17 @@ const actions = {
         commit('setPreloadAssignmentList', true);
         commit('setAssignmentList', []);
         try {
-            let status = state.assignment_list.filter.status === 999 ? '' : state.assignment_list.filter.status      
-            let sales_group = state.assignment_list.filter.sales_group_id === '' ? '' : state.assignment_list.filter.sales_group_id
+            let filter =  state.assignment_list.filter
+            let status = filter.status === 999 ? '' : filter.status      
+            let territory = filter.territory
             let start_date1 = ''
             let start_date2 = ''
-            if (state.assignment_list.filter.start_date.value.length > 0) {
-                if (state.assignment_list.filter.start_date.value.length == 1) {
-                start_date1 = state.assignment_list.filter.start_date.value[0]
+            if (filter.start_date.value.length > 0) {
+                if (filter.start_date.value.length == 1) {
+                start_date1 = filter.start_date.value[0]
                 } else {
-                    let date = state.assignment_list.filter.start_date.value[0]
-                    let date2 = state.assignment_list.filter.start_date.value[1]
+                    let date = filter.start_date.value[0]
+                    let date2 = filter.start_date.value[1]
                     if (date > date2) {
                         start_date1 = date2
                         start_date2 = date
@@ -29,13 +29,13 @@ const actions = {
             }
             let end_date1 = ''
             let end_date2 = ''
-            if (state.assignment_list.filter.end_date.value.length > 0) {
-                if (state.assignment_list.filter.end_date.value.length == 1) {
-                end_date1 = state.assignment_list.filter.end_date.value[0]
-                end_date2 = state.assignment_list.filter.end_date.value[0]
+            if (filter.end_date.value.length > 0) {
+                if (filter.end_date.value.length == 1) {
+                end_date1 = filter.end_date.value[0]
+                end_date2 = filter.end_date.value[0]
                 } else {
-                    let date = state.assignment_list.filter.end_date.value[0]
-                    let date2 = state.assignment_list.filter.end_date.value[1]
+                    let date = filter.end_date.value[0]
+                    let date2 = filter.end_date.value[1]
                     if (date > date2) {
                         end_date1 = date2
                         end_date2 = date
@@ -54,7 +54,7 @@ const actions = {
                   end_date_from:end_date1,
                   end_date_to:end_date2,
                   status: status,
-                  territory_id: sales_group
+                  territory_id: territory
                 }
             });
             if (response.data.data) commit('setAssignmentList', response.data.data);

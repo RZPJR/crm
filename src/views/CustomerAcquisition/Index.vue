@@ -14,6 +14,7 @@
                                 outlined
                                 dense
                                 filled
+                                data-unq="customerAcquisition-input-search"
                                 v-privilege="'filter_rdl'"
                             >
                             </v-text-field>
@@ -94,6 +95,7 @@
                                     v-model="submitted_date.input"
                                     dense
                                     clearable
+                                    data-unq="customerAcquisition-input-submittedDate"
                                 >
                                     <template v-slot:label>
                                         Submitted Date
@@ -128,18 +130,19 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
-                        <td>{{ props.item.address_name ? props.item.address_name : '-'}}</td>
-                        <td>{{ props.item.salesperson?.display_name ? props.item.salesperson.display_name : '-'}}</td>
-                        <td>{{ props.item.territory ? (props.item.territory.description ? props.item.territory.description : '-') : '-'}}</td>
-                        <td>{{ props.item.submit_date == '0001-01-01T00:00:00Z' ? '-' : props.item.submit_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
+                        <td :data-unq="`customerAcquisition-value-name-${props.index}`">{{ props.item.name }}</td>
+                        <td :data-unq="`customerAcquisition-value-phoneNumber-${props.index}`">{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
+                        <td :data-unq="`customerAcquisition-value-addressName-${props.index}`">{{ props.item.address_name ? props.item.address_name : '-'}}</td>
+                        <td :data-unq="`customerAcquisition-value-displayName-${props.index}`">{{ props.item.salesperson?.display_name ? props.item.salesperson.display_name : '-'}}</td>
+                        <td :data-unq="`customerAcquisition-value-territory-${props.index}`">{{ props.item.territory ? (props.item.territory.description ? props.item.territory.description : '-') : '-'}}</td>
+                        <td :data-unq="`customerAcquisition-value-submitDate-${props.index}`">{{ props.item.submit_date == '0001-01-01T00:00:00Z' ? '-' : props.item.submit_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
                         <td>
                             <v-menu offset-y>
                                 <template v-slot:activator="{ on: menu }">
                                     <v-btn
                                         icon
-                                        v-on="{ ...menu }"
+                                        v-on="{ ...menu }" 
+                                        :data-unq="`customerAcquisition-button-actionButton-${props.index}`"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
@@ -147,7 +150,11 @@
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item> -->
-                                    <v-list-item v-privilege="'ca_rdd'" :to="'/customer-relation/customer-acquisition/detail/'+ props.item.id ">
+                                    <v-list-item 
+                                        v-privilege="'ca_rdd'" 
+                                        :to="'/customer-relation/customer-acquisition/detail/'+ props.item.id " 
+                                        :data-unq="`customerAcquisition-button-detail-${props.index}`"
+                                    >
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
@@ -163,7 +170,6 @@
 </template>
 
 <script>
-    import Vue from 'vue';
     import { mapState, mapActions } from 'vuex';
 
     export default {

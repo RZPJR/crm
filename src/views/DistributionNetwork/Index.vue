@@ -48,28 +48,29 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>
-                            {{ props.item.code }}<br>
-                        <span class="second-color">{{ props.item.name ?  props.item.name : '-' }}</span>
+                        <td :data-unq="`distributionNetwork-value-code-${props.index}`">
+                            {{ props.item.code }}
+                            <br>
+                            <span class="second-color" :data-unq="`distributionNetwork-value-name-${props.index}`">{{ props.item.name ?  props.item.name : '-' }}</span>
                         </td>
-                        <td>{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
-                        <td>{{ props.item.finance_area.name ? props.item.finance_area.name : '-'}}</td>
-                        <td>{{ props.item.payment_term.name ? props.item.payment_term.name : '-'}}</td>
-                        <td>{{ props.item.remaining_outstanding !== null || props.item.remaining_outstanding !== undefined ? 'Rp '+formatPrice(props.item.remaining_outstanding) : '-'}}</td>
+                        <td :data-unq="`distributionNetwork-value-phoneNumber-${props.index}`">{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
+                        <td :data-unq="`distributionNetwork-value-financeArea-${props.index}`">{{ props.item.finance_area.name ? props.item.finance_area.name : '-'}}</td>
+                        <td :data-unq="`distributionNetwork-value-paymentTerm-${props.index}`">{{ props.item.payment_term.name ? props.item.payment_term.name : '-'}}</td>
+                        <td :data-unq="`distributionNetwork-value-remainingOutstanding-${props.index}`">{{ props.item.remaining_outstanding !== null || props.item.remaining_outstanding !== undefined ? 'Rp '+formatPrice(props.item.remaining_outstanding) : '-'}}</td>
                         <td>
                             <v-menu offset-y>
                                 <template v-slot:activator="{ on: menu }">
                                     <v-btn
                                         icon
                                         v-on="{ ...menu }"
-                                        :data-unq="`distributionNetwork-button-actionButton-${props.item.id}`"
+                                        :data-unq="`distributionNetwork-button-actionButton-${props.index}`"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
                                     <v-list-item 
                                         v-privilege="'dis_net_rdd'" 
                                         :to="{ name: 'DistributionNetworkDetail', params: { id: props.item.id } }"
-                                        :data-unq="`distributionNetwork-button-detailDistributionNetwork-${props.item.id}`"
+                                        :data-unq="`distributionNetwork-button-detail-${props.index}`"
                                     >
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
@@ -77,7 +78,7 @@
                                     <v-list-item  
                                         v-privilege="'dis_net_upd'" 
                                         v-if="props.item.status === 1" :to="{ name: 'DistributionNetworkUpdate', params: { id: props.item.id } }"                                        
-                                        :data-unq="`distributionNetwork-button-updateDistributionNetwork-${props.item.id}`"
+                                        :data-unq="`distributionNetwork-button-update-${props.item.id}`"
                                     >
                                         <v-list-item-title>Update</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>

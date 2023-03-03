@@ -9,7 +9,7 @@
                         x-small
                         @click="showFilter = !showFilter"
                         v-if="showFilter"
-                        data-unq="switch-filter-hide"
+                        data-unq="salesPerformance-button-hide"
                         class="no-caps fs12"
                     >
                         Hide
@@ -24,7 +24,7 @@
                         x-small
                         @click="showFilter = !showFilter"
                         v-else
-                        data-unq="switch-filter-hide"
+                        data-unq="salesPerformance-button-show"
                         class="no-caps fs12"
                     >
                         Show
@@ -44,7 +44,7 @@
                         :norequired="true"
                         :dense="true"
                         :label="'Territory'"
-                        data-unq="crm-filter-territory"
+                        data-unq="salesPerformance-select-territory"
                     ></SelectSalesGroup>
                 </v-col>
                 <v-col cols="12" md="3" class="mt24">
@@ -53,7 +53,7 @@
                         :norequired="true"
                         :dense="true"
                         @selected="salespersonSelected"
-                        data-unq="crm-filter-salesperson"
+                        data-unq="salesPerformance-select-salesperson"
                     ></SelectSalesPerson>
                 </v-col>
                 <v-col cols="12" md="3" class="mt24">
@@ -73,7 +73,7 @@
                                     maxlength="24"
                                     @click:clear="submitted_date.value = [],submitted_date.input = '',fetchSalesPerformanceList()"
                                     v-model="submitted_date.input"
-                                    data-unq="crm-filter-assignmentDate"
+                                    data-unq="salesPerformance-input-submittedDate"
                                     dense
                                 >
                                     <template v-slot:label>
@@ -108,34 +108,40 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>
+                        <td :data-unq="`salesPerformance-value-salesperson-${props.index}`">
                             {{ props.item.salesperson ? props.item.salesperson.name : "-" }}<br>
-                            <span class="text-black60">{{ props.item.sales_assignment ? props.item.sales_assignment.sales_group.name : "-"}}</span>
+                            <span class="text-black60" :data-unq="`salesPerformance-value-salesgroupName-${props.index}`">
+                                {{ props.item.sales_assignment ? props.item.sales_assignment.sales_group.name : "-"}}
+                            </span>
                         </td>
-                        <td>
+                        <td :data-unq="`salesPerformance-value-visit-${props.index}`">
                             <span class="text-black60">Plan : </span>{{ props.item.plan_visit ? props.item.plan_visit : "-" }}<br>
                             <span class="text-black60">Actual : </span>{{ props.item.visit_actual ? props.item.visit_actual : "-" }}<br>
                             <span class="text-black60">Percentage : </span>{{ props.item.visit_percentage ? props.item.visit_percentage.toFixed(2)+"%" : "-" }}
                         </td>
-                        <td>
+                        <td :data-unq="`salesPerformance-value-followup-${props.index}`">
                             <span class="text-black60">Plan : </span>{{ props.item.plan_follow_up ? props.item.plan_follow_up : "-" }}<br>
                             <span class="text-black60">Actual : </span>{{ props.item.follow_up_actual ? props.item.follow_up_actual : "-" }}<br>
                             <span class="text-black60">Percentage : </span>{{ props.item.follow_up_percentage ? props.item.follow_up_percentage.toFixed(2)+"%" : "-" }}<br>
                         </td>
-                        <td>{{ props.item.total_ca ? props.item.total_ca : "-" }}</td>
-                        <td>{{ props.item.revenue_effective_call ? formatPrice(props.item.revenue_effective_call) : "-" }}</td>
-                        <td>{{ props.item.revenue_total ? formatPrice(props.item.revenue_total) : "-" }}</td>
-                        <td>{{ props.item.effective_call_percentage ? props.item.effective_call_percentage.toFixed(2)+"%" : "-" }}</td>
+                        <td :data-unq="`salesPerformance-value-totalCA-${props.index}`">{{ props.item.total_ca ? props.item.total_ca : "-" }}</td>
+                        <td :data-unq="`salesPerformance-value-revenueEffectiveCall-${props.index}`">{{ props.item.revenue_effective_call ? formatPrice(props.item.revenue_effective_call) : "-" }}</td>
+                        <td :data-unq="`salesPerformance-value-revenueTotal-${props.index}`">{{ props.item.revenue_total ? formatPrice(props.item.revenue_total) : "-" }}</td>
+                        <td :data-unq="`salesPerformance-value-effectiveCallPercentage-${props.index}`">{{ props.item.effective_call_percentage ? props.item.effective_call_percentage.toFixed(2)+"%" : "-" }}</td>
                         <td>
                             <v-menu offset-y>
                                 <template v-slot:activator="{ on: menu }">
                                     <v-btn
                                         icon
                                         v-on="{ ...menu }"
+                                        :data-unq="`salesPerformance-button-actionButton-${props.index}`"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item  :to="`/customer-relation/sales-performance/detail/${convert_date}/${props.item.salesperson.id}`">
+                                    <v-list-item  
+                                        :to="`/customer-relation/sales-performance/detail/${convert_date}/${props.item.salesperson.id}`"
+                                        :data-unq="`salesPerformance-button-detail-${props.index}`"
+                                    >
                                         <v-list-item-content>
                                             <v-list-item-title>Detail</v-list-item-title>
                                         </v-list-item-content>
@@ -150,11 +156,9 @@
                 </template>
             </v-data-table>
         </div>
-        <LoadingBar :value="overlay"/>
     </v-container>
 </template>
 <script>
-    import Vue from 'vue'
     import { mapState, mapActions } from 'vuex';
     export default {
         name: "PerformanceList",
@@ -162,9 +166,7 @@
             return {
                 id: '',
                 showFilter : false,
-                overlay: false,
                 convert_date: '',
-                error: {},
             }
         },
         mounted() {

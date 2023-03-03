@@ -1,45 +1,48 @@
 const mutations = {
     // Readlist ProspectCustomer
+    // #region 
     setPreloadProspectCustomer: function(state, payload) {
         state.prospect_customer.isLoading = payload;
-        return state;
-    },
-    setOverlayProspectCustomer: function(state, payload) {
-        state.prospect_customer.overlay = payload;
         return state;
     },
     setProspectCustomer: function(state, payload) {
         state.prospect_customer.items = payload;
         return state;
     },
-    setSearchProspectCustomer: function(state, payload) {
-        state.prospect_customer.filter.search = payload;
+    setErrorProspectCustomer: function(state, payload) {
+        state.prospect_customer.error = payload
         return state;
     },
-    setStatusProspectCustomer: function(state, payload) {
-        state.prospect_customer.filter.statuses = payload;
+    setFilterProspectCustomer: function(state, payload) {
+        state.prospect_customer.filter = payload
         return state;
     },
-    setSelectCustomerTypeProspectCustomer: function(state, payload) {
-        state.prospect_customer.filter.customer_type = payload;
+    setSelectDeclineTypeProspectCustomer: function(state, payload) {
+        state.prospect_customer.decline.type = payload;
         return state;
     },
-    setSelectAreaProspectCustomer: function(state, payload) {
-        state.prospect_customer.filter.area = payload;
+    setCloseDeclineProspectCustomer: function(state, payload) {
+        let decline = state.prospect_customer.decline
+        decline.show_modal = false
+        decline.clear_type = true
         return state;
     },
-    setSelectArchetypeProspectCustomer: function(state, payload) {
-        state.prospect_customer.filter.archetype = payload;
+    setOpenDeclineDialogProspectCustomer: function(state, payload) {
+        let decline = state.prospect_customer.decline
+        state.prospect_customer.error = {}
+        decline.type = 0
+        decline.note = ""
+        decline.clear_type = false
+        decline.id = payload
+        decline.show_modal = true
         return state;
     },
-    setSelectSalesPersonProspectCustomer: function(state, payload) {
-        state.prospect_customer.filter.sales_person = payload;
+    sethandlerSelectSalesPerson: function(state, payload) {        
+        state.prospect_customer.clear_salesperson = payload
+        state.prospect_customer.disable_salesperson = payload
         return state;
     },
-    setSelectRequestProspectCustomer: function(state, payload) {
-        state.prospect_customer.filter.request_by = payload;
-        return state;
-    },
+    // #endregion
 
     // Detail
     setPreloadProspectCustomerDetail: function(state, payload) {

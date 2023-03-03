@@ -3,26 +3,19 @@ const state = {
     prospect_customer: {
         isLoading: false,
         items: [],
+        error: {},
         filter: {
             search: '',
-            statuses: 6,
+            status: 6,
             customer_type: '',
             area: '',
             archetype: '',
             sales_person: '',
             request_by: '',
         },
-        showFilter : false,
-        overlay: false,
-        clearSalesperson: true,
-        disableSalesperson: true,
-        declineDialog: false,
-        decline_id: "",
-        decline_type: 0,
-        decline_note: "",
-        clearDeclineType:false,
-        error: {},
-        requestBy: [
+        clear_salesperson: true,
+        disable_salesperson: true,
+        requestby_options: [
             {
                 text: 'Customer',
                 value: 'customer'
@@ -32,7 +25,7 @@ const state = {
                 value: 'salesperson'
             }
         ],
-        regStatus: [
+        status_options: [
             {
                 text: 'All Status',
                 value: ''
@@ -50,68 +43,73 @@ const state = {
                 value: 10
             }
         ],
-        table: {
-            fields: [
-                {
-                    text: 'Name',
-                    width: "20%",
-                    class: 'grey--text text--darken-4',
-                    sortable: false,
-                },
-                {
-                    text: 'Phone Number',
-                    width: "10%",
-                    class: 'grey--text text--darken-4',
-                    sortable: false,
-                },
-                {
-                    text: 'Archetype',
-                    width: "8%",
-                    class: 'grey--text text--darken-4',
-                    sortable: false
-                },
-                {
-                    text: 'Customer Type',
-                    width: "12%",
-                    class: 'grey--text text--darken-4',
-                    sortable: false
-                },
-                {
-                    text: 'Region',
-                    width: "10%",
-                    class: 'grey--text text--darken-4',
-                    sortable: false
-                },
-                {
-                    text: 'Location',
-                    width: "20%",
-                    class: 'grey--text text--darken-4',
-                    sortable: false
-                },
-                {
-                    text: 'Request Upgrade',
-                    class: 'grey--text text--darken-4',
-                    width: "3%",
-                    sortable: false
-                },
-                {
-                    text: 'Requested By',
-                    width: "10%",
-                    class: 'grey--text text--darken-4',
-                    sortable: false
-                },
-                {
-                    text: 'Status',
-                    width: "2%",
-                    class: 'grey--text text--darken-4',
-                    sortable: false
-                },
-                {
-                    width: "2%",
-                    sortable: false
-                },
-            ],
-        },
+        table_header: [
+            {
+                text: 'Name',
+                width: "20%",
+                class: 'grey--text text--darken-4',
+                sortable: false,
+            },
+            {
+                text: 'Phone Number',
+                width: "10%",
+                class: 'grey--text text--darken-4',
+                sortable: false,
+            },
+            {
+                text: 'Archetype',
+                width: "8%",
+                class: 'grey--text text--darken-4',
+                sortable: false
+            },
+            {
+                text: 'Customer Type',
+                width: "12%",
+                class: 'grey--text text--darken-4',
+                sortable: false
+            },
+            {
+                text: 'Region',
+                width: "10%",
+                class: 'grey--text text--darken-4',
+                sortable: false
+            },
+            {
+                text: 'Location',
+                width: "20%",
+                class: 'grey--text text--darken-4',
+                sortable: false
+            },
+            {
+                text: 'Request Upgrade',
+                class: 'grey--text text--darken-4',
+                width: "3%",
+                sortable: false
+            },
+            {
+                text: 'Requested By',
+                width: "10%",
+                class: 'grey--text text--darken-4',
+                sortable: false
+            },
+            {
+                text: 'Status',
+                width: "2%",
+                class: 'grey--text text--darken-4',
+                sortable: false
+            },
+            {
+                width: "2%",
+                sortable: false
+            },
+        ],
+        decline: {
+            show_modal: false,
+            id: '',
+            type: 0,
+            clear_type: false,
+            note: '',
+        }
     },
 
     // Detail prospect_customer

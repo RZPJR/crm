@@ -88,14 +88,14 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{props.item.code ? props.item.code : '-'}}</td>
-                        <td>{{props.item.name ? props.item.name : '-'}}</td>
-                        <td>{{props.item.objective ? props.item.objective : '-'}}</td>
-                        <td>
+                        <td :data-unq="`salesAssignmentObjective-value-code-${props.index}`">{{props.item.code ? props.item.code : '-'}}</td>
+                        <td :data-unq="`salesAssignmentObjective-value-name-${props.index}`">{{props.item.name ? props.item.name : '-'}}</td>
+                        <td :data-unq="`salesAssignmentObjective-value-objective-${props.index}`">{{props.item.objective ? props.item.objective : '-'}}</td>
+                        <td :data-unq="`salesAssignmentObjective-value-surveyLink-${props.index}`">
                             <a :href="props.item.survey_link" class="routerLink linkReload" target="_blank">{{props.item.survey_link ? props.item.survey_link : '-'}}</a>
                         </td>
-                        <td>{{props.item.created_by ? (props.item.created_by.name ? props.item.created_by.name : '-') : '-'}}</td>
-                        <td>
+                        <td :data-unq="`salesAssignmentObjective-value-createdBy-${props.index}`">{{props.item.created_by ? (props.item.created_by.name ? props.item.created_by.name : '-') : '-'}}</td>
+                        <td :data-unq="`salesAssignmentObjective-value-status-${props.index}`">
                             <div v-if="props.item.status == 1">
                                 <v-chip
                                     :color="statusMaster('active')"
@@ -115,22 +115,38 @@
                                     <v-btn
                                         icon
                                         v-on="{ ...menu }"
+                                        :data-unq="`salesAssignmentObjective-button-actionButton-${props.index}`"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'sla_obj_upd'" :to="`/customer-relation/sales-assignment-objective/update/`+props.item.id" v-if="props.item.status == 1">
+                                    <v-list-item 
+                                        v-privilege="'sla_obj_upd'" 
+                                        :to="`/customer-relation/sales-assignment-objective/update/`+props.item.id" 
+                                        v-if="props.item.status == 1"
+                                        :data-unq="`salesAssignmentObjective-button-update-${props.index}`"
+                                    >
                                         <v-list-item-title>Update</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
                                     <div class="px-md-2" v-if="props.item.status == 1">
                                         <hr>
                                     </div>
-                                    <v-list-item v-privilege="'sla_obj_arc'" @click="changeStatus(props.item.status,props.item.id)" v-if="props.item.status == 1">
+                                    <v-list-item 
+                                        v-privilege="'sla_obj_arc'" 
+                                        @click="changeStatus(props.item.status,props.item.id)" 
+                                        v-if="props.item.status == 1"
+                                        :data-unq="`salesAssignmentObjective-button-archive-${props.index}`"
+                                    >
                                         <v-list-item-content>
                                             <v-list-item-title>Archive</v-list-item-title>
                                         </v-list-item-content>
                                     </v-list-item>
-                                    <v-list-item v-privilege="'sla_obj_urc'" @click="changeStatus(props.item.status,props.item.id)" v-else>
+                                    <v-list-item 
+                                        v-privilege="'sla_obj_urc'" 
+                                        @click="changeStatus(props.item.status,props.item.id)" 
+                                        :data-unq="`salesAssignmentObjective-button-unarchive-${props.index}`"
+                                        v-else
+                                    >
                                         <v-list-item-content>
                                             <v-list-item-title>Unarchive</v-list-item-title>
                                         </v-list-item-content>
