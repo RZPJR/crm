@@ -8,7 +8,7 @@
             <v-row>
                 <v-col cols="12" md="3">
                    <SelectSalesGroup
-                        @selected="salesGroupSelected"
+                        @selected="territorySelected"
                         :dense="true"
                         :norequired="true"
                         :label="'Territory'"
@@ -99,7 +99,7 @@
                 <v-col cols="12" md="3">
                     <v-select
                         v-model="filter.status"
-                        :items="filter.statuses"
+                        :items="assignment_list.status_options"
                         item-text="text"
                         item-value="value"
                         outlined
@@ -131,12 +131,12 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{props.item.code}}</td>
-                        <td>{{props.item.territory.description}}</td>
-                        <td>{{'-'}}</td>
-                        <td>{{props.item.start_date | moment("YYYY-MM-DD")}}</td>
-                        <td>{{props.item.end_date | moment("YYYY-MM-DD")}}</td>
-                        <td>
+                        <td :data-unq="`salesAssignment-value-code-${props.index}`">{{props.item.code}}</td>
+                        <td :data-unq="`salesAssignment-value-territoryDescription-${props.index}`">{{props.item.territory.description}}</td>
+                        <td :data-unq="`salesAssignment-value-supervisor-${props.index}`">{{'-'}}</td>
+                        <td :data-unq="`salesAssignment-value-startDate-${props.index}`">{{props.item.start_date | moment("YYYY-MM-DD")}}</td>
+                        <td :data-unq="`salesAssignment-value-endDate-${props.index}`">{{props.item.end_date | moment("YYYY-MM-DD")}}</td>
+                        <td :data-unq="`salesAssignment-value-status-${props.index}`">
                             <div v-if="props.item.status == 1">
                                 <v-chip
                                     :color="statusMaster('active')"
@@ -161,18 +161,27 @@
                                 <template v-slot:activator="{ on: menu }">
                                     <v-btn
                                         icon
-                                        v-on="{ ...menu }"
+                                        v-on="{ ...menu }" 
+                                        :data-unq="`salesAssignment-button-actionButton-${props.index}`"
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <v-list-item v-privilege="'sla_rdd'" :to="`/customer-relation/sales-assignment/detail/${props.item.id}`">
+                                    <v-list-item 
+                                        v-privilege="'sla_rdd'" 
+                                        :to="`/customer-relation/sales-assignment/detail/${props.item.id}`"
+                                        :data-unq="`salesAssignment-button-detail-${props.index}`"
+                                    >
                                         <v-list-item-title>Detail</v-list-item-title>
                                         <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                                     </v-list-item>
                                     <div class="px-md-2" v-if="props.item.status == 1">
                                         <hr>
                                     </div>
-                                    <v-list-item @click="changeStatus(props.item.id)" v-if="props.item.status == 1">
+                                    <v-list-item 
+                                        @click="changeStatus(props.item.id)" 
+                                        v-if="props.item.status == 1"                                        
+                                        :data-unq="`salesAssignment-button-cancel-${props.index}`"
+                                    >
                                         <v-list-item-content>
                                             <v-list-item-title>Cancel</v-list-item-title>
                                         </v-list-item-content>
@@ -189,7 +198,7 @@
 </template>
 <script>
     import Vue from 'vue';
-    import { mapState, mapActions } from 'vuex';
+    import { mapState, mapActions, mapMutations } from 'vuex';
 
     export default {
         name: "SalesAssignment",
@@ -223,6 +232,13 @@
             ...mapActions ([
                 'fetchAssignmentList',
             ]),
+            ...mapMutations ([
+                "setTerritoryAssignmentList",
+                "setStartDateValueAssignmentList",
+                "setStartDateInputAssignmentList",
+                "setEndDateValueAssignmentList",
+                "setEndDateInputAssignmentList",
+            ]),
             // For cancel assignment
             changeStatus(id) {
                 this.ConfirmData = {
@@ -236,10 +252,10 @@
                 }
             },
             // For select sales group filter
-            salesGroupSelected(d) {
-                this.filter.sales_group_id = '';
+            territorySelected(d) {
+                this.$store.commit('setTerritoryAssignmentList', '')
                 if(d){
-                    this.filter.sales_group_id = d.id
+                    this.$store.commit('setTerritoryAssignmentList', d.id)
                 }
                 Vue.nextTick(() => {
                     this.fetchAssignmentList()
@@ -261,20 +277,19 @@
                         if (val.length == 10) {
                             let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
                             if (valid == true) {
-                                this.start_date.value[0] = this.$moment(val).format('YYYY-MM-DD')
+                                this.$store.commit("setStartDateValueAssignmentList", [this.$moment(val).format('YYYY-MM-DD')])
                             }
                         } else if (val.length == 24) {
                             let date1 = val.substr(0, 10)
                             let date2 = val.substr(14, 23)
                             let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
                             let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
-                            if (valid1 == true && valid2 == true) {
-                                this.start_date.value[0] = this.$moment(date1).format('YYYY-MM-DD')
-                                this.start_date.value[1] = this.$moment(date2).format('YYYY-MM-DD')
+                            if (valid1 == true && valid2 == true) {                             
+                                this.$store.commit("setStartDateValueAssignmentList", [this.$moment(date1).format('YYYY-MM-DD'), this.$moment(date2).format('YYYY-MM-DD')])
                             }
                         }
                     } else if (val == "") {
-                        this.start_date.value = []
+                        this.$store.commit("setStartDateValueAssignmentList", [])
                     }
                 },
                 deep: true
@@ -282,7 +297,7 @@
             'start_date.value': {
                 handler: function (val) {
                     if (val) {
-                        this.start_date.input = this.formatDateRange(val)
+                        this.$store.commit("setStartDateInputAssignmentList", this.formatDateRange(val))
                     }
                 },
                 deep: true
@@ -293,7 +308,7 @@
                         if (val.length == 10) {
                             let valid = this.$moment(val, 'YYYY-MM-DD', true).isValid()
                             if (valid == true) {
-                                this.end_date.value[0] = this.$moment(val).format('YYYY-MM-DD')
+                                this.$store.commit("setEndDateValueAssignmentList", [this.$moment(val).format('YYYY-MM-DD')])
                             }
                         } else if (val.length == 24) {
                             let date1 = val.substr(0, 10)
@@ -301,12 +316,11 @@
                             let valid1 = this.$moment(date1, 'YYYY-MM-DD', true).isValid()
                             let valid2 = this.$moment(date2, 'YYYY-MM-DD', true).isValid()
                             if (valid1 == true && valid2 == true) {
-                                this.end_date.value[0] = this.$moment(date1).format('YYYY-MM-DD')
-                                this.end_date.value[1] = this.$moment(date2).format('YYYY-MM-DD')
+                                this.$store.commit("setEndDateValueAssignmentList", [this.$moment(date1).format('YYYY-MM-DD'), this.$moment(date2).format('YYYY-MM-DD')])
                             }
                         }
                     } else if (val == "") {
-                        this.end_date.value = []
+                        this.$store.commit("setEndDateValueAssignmentList", [])
                     }
                 },
                 deep: true
@@ -314,7 +328,7 @@
             'end_date.value': {
                 handler: function (val) {
                     if (val) {
-                        this.end_date.input = this.formatDateRange(val)
+                        this.$store.commit("setEndDateInputAssignmentList", this.formatDateRange(val), 'input')
                     }
                 },
                 deep: true

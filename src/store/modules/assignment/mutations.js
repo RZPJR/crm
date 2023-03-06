@@ -8,6 +8,26 @@ const mutations = {
         state.assignment_list.data = payload;
         return state;
     },
+    setTerritoryAssignmentList: function(state, payload) {
+        state.assignment_list.filter.territory = payload;
+        return state;
+    },
+    setStartDateValueAssignmentList: function(state, payload) {
+        state.assignment_list.filter.start_date.value = payload;
+        return state;
+    },
+    setStartDateInputAssignmentList: function(state, payload) {
+        state.assignment_list.filter.start_date.input = payload;
+        return state;
+    },
+    setEndDateValueAssignmentList: function(state, payload) {
+        state.assignment_list.filter.end_date.value = payload;
+        return state;
+    },
+    setEndDateInputAssignmentList: function(state, payload) {
+        state.assignment_list.filter.end_date.input = payload;
+        return state;
+    },
 
     // Create Sales Assignment
     setPreloadCreateAssignment: function(state, payload) {
