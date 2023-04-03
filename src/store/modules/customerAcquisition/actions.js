@@ -28,7 +28,7 @@ const actions = {
             }
             const response = await http.get("/customer/acquisition", {
                 params: {
-                  per_page:1000,
+                  per_page:100,
                   order_by:'-id',
                   search: search,
                   submit_date_start: submitted_date,
