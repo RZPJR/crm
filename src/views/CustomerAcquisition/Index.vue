@@ -133,7 +133,7 @@
                         <td :data-unq="`customerAcquisition-value-name-${props.index}`">{{ props.item.name }}</td>
                         <td :data-unq="`customerAcquisition-value-phoneNumber-${props.index}`">{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
                         <td :data-unq="`customerAcquisition-value-addressName-${props.index}`">{{ props.item.address_name ? props.item.address_name : '-'}}</td>
-                        <td :data-unq="`customerAcquisition-value-displayName-${props.index}`">{{ props.item.salesperson?.display_name ? props.item.salesperson.display_name : '-'}}</td>
+                        <td :data-unq="`customerAcquisition-value-displayName-${props.index}`">{{ props.item.salesperson?.name ? props.item.salesperson.name : '-'}}</td>
                         <td :data-unq="`customerAcquisition-value-territory-${props.index}`">{{ props.item.territory ? (props.item.territory.description ? props.item.territory.description : '-') : '-'}}</td>
                         <td :data-unq="`customerAcquisition-value-submitDate-${props.index}`">{{ props.item.submit_date == '0001-01-01T00:00:00Z' ? '-' : props.item.submit_date | moment("YYYY-MM-DD HH:mm:ss") }}</td>
                         <td>
@@ -146,10 +146,6 @@
                                     ><v-icon dark>mdi-dots-vertical</v-icon></v-btn>
                                 </template>
                                 <v-list class="bg-white">
-                                    <!-- <v-list-item v-privilege="'ca_rdd'" :to="{ name: 'CustomerAcquisitionDetail', params: { id: props.item.id } }">
-                                        <v-list-item-title>Detail</v-list-item-title>
-                                        <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
-                                    </v-list-item> -->
                                     <v-list-item 
                                         v-privilege="'ca_rdd'" 
                                         :to="'/customer-relation/customer-acquisition/detail/'+ props.item.id " 
