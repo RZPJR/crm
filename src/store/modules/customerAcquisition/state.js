@@ -6,7 +6,7 @@ const state = {
         filter: {
             search: '',
             salesperson : '',
-            sales_group_id: '',
+            territory_id: '',
             submitted_date: {
                 model: '',
                 input: '',
