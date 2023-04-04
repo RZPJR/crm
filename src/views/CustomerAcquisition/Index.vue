@@ -58,16 +58,15 @@
                 </v-col>
             </v-row>
             <v-row v-if="showFilter">
-                <!-- <v-col cols="12" md="3">
+                <v-col cols="12" md="3">
                     <SelectSalesPerson
                         v-model="salesperson"
                         :norequired="true"
                         :dense="true"
                         @selected="salespersonSelected"
-                        v-privilege="'filter_rdl'"
                     ></SelectSalesPerson>
-                </v-col> -->
-                <!-- <v-col cols="12" md="3">
+                </v-col>
+                <v-col cols="12" md="3">
                     <SelectSalesGroup
                         v-model="sales_group_id"
                         @selected="salesGroupSelected"
@@ -75,7 +74,7 @@
                         :dense="true"
                         :label="'Territory'"
                     ></SelectSalesGroup>
-                </v-col> -->
+                </v-col>
                 <v-col cols="12" md="3">
                     <v-menu
                         ref="menu"
@@ -166,7 +165,7 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from 'vuex';
+    import { mapState, mapActions, mapMutations } from 'vuex';
 
     export default {
         name: "CustomerAcquisition",
@@ -190,8 +189,27 @@
             ...mapActions([
                 'fetchCustomerAcquisition',
             ]),
+            ...mapMutations([
+                "setFilterCustomerAcquisition",
+            ]),
             // For get data from API
             renderData(){
+                this.fetchCustomerAcquisition();
+            },
+            //For Filter Salesperson
+            salespersonSelected(d) {
+                this.$store.commit('setFilterCustomerAcquisition', {...this.filter, salesperson: ''})
+                if (d) {
+                    this.$store.commit('setFilterCustomerAcquisition', {...this.filter, salesperson: d.id})
+                }
+                this.fetchCustomerAcquisition();
+            },
+             // For Filter Sales Group
+             salesGroupSelected(d) {
+                this.$store.commit('setFilterCustomerAcquisition', {...this.filter, territory_id: ''})
+                if(d){
+                    this.$store.commit('setFilterCustomerAcquisition', {...this.filter, territory_id: d.id})
+                }
                 this.fetchCustomerAcquisition();
             },
         },

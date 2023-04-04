@@ -7,8 +7,8 @@ const actions = {
         commit('setCustomerAcquisition', []);
         try {
             let search = state.customer_acquisition.filter.search
-            // let sales_person = state.customer_acquisition.filter.salesperson === 999 ? '' : "|salesperson_id.e:"+state.customer_acquisition.filter.salesperson      
-            // let sales_group = state.customer_acquisition.filter.sales_group_id === '' ? '' : "|sales_group_id.e:"+state.customer_acquisition.filter.sales_group_id
+            let sales_person = state.customer_acquisition.filter.salesperson === '' ? '' : state.customer_acquisition.filter.salesperson
+            let territory = state.customer_acquisition.filter.territory_id === '' ? '' : state.customer_acquisition.filter.territory_id
             let submitted_date = ''
             let submitted_date2 = ''
             if (state.customer_acquisition.filter.submitted_date.value.length > 0) {
@@ -32,7 +32,9 @@ const actions = {
                   order_by:'-id',
                   search: search,
                   submit_date_start: submitted_date,
-                  submit_date_end: submitted_date2
+                  submit_date_end: submitted_date2,
+                  territory_id: territory,
+                  salesperson_id: sales_person
                 }
             });
             if (response.data.data) commit('setCustomerAcquisition', response.data.data);

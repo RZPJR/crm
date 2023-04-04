@@ -8,6 +8,10 @@ const mutations = {
         state.customer_acquisition.data = payload;
         return state;
     },
+    setFilterCustomerAcquisition: function(state, payload) {
+        state.customer_acquisition.filter = payload
+        return state;
+    },
     
     // Detail Customer Acquisition
     setPreloadCustomerAcquisitionDetail: function(state, payload) {
