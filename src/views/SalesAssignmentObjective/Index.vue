@@ -151,6 +151,11 @@
                                             <v-list-item-title>Unarchive</v-list-item-title>
                                         </v-list-item-content>
                                     </v-list-item>
+                                    <v-list-item @click="seeHistory(props.item.id)">
+                                        <v-list-item-content>
+                                            <v-list-item-title>History</v-list-item-title>
+                                        </v-list-item-content>
+                                    </v-list-item>
                                 </v-list>
                             </v-menu>
                         </td>
@@ -159,6 +164,7 @@
             </v-data-table>
         </div>
         <ConfirmationDialogNew :sendData="ConfirmData"/>
+        <AuditLogNew :data="dataAuditLog"/>
     </v-container>
 </template>
 <script>
@@ -170,6 +176,7 @@
         data() {
             return {
                 showFilter : false,
+                dataAuditLog: {},
                 ConfirmData : {},
                 tab: '/customer-relation/sales-assignment-objective',
             }
@@ -222,6 +229,14 @@
                         urlApi : '/crm/v1/sales/assignment/objective/unarchive/'+id,
                         data : {}
                     }
+                }
+            },
+            //For geting history data
+            seeHistory(id) {
+                this.dataAuditLog = {
+                    model: true,
+                    id: id,
+                    type: "sales_assignment_objective"
                 }
             },
         },

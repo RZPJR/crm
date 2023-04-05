@@ -11,7 +11,7 @@ const actions = {
             
             const response = await http.get("/sales/assignment/objective", {
                 params: {
-                    per_page:1000,
+                    per_page:100,
                     order_by:'-id',
                     status: status,
                     search: search
