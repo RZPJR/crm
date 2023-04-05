@@ -47,7 +47,7 @@ const actions = {
             }
             const response = await http.get("/sales/assignment", {
                 params: {
-                  per_page:1000,
+                  per_page:100,
                   orderby:'-id',
                   start_date_from:start_date1,
                   start_date_to:start_date2,
