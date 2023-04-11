@@ -49,14 +49,14 @@
                 <template v-slot:item="props">
                     <tr style="height:48px">
                         <td :data-unq="`distributionNetwork-value-code-${props.index}`">
-                            {{ props.item.code }}
+                            {{ props.item.customer_code }}
                             <br>
                             <span class="second-color" :data-unq="`distributionNetwork-value-name-${props.index}`">{{ props.item.name ?  props.item.name : '-' }}</span>
                         </td>
-                        <td :data-unq="`distributionNetwork-value-phoneNumber-${props.index}`">{{ props.item.phone_number ?  props.item.phone_number : '-'}}</td>
-                        <td :data-unq="`distributionNetwork-value-financeArea-${props.index}`">{{ props.item.finance_area.name ? props.item.finance_area.name : '-'}}</td>
-                        <td :data-unq="`distributionNetwork-value-paymentTerm-${props.index}`">{{ props.item.payment_term.name ? props.item.payment_term.name : '-'}}</td>
-                        <td :data-unq="`distributionNetwork-value-remainingOutstanding-${props.index}`">{{ props.item.remaining_outstanding !== null || props.item.remaining_outstanding !== undefined ? 'Rp '+formatPrice(props.item.remaining_outstanding) : '-'}}</td>
+                        <td :data-unq="`distributionNetwork-value-phoneNumber-${props.index}`">{{ props.item.phone1 ?  props.item.phone1 : '-'}}</td>
+                        <td :data-unq="`distributionNetwork-value-financeArea-${props.index}`">{{'-'}}</td>
+                        <td :data-unq="`distributionNetwork-value-paymentTerm-${props.index}`">{{'-'}}</td>
+                        <td :data-unq="`distributionNetwork-value-remainingOutstanding-${props.index}`">{{'Rp '+formatPrice(0)}}</td>
                         <td>
                             <v-menu offset-y>
                                 <template v-slot:activator="{ on: menu }">
