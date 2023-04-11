@@ -7,15 +7,14 @@ const actions = {
         commit('setDistributionNetwork', []);
         try {
             let search = state.distribution_network_list.filter.search
-            // const response = await http.get("/distribution-network", {
-            //     params: {
-            //         per_page:1000,
-            //         order_by:'-id',
-            //         search: search,
-            //         status: status,
-            //     }
-            // });
-            // if (response.data.data) commit('setDistributionNetwork', response.data.data);
+            const response = await http.get("/customer", {
+                params: {
+                    per_page:1000,
+                    order_by:'-id',
+                    search: search,
+                }
+            });
+            if (response.data.data) commit('setDistributionNetwork', response.data.data);
             commit('setPreloadDistributionNetwork', false);
         } catch (error) {
             console.log(error);
