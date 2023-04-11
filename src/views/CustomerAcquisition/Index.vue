@@ -216,11 +216,13 @@
         watch: {
             'filter.search': {
                 handler: function (val) {
-                    let that = this
-                    clearTimeout(this._timerId)
-                    this._timerId = setTimeout(function(){
-                    that.renderData()
-                    }, 1000);
+                    if(val){
+                        let that = this
+                        clearTimeout(this._timerId)
+                        this._timerId = setTimeout(function(){
+                            that.fetchCustomerAcquisition()
+                        }, 1000);
+                    }
                 },
                 deep: true
             },
