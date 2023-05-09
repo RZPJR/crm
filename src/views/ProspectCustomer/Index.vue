@@ -327,6 +327,7 @@
                 decline: state => state.prospectCustomer.prospect_customer.decline,
                 pagination: state => state.pagination.pagination,
             }),
+            //For footer table
             footerProps() {
                 return {
                     'items-per-page-options':[10,15,20,25],
@@ -351,6 +352,7 @@
                 if (d) {
                     this.$store.commit('setFilterProspectCustomer', {...this.filter, archetype: d.id})
                 }
+                this.getPagination(1)
                 this.fetchProspectCustomer()
             },
             //For Filter Type
@@ -359,6 +361,7 @@
                 if (d) {
                     this.$store.commit('setFilterProspectCustomer', {...this.filter, customer_type: d.id})
                 }
+                this.getPagination(1)
                 this.fetchProspectCustomer()
             },
             //For Filter Area
@@ -367,6 +370,7 @@
                 if (d) {
                     this.$store.commit('setFilterProspectCustomer', {...this.filter, area: d.id})
                 }
+                this.getPagination(1)
                 this.fetchProspectCustomer()
             },
             //For Filter Salesperson
@@ -375,6 +379,7 @@
                 if (d) {
                     this.$store.commit('setFilterProspectCustomer', {...this.filter, sales_person: d.id})
                 }
+                this.getPagination(1)
                 this.fetchProspectCustomer()
             },
             //For get selected decline type
