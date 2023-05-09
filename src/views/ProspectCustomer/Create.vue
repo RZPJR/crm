@@ -136,7 +136,7 @@
                             table="prospect_customer"
                             attribute="reg_channel"
                             :dense="true"
-                            :glossary="selected_channel"
+                            :glossary="form.reg_channel"
                             :error="error.reg_channel_value"
                             :data-unq="`prospectCustomer-select-registrationChannel`"
                         ></SelectGlossary>
@@ -183,12 +183,6 @@
         data() {
             return {
                 disabled_archetype: true,
-                selected_channel: {
-                    id: 249,
-                    table: 'prospect_customer',
-                    attribute: 'reg_channel',
-                    value_int: 2,
-                }
             }
         },
         computed: {

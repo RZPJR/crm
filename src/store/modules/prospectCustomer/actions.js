@@ -93,7 +93,11 @@ const actions = {
             referrer_code: '',
             time_consent: null,
             reference_info: null,
-            reg_channel: 1,
+            reg_channel: {                
+                id: 249,
+                value: 1,
+                value_name: "dino"
+            },
         }); 
     },
 };

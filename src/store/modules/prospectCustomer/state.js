@@ -173,7 +173,7 @@ const state = {
             referrer_code: '',
             time_consent: null,
             reference_info: null,
-            reg_channel: 1,
+            reg_channel: {},
 
         },
         confirm_data: {},
