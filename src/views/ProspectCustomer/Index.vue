@@ -123,8 +123,20 @@
         </div>
         <div class="box-title">
             <v-row >
-                <v-col cols="12" md="9" class="h1"/>
-                <v-col cols="12" md="3" class="d-flex justify-end h70"></v-col>
+                <v-col class="flex-align-end">
+                    <router-link :to="{ name: 'ProspectCustomerCreate' }" class="routerLink">
+                        <v-btn
+                            depressed
+                            color="#50ABA3"
+                            class="no-caps bold white--text"
+                            data-unq="prospectCustomer-button-create"
+                        >
+                            <span class="text-white bold">
+                                Create Prospect Customer
+                            </span>
+                        </v-btn>
+                    </router-link>
+                </v-col>
             </v-row>
         </div>
         <div class="box-body-table">

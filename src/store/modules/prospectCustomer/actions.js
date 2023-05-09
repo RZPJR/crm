@@ -79,6 +79,23 @@ const actions = {
             commit('setPreloadProspectCustomerDetail', false);
         }
     },
+
+    // Create Prospect Customer 
+    fetchProspectCustomerCreate: async ({ commit, state, dispatch }, payload) => {
+        commit("setFormProspectCustomerCreate", {
+            customer_id: null,
+            company_name: '',
+            customer_type_id: null,
+            business_type_value: null,
+            archetype_id: null,
+            brand_name: '',
+            customer_class_id: null,
+            referrer_code: '',
+            time_consent: null,
+            reference_info: null,
+            reg_channel: 1,
+        }); 
+    },
 };
 
 export default actions;

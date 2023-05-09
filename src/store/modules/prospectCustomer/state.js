@@ -157,8 +157,27 @@ const state = {
         decline_note: "",
         clearDeclineType:false,
         error: {},
-    }
+    },
 
+    //Create prospect_customer
+    create_prospect_customer:{
+        error: {},
+        form: {
+            customer_id: null,
+            company_name: '',
+            customer_type_id: null,
+            business_type_value: null,
+            archetype_id: null,
+            brand_name: '',
+            customer_class_id: null,
+            referrer_code: '',
+            time_consent: null,
+            reference_info: null,
+            reg_channel: 1,
+
+        },
+        confirm_data: {},
+    }
 };
 
 export default state;

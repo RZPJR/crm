@@ -52,8 +52,13 @@ const mutations = {
     setDataProspectCustomerDetail: function(state, payload) {
         state.detail_prospect_customer.data = payload;
         return state;
+    },
+
+    // Create
+    setFormProspectCustomerCreate: function(state, payload) {
+        state.create_prospect_customer.form = payload;
+        return state;
     }
-    
 };
 
 export default mutations;
