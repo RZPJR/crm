@@ -8,6 +8,7 @@ import assignmentSubmission from "./modules/assignmentSubmission";
 import customerAcquisition from "./modules/customerAcquisition";
 import salesPerformance from "./modules/salesPerformance";
 import distributionNetwork from "./modules/distributionNetwork";
+import pagination from "./modules/pagination";
 
 Vue.use(Vuex);
 Vue.use(require('vue-moment'));
@@ -21,5 +22,6 @@ export default new Vuex.Store({
     salesPerformance,
     assignmentSubmission,
     distributionNetwork,
+    pagination,
   }
 });

@@ -55,7 +55,7 @@
                 </v-col>
             </v-row>
             <v-row v-if="showFilter">
-                <v-col cols="12" md="3">
+                <v-col cols="12" md="3" class="-mb24">
                     <v-select
                         v-model="filter.status"
                         :items="status_options"
@@ -67,7 +67,7 @@
                         outlined
                     ></v-select>
                 </v-col>
-                <v-col cols="12" md="3">
+                <v-col cols="12" md="3" class="-mb24">
                      <SelectArchetype
                         :aux_data="2"
                         :norequired="true"
@@ -76,7 +76,7 @@
                         @selected="archetypeSelected"
                     ></SelectArchetype>
                 </v-col>
-                <v-col cols="12" md="3">
+                <v-col cols="12" md="3" class="-mb24">
                     <SelectBusinessType
                         :data_unq="`proscus-filter-customerType`"
                         :aux_data="2"
@@ -86,16 +86,17 @@
                         @selected="typeSelected"
                     ></SelectBusinessType>
                 </v-col>
-                <v-col cols="12" md="3">
+                <v-col cols="12" md="3" class="-mb24">
                     <SelectArea
                         :aux_data="2"
                         :dense="true"
                         :label="'Region'"
                         data-unq="proscus-filter-area"
                         @selected="areaSelected"
+                        :norequired="true"
                     ></SelectArea>
                 </v-col>
-                <v-col cols="12" md="3" class="-mt24">
+                <v-col cols="12" md="3" class="-mb24">
                     <v-autocomplete
                         v-model="filter.request_by"
                         :items="requestby_options"
@@ -108,7 +109,7 @@
                         clearable
                     ></v-autocomplete>
                 </v-col>
-                <v-col cols="12" md="3" class="-mt24">
+                <v-col cols="12" md="3" class="-mb24">
                     <SelectSalesPerson
                         :norequired="true"
                         :clear="prospect_customer.clear_salesperson"
@@ -128,29 +129,32 @@
         </div>
         <div class="box-body-table">
             <v-data-table
-                :mobile-breakpoint="0"
                 :headers="table_header"
                 :items="prospect_customer.items"
                 :loading="prospect_customer.isLoading"
-                :items-per-page="10"
+                :items-per-page="pagination.rows_per_page"
+                :server-items-length="pagination.total_items"
+                @update:items-per-page="getItemPerPage"
+                @update:page="getPagination"
+                :footer-props="footerProps"
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td :data-unq="`proscus-value-name-${props.index}`">{{ props.item.name }}</td>
-                        <td :data-unq="`proscus-value-phonenumber-${props.index}`">{{ props.item.phone_1 }}</td>
+                        <td :data-unq="`proscus-value-name-${props.index}`">{{ props.item.brand_name }}</td>
+                        <td :data-unq="`proscus-value-phonenumber-${props.index}`">{{ props.item.pic_order_contact }}</td>
                         <td :data-unq="`proscus-value-archetype-${props.index}`">{{ props.item.archetype.description }}</td>
                         <td :data-unq="`proscus-value-customer_type-${props.index}`">{{ props.item.customer_type.description }}</td>
-                        <td :data-unq="`proscus-value-region-${props.index}`">{{ props.item.region.description }}</td>
+                        <td :data-unq="`proscus-value-region-${props.index}`">{{ props.item.company_address.region }}</td>
                         <td :data-unq="`proscus-value-sub_district-${props.index}`">
-                            {{ props.item.sub_district.district.city.province ?  props.item.sub_district.district.city.province.description : '-'}} - 
-                            {{ props.item.sub_district.district.city.description }}<br>
+                            {{ props.item.company_address.province }} - 
+                            {{ props.item.company_address.city }} <br>
                             <span class="second-color">
-                                {{ props.item.sub_district.district.description }} -
-                                {{ props.item.sub_district.description }}
+                                {{ props.item.company_address.district }} -
+                                {{ props.item.company_address.sub_district }}
                             </span>
                         </td>
                         <td :data-unq="`proscus-value-customer_upgrade-${props.index}`">
-                            <div v-if="props.item.customer_upgrade == 1">
+                            <div v-if="props.item.customer">
                                 Yes
                             </div>
                             <div v-else>
@@ -171,13 +175,12 @@
                         <td>
                             <v-chip
                                 class="ma-2"
-                                :data-unq="`proscus-button-status-${props.item.reg_status === 6 ? 'new' : props.item.reg_status === 11 ? 'registered' : 'decline'}-${props.index}`"
-                                :color="statusMaster(props.item.reg_status === 6 ? 'new' : props.item.reg_status === 11 ? 'registered' : 'decline')"
-                                :text-color="statusMasterText(props.item.reg_status === 6 ? 'new' : props.item.reg_status === 11 ? 'registered' : 'decline')"
+                                :data-unq="`proscus-button-status-${props.item.reg_status_convert.toLowerCase()}-${props.index}`"
+                                :color="statusMaster(props.item.reg_status_convert.toLowerCase())"
+                                :text-color="statusMasterText(props.item.reg_status_convert.toLowerCase())"
                                 small
                             >
-                                {{props.item.reg_status === 6 ? 'New' : props.item.reg_status === 11 ? 'Registered' :
-                                'Decline'}}
+                                {{ props.item.reg_status_convert }}
                             </v-chip>
                         </td>
                         <td>
@@ -322,7 +325,17 @@
                 status_options: state => state.prospectCustomer.prospect_customer.status_options,
                 error: state => state.prospectCustomer.prospect_customer.error,
                 decline: state => state.prospectCustomer.prospect_customer.decline,
+                pagination: state => state.pagination.pagination,
             }),
+            //For footer table
+            footerProps() {
+                return {
+                    'items-per-page-options':[10,15,20,25],
+                    'page-text': `${(this.pagination.page-1)*this.pagination.rows_per_page+1}
+                                    - ${Math.min(this.pagination.page*this.pagination.rows_per_page,this.pagination.total_items)} 
+                                    of ${this.pagination.total_items}`,
+                };
+            },
         },
         methods: {
             ...mapActions([
@@ -339,6 +352,7 @@
                 if (d) {
                     this.$store.commit('setFilterProspectCustomer', {...this.filter, archetype: d.id})
                 }
+                this.getPagination(1)
                 this.fetchProspectCustomer()
             },
             //For Filter Type
@@ -347,6 +361,7 @@
                 if (d) {
                     this.$store.commit('setFilterProspectCustomer', {...this.filter, customer_type: d.id})
                 }
+                this.getPagination(1)
                 this.fetchProspectCustomer()
             },
             //For Filter Area
@@ -355,6 +370,7 @@
                 if (d) {
                     this.$store.commit('setFilterProspectCustomer', {...this.filter, area: d.id})
                 }
+                this.getPagination(1)
                 this.fetchProspectCustomer()
             },
             //For Filter Salesperson
@@ -363,6 +379,7 @@
                 if (d) {
                     this.$store.commit('setFilterProspectCustomer', {...this.filter, sales_person: d.id})
                 }
+                this.getPagination(1)
                 this.fetchProspectCustomer()
             },
             //For get selected decline type
@@ -375,6 +392,22 @@
             //For Decline Customer Registration
             openDeclineDialog(recordID){
                 this.$store.commit('setOpenDeclineDialogProspectCustomer', recordID)
+            },
+            // Count all data for paggination
+            getItemPerPage(val) {
+                this.$store.commit('setPagination', {
+                    ...this.pagination,
+                    rows_per_page: val,
+                })
+                this.fetchProspectCustomer()
+            },
+            // For paggination
+            getPagination(val) {
+                this.$store.commit('setPagination', {
+                    ...this.pagination,
+                    page: val,
+                })
+                this.fetchProspectCustomer()
             },
         },
         watch: {

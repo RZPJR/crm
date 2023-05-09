@@ -1,6 +1,7 @@
 
 import Vue from 'vue'
 import http from "../../../services/http";
+import Pagination from "../pagination";
 
 const actions = {
     // Readlist Prospect Customer 
@@ -15,9 +16,11 @@ const actions = {
             let archetype_id = state.prospect_customer.filter.archetype
             let salesperson_id = state.prospect_customer.filter.sales_person
             let requested_by = state.prospect_customer.filter.request_by
+            let pagination = Pagination.state.pagination
             const response = await http.get("/prospective_customer", {
                 params: {
-                    per_page:100,
+                    page: pagination.page,
+                    per_page : pagination.rows_per_page,
                     order_by:'-id',
                     search: search,
                     status: status,
@@ -28,7 +31,13 @@ const actions = {
                     requested_by: requested_by,
                 }
             });
-            if (response.data.data) commit('setProspectCustomer', response.data.data);
+            if(response.data.data && response.data.data !== null){
+                commit('setProspectCustomer', response.data.data);
+                commit('setPagination', {
+                    ...pagination,
+                    total_items: response.data.total !== null ? response.data.total : 0
+                })
+            }
             commit('setPreloadProspectCustomer', false);
         } catch (error) {
             console.log(error);
