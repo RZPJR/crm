@@ -394,7 +394,7 @@
                     ...this.pagination,
                     rows_per_page: val,
                 })
-                this.fetchItemList()
+                this.fetchProspectCustomer()
             },
             // For paggination
             getPagination(val) {
@@ -402,7 +402,7 @@
                     ...this.pagination,
                     page: val,
                 })
-                this.fetchItemList()
+                this.fetchProspectCustomer()
             },
         },
         watch: {
