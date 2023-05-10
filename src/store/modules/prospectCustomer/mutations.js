@@ -58,6 +58,10 @@ const mutations = {
     setFormProspectCustomerCreate: function(state, payload) {
         state.create_prospect_customer.form = payload;
         return state;
+    },
+    setDisabledProspectCustomerCreate: function(state, payload) {
+        state.create_prospect_customer.disabled = payload;
+        return state;
     }
 };
 

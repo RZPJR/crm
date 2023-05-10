@@ -187,6 +187,27 @@ const actions = {
                 "value_name": "Dashboard"
             }
         }); 
+        commit("setDisabledProspectCustomerCreate", {
+            archetype: true,
+            company_address: {
+                province: true,
+                city: true,
+                district: true,
+                sub_district: true,
+            },
+            ship_to_address: {
+                province: true,
+                city: true,
+                district: true,
+                sub_district: true,
+            },
+            bill_to_address: {
+                province: true,
+                city: true,
+                district: true,
+                sub_district: true,
+            }
+        })
     },
 };
 

@@ -57,7 +57,7 @@
                         <SelectArchetype
                             @selected="setIdComponentSelected($event, 'archetype_id')"
                             name="archetype"
-                            :disabled="disabled_archetype"
+                            :disabled="disabled.archetype"
                             :customer_type_id="form.customer_type_id"
                             :dense="true"
                             :error="error.archetype_id"
@@ -1130,27 +1130,6 @@
         name: "ProspectCustomerCreate",
         data() {
             return {
-                disabled_archetype: true,
-                disabled: {
-                    company_address: {
-                        province: true,
-                        city: true,
-                        district: true,
-                        sub_district: true,
-                    },
-                    ship_to_address: {
-                        province: true,
-                        city: true,
-                        district: true,
-                        sub_district: true,
-                    },
-                    bill_to_address: {
-                        province: true,
-                        city: true,
-                        district: true,
-                        sub_district: true,
-                    }
-                },
                 email_rules: [ v => /.+@.+/.test(v) || 'Invalid Email address' ],
                 flagging:{
                     shipping_info: false,
@@ -1164,6 +1143,7 @@
         computed: {
             ...mapState({
                 form: state => state.prospectCustomer.create_prospect_customer.form,
+                disabled: state => state.prospectCustomer.create_prospect_customer.disabled,
                 error: state => state.prospectCustomer.create_prospect_customer.error,
             }),
         },
@@ -1181,10 +1161,10 @@
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, customer_type_id: null})
                 if (d) {
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, customer_type_id: d.id})
-                    this.disabled_archetype = false
+                    this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, archetype: false})
                 }else{
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, archetype_id: null})
-                    this.disabled_archetype = true
+                    this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, archetype: true})
                 }
             },
             setIdComponentSelected(d, comp){// For Selected then set Id
@@ -1204,7 +1184,7 @@
                 if (d) {
                     if(current !== 'sub_district'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [current]: d.description }})
-                        this.disabled[section][next] = false
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], [next]: false }})
                     }else{
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [current]: d.description, [next]: d.postal_code }})
                     }
@@ -1217,12 +1197,12 @@
                             sub_district: null,
                             postal_code: null,
                         }})
-                        this.disabled[section] = {
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
                             province: true,
                             city: true,
                             district: true,
                             sub_district: true,
-                        }
+                        }})
                     }
                     else if(current === 'province'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
@@ -1231,11 +1211,11 @@
                             sub_district: null,
                             postal_code: null,
                         }})
-                        this.disabled[section] = {
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
                             city: true,
                             district: true,
                             sub_district: true,
-                        }
+                        }})
                     }
                     else if(current === 'city'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
@@ -1243,19 +1223,19 @@
                             sub_district: null,
                             postal_code: null,
                         }})
-                        this.disabled[section] = {
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
                             district: true,
                             sub_district: true,
-                        }
+                        }})
                     }
                     else if(current === 'district'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
                             sub_district: null,
                             postal_code: null,
                         }})
-                        this.disabled[section] = {
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
                             sub_district: true,
-                        }
+                        }})
                     }
                     else if(current === 'sub_district'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [next]: null }})

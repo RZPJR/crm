@@ -162,6 +162,27 @@ const state = {
     //Create prospect_customer
     create_prospect_customer:{
         error: {},
+        disabled: {
+            archetype: true,
+            company_address: {
+                province: true,
+                city: true,
+                district: true,
+                sub_district: true,
+            },
+            ship_to_address: {
+                province: true,
+                city: true,
+                district: true,
+                sub_district: true,
+            },
+            bill_to_address: {
+                province: true,
+                city: true,
+                district: true,
+                sub_district: true,
+            }
+        },
         form: {
             // basic info
             customer_id: '',
