@@ -210,7 +210,7 @@
                                 <v-list class="bg-white">
                                     <v-list-item 
                                         v-privilege="'pro_cst_rdl'" 
-                                        :to="'/customer-relation/prospective-customer/'+ props.item.id "
+                                        :to="'/customer-relation/prospective-customer/detail/'+ props.item.id "
                                         :data-unq="`proscus-button-detail-${props.index}`" 
                                     >
                                         <v-list-item-title>Detail</v-list-item-title>

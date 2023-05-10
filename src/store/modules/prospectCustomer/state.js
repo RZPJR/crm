@@ -163,18 +163,103 @@ const state = {
     create_prospect_customer:{
         error: {},
         form: {
-            customer_id: null,
-            company_name: '',
-            customer_type_id: null,
-            business_type_value: null,
-            archetype_id: null,
+            // basic info
+            customer_id: '',
+            business_name: '',
+            customer_type_id: '',
+            business_type_id: '',
+            archetype_id: '',
             brand_name: '',
-            customer_class_id: null,
+            customer_class_id: '',
             referrer_code: '',
-            time_consent: null,
-            reference_info: null,
-            reg_channel: {},
+            time_consent: 0,
+            reference_info: 0,
+            registration_channel: 0,
+            outlet_image: [],
 
+            //company address
+            company_address: {
+                address_name: '',
+                region: '',
+                address_1: '',
+                address_2: '',
+                address_3: '',
+                province: '',
+                city: '',
+                district: '',
+                sub_district: '',
+                postal_code: '',
+                note: '',
+                latitude: null,
+                longitude: null
+            },
+
+            //sales and shipping info
+            ship_to_address: {
+                address_name: '',
+                region: '',
+                address_1: '',
+                address_2: '',
+                address_3: '',
+                province: '',
+                city: '',
+                district: '',
+                sub_district: '',
+                postal_code: '',
+                note: '',
+                latitude: null,
+                longitude: null
+            },
+            shipping_method_id: '',
+            pic_order_name: '',
+            pic_order_contact: '',
+            sales_territory_id: '',
+            salesperson_id: '',
+            price_level_id: '',
+
+            // Business Info
+            owner_name: '',
+            owner_role: '',
+            email: '',
+            id_card_doc_number: '',
+            taxpayer_doc_number: '',
+            id_card_doc_url: '',
+            company_contract_doc_url: '',
+            notarial_deed_doc_url: '',
+            taxpayer_doc_url: '',
+            taxable_entrepeneur_doc_url: '',
+            business_license_doc_url: '',
+            company_certificate_reg_url: '',
+
+            // Finance Info
+            pic_finance_name: '',
+            pic_finance_contact: '',
+            payment_term_id: '',
+            exchange_invoice: 0,
+            exchange_invoice_time: '',
+            invoice_term: 0,
+            finance_email: '',
+
+            // Billing Address
+            bill_to_address: {
+                address_name: '',
+                region: '',
+                address_1: '',
+                address_2: '',
+                address_3: '',
+                province: '',
+                city: '',
+                district: '',
+                sub_district: '',
+                postal_code: '',
+                note: '',
+                latitude: null,
+                longitude: null
+            },
+
+            //Additional Info
+            comment_1: '',
+            comment_2: '',
         },
         confirm_data: {},
     }
