@@ -1180,7 +1180,7 @@
                 }
             },
             admDivisionSelected(d, section, current, next) {// For selected related adm division
-                this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [current]: null }})
+                this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [current]: '' }})
                 if (d) {
                     if(current !== 'sub_district'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [current]: d.description }})
@@ -1191,11 +1191,11 @@
                 }else{
                     if(current === 'region'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
-                            province: null,
-                            city: null,
-                            district: null,
-                            sub_district: null,
-                            postal_code: null,
+                            province: '',
+                            city: '',
+                            district: '',
+                            sub_district: '',
+                            postal_code: '',
                         }})
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
                             province: true,
@@ -1206,10 +1206,10 @@
                     }
                     else if(current === 'province'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
-                            city: null,
-                            district: null,
-                            sub_district: null,
-                            postal_code: null,
+                            city: '',
+                            district: '',
+                            sub_district: '',
+                            postal_code: '',
                         }})
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
                             city: true,
@@ -1219,9 +1219,9 @@
                     }
                     else if(current === 'city'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
-                            district: null,
-                            sub_district: null,
-                            postal_code: null,
+                            district: '',
+                            sub_district: '',
+                            postal_code: '',
                         }})
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
                             district: true,
@@ -1230,15 +1230,15 @@
                     }
                     else if(current === 'district'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
-                            sub_district: null,
-                            postal_code: null,
+                            sub_district: '',
+                            postal_code: '',
                         }})
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
                             sub_district: true,
                         }})
                     }
                     else if(current === 'sub_district'){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [next]: null }})
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [next]: '' }})
                     }
                 }
             },
