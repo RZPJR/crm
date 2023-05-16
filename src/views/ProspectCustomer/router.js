@@ -5,7 +5,7 @@ export default [
         component: () => import("./Index.vue"),
         meta: {
             auth: true,
-            title: 'Prospect Customer List'
+            title: 'Prospective Customer List'
         },
     },
     {
@@ -14,14 +14,14 @@ export default [
         component: () => import("./Detail.vue"),
         meta: {
             auth: true,
-            title: 'Detail Prospect Customer',
+            title: 'Detail Prospective Customer',
             breadcrumbs : [
                 {
-                    text: 'Prospect Customer List',
+                    text: 'Prospective Customer List',
                     to : '/customer-relation/prospective-customer'
                 },
                 {
-                    text: 'Detail Prospect Customer',
+                    text: 'Detail Prospective Customer',
                 },
             ],
         }
@@ -32,14 +32,14 @@ export default [
         component: () => import("./Create.vue"),
         meta: {
             auth: true,
-            title: 'Create Prospect Customer',
+            title: 'Create Prospective Customer',
             breadcrumbs: [
                 {
-                    text: 'Prospect Customer List',
+                    text: 'Prospective Customer List',
                     to : '/customer-relation/prospective-customer'
                 },
                 {
-                    text: 'Create Prospect Customer',
+                    text: 'Create Prospective Customer',
                 },
             ],
         },
