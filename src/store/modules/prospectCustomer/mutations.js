@@ -62,7 +62,11 @@ const mutations = {
     setDisabledProspectCustomerCreate: function(state, payload) {
         state.create_prospect_customer.disabled = payload;
         return state;
-    }
+    },
+    setOutletImage: function(state, payload) {
+        state.create_prospect_customer.form.outlet_image = payload;
+        return state;
+    },
 };
 
 export default mutations;
