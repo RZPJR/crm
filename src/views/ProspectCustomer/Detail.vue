@@ -151,8 +151,7 @@
         </div>
         <div class="box">
             <v-row class="my2">
-                <v-col cols="12" class="fs16 bold" v-if="data.business_type?.value_int === 1">Sales and Shipping Info</v-col>
-                <v-col cols="12" class="fs16 bold" v-else>Business/Shipping Info</v-col>
+                <v-col cols="12" class="fs16 bold">Sales and Shipping Info</v-col>
             </v-row>
             <v-row class="px-5 mt-10">
                 <v-col cols="12" md="6" class="-mt24">
@@ -246,10 +245,10 @@
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Taxpayer Number'" :value="data.taxpayer_doc_number? data.taxpayer_doc_number : '-' "/>
                 </v-col>
-                <v-col cols="12" md="6" class="-mt24">
+                <v-col cols="12" md="6" class="-mt24" v-if="data.business_type?.value_int === 1">
                     <DetailRowNew :name="'PIC Operation/Purchasing Name'" :value="data.pic_operation_name? data.pic_operation_name : '-' "/>
                 </v-col>
-                <v-col cols="12" md="6" class="-mt24">
+                <v-col cols="12" md="6" class="-mt24" v-if="data.business_type?.value_int === 1">
                     <DetailRowNew :name="'PIC Operation/Purchasing Contact'" :value="data.pic_operation_contact? data.pic_operation_contact : '-' "/>
                 </v-col>
             </v-row>
