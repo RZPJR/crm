@@ -80,6 +80,17 @@ const actions = {
         }
     },
 
+    fetchCustomerDetail: async ({ state, commit, dispatch }, payload) => {
+        try {
+            const response = await http.get("/customer/" + payload);
+            if (response.data.data){
+                commit('setFormProspectCustomerCreate', response.data.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
     // Create Prospect Customer 
     fetchProspectCustomerCreate: async ({ commit, state, dispatch }, payload) => {
         commit("setFormProspectCustomerCreate", {
