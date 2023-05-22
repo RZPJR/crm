@@ -185,7 +185,7 @@
                             label="Region"
                             :error="error.region"
                             :data-unq="`prospectCustomer-select-companyAddressRegion`"
-                            :val="form.company_address.region"
+                            :adm_division="form.company_address.region"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24 mb24">
@@ -252,7 +252,7 @@
                             :data-unq="`prospectCustomer-select-companyAddressProvince`"
                             :region="form.company_address.region"
                             :disabled="disabled.company_address.province"
-                            :val="form.company_address.province"
+                            :adm_division="form.company_address.province"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -266,7 +266,7 @@
                             :region="form.company_address.region"
                             :province="form.company_address.province"
                             :disabled="disabled.company_address.city"
-                            :val="form.company_address.city"
+                            :adm_division="form.company_address.city"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -281,7 +281,7 @@
                             :province="form.company_address.province"
                             :city="form.company_address.city"
                             :disabled="disabled.company_address.district"
-                            :val="form.company_address.district"
+                            :adm_division="form.company_address.district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -297,7 +297,7 @@
                             :city="form.company_address.city"
                             :district="form.company_address.district"
                             :disabled="disabled.company_address.sub_district"
-                            :val="form.company_address.sub_district"
+                            :adm_division="form.company_address.sub_district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -400,7 +400,7 @@
                             :error="error.region"
                             :data-unq="`prospectCustomer-select-shippingInfoRegion`"
                             :disabled="flagging.shipping_info"
-                            :val="form.ship_to_address.region"
+                            :adm_division="form.ship_to_address.region"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24 mb24">
@@ -470,7 +470,7 @@
                             :data-unq="`prospectCustomer-select-shippingInfoProvince`"
                             :region="form.ship_to_address.region"
                             :disabled="disabled.ship_to_address.province || flagging.shipping_info"
-                            :val="form.ship_to_address.province"
+                            :adm_division="form.ship_to_address.province"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -484,7 +484,7 @@
                             :region="form.ship_to_address.region"
                             :province="form.ship_to_address.province"
                             :disabled="disabled.ship_to_address.city || flagging.shipping_info"
-                            :val="form.ship_to_address.city"
+                            :adm_division="form.ship_to_address.city"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -499,7 +499,7 @@
                             :province="form.ship_to_address.province"
                             :city="form.ship_to_address.city"
                             :disabled="disabled.ship_to_address.district || flagging.shipping_info"
-                            :val="form.ship_to_address.district"
+                            :adm_division="form.ship_to_address.district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -515,7 +515,7 @@
                             :city="form.ship_to_address.city"
                             :district="form.ship_to_address.district"
                             :disabled="disabled.ship_to_address.sub_district || flagging.shipping_info"
-                            :val="form.ship_to_address.sub_district"
+                            :adm_division="form.ship_to_address.sub_district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -1019,7 +1019,7 @@
                             label="Region"
                             :error="error.region"
                             :data-unq="`prospectCustomer-select-billAddressRegion`"
-                            :val="form.bill_to_address.region"
+                            :adm_division="form.bill_to_address.region"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24 mb24">
@@ -1086,7 +1086,7 @@
                             :data-unq="`prospectCustomer-select-billAddressProvince`"
                             :region="form.bill_to_address.region"
                             :disabled="disabled.bill_to_address.province"
-                            :val="form.bill_to_address.province"
+                            :adm_division="form.bill_to_address.province"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -1100,7 +1100,7 @@
                             :region="form.bill_to_address.region"
                             :province="form.bill_to_address.province"
                             :disabled="disabled.bill_to_address.city"
-                            :val="form.bill_to_address.city"
+                            :adm_division="form.bill_to_address.city"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -1115,7 +1115,7 @@
                             :province="form.bill_to_address.province"
                             :city="form.bill_to_address.city"
                             :disabled="disabled.bill_to_address.district"
-                            :val="form.bill_to_address.district"
+                            :adm_division="form.bill_to_address.district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -1131,7 +1131,7 @@
                             :city="form.bill_to_address.city"
                             :district="form.bill_to_address.district"
                             :disabled="disabled.bill_to_address.sub_district"
-                            :val="form.bill_to_address.sub_district"
+                            :adm_division="form.bill_to_address.sub_district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
