@@ -1248,25 +1248,41 @@
                         >
                             <span class="text-black80 bold">Cancel</span>
                         </v-btn>
-                        <v-btn
-                            depressed
-                            outlined
-                            color="#EBEBEB"
-                            class="main-btn"
-                            @click="draft()"
-                            data-unq="prospectCustomer-button-save"
-                        >
-                            <span class="text-secondary bold">Save</span>
-                        </v-btn>
-                        <v-btn
-                            depressed
-                            color="#50ABA3"
-                            class="main-btn white--text"
-                            @click="upgrade()"
-                            data-unq="prospectCustomer-button-create"
-                        >
-                            <span class="bold">Upgrade</span>
-                        </v-btn>
+                        <div class="ml10">
+                            <v-tooltip top>
+                                <template v-slot:activator="{ on: tooltip }">
+                                    <v-btn
+                                        depressed
+                                        outlined
+                                        color="#EBEBEB"
+                                        class="main-btn"
+                                        @click="draft()"
+                                        data-unq="prospectCustomer-button-save"
+                                        v-on="{ ...tooltip }"
+                                    >
+                                        <span class="text-secondary bold">Save</span>
+                                    </v-btn>
+                                </template>
+                                <span>Can save the data even if it is incomplete</span>
+                            </v-tooltip>
+                        </div>
+                        <div class="ml10">
+                            <v-tooltip top>
+                                <template v-slot:activator="{ on: tooltip }">
+                                    <v-btn
+                                        depressed
+                                        color="#50ABA3"
+                                        class="main-btn white--text"
+                                        @click="upgrade()"
+                                        data-unq="prospectCustomer-button-create"
+                                        v-on="{ ...tooltip }"
+                                    >
+                                        <span class="bold">Upgrade</span>
+                                    </v-btn>
+                                </template>
+                                <span>Must complete the required fields to Upgrade</span>
+                            </v-tooltip>
+                        </div>
                     </v-card-actions>
                 </v-col>
             </v-row>
