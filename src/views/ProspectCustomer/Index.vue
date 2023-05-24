@@ -156,13 +156,13 @@
                         <td :data-unq="`proscus-value-phonenumber-${props.index}`">{{ props.item.pic_order_contact }}</td>
                         <td :data-unq="`proscus-value-archetype-${props.index}`">{{ props.item.archetype.description }}</td>
                         <td :data-unq="`proscus-value-customer_type-${props.index}`">{{ props.item.customer_type.description }}</td>
-                        <td :data-unq="`proscus-value-region-${props.index}`">{{ props.item.company_address.region }}</td>
+                        <td :data-unq="`proscus-value-region-${props.index}`">{{ props.item.company_address_region }}</td>
                         <td :data-unq="`proscus-value-sub_district-${props.index}`">
-                            {{ props.item.company_address.province }} - 
-                            {{ props.item.company_address.city }} <br>
+                            {{ props.item.company_address_province }} - 
+                            {{ props.item.company_address_city }} <br>
                             <span class="second-color">
-                                {{ props.item.company_address.district }} -
-                                {{ props.item.company_address.sub_district }}
+                                {{ props.item.company_address_district }} -
+                                {{ props.item.company_address_sub_district }}
                             </span>
                         </td>
                         <td :data-unq="`proscus-value-customer_upgrade-${props.index}`">
