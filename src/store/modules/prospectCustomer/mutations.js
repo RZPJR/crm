@@ -67,6 +67,14 @@ const mutations = {
         state.create_prospect_customer.form.outlet_image = payload;
         return state;
     },
+    setSelectedChannel: function(state, payload) {
+        state.create_prospect_customer.selected_channel = payload;
+        return state;
+    },
+    setError: function(state, payload) {
+        state.create_prospect_customer.error = payload;
+        return state;
+    },
 };
 
 export default mutations;

@@ -100,10 +100,10 @@
             </v-row>
             <v-row class="px-5 mt-10">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Address Name'" :value="data.company_address?.address_name ? data.company_address.address_name : '-' "/>
+                    <DetailRowNew :name="'Address Name'" :value="data.company_address_name ? data.company_address_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Region'" :value="data.company_address?.region ? data.company_address.region : '-' "/>
+                    <DetailRowNew :name="'Region'" :value="data.company_address_region ? data.company_address_region : '-' "/>
                 </v-col>
                 <v-col cols="12" md="12" class="-mt24 mb24">
                     <v-card outlined class="pa20">
@@ -112,54 +112,53 @@
                         </div>
                         <v-row class="px-5">
                             <v-col cols="12" md="12">
-                                <DetailRowNew :name="'Address Detail'" :value="data.company_address?.address_1? data.company_address.address_1 : '-'" :align="true"/>
+                                <DetailRowNew :name="'Address Detail'" :value="data.company_address_detail_1? data.company_address_detail_1 : '-'" :align="true"/>
                             </v-col>
                             <v-col cols="12" md="12" class="-mt24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.company_address?.address_2? data.company_address.address_2 : '-'" :align="true"/>
+                                <DetailRowNew :name="'Continue Address Detail'" :value="data.company_address_detail_2? data.company_address_detail_2 : '-'" :align="true"/>
                             </v-col>
                             <v-col cols="12" md="12" class="-mt24 -mb24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.company_address?.address_3? data.company_address.address_3 : '-'" :align="true"/>
+                                <DetailRowNew :name="'Continue Address Detail'" :value="data.company_address_detail_3? data.company_address_detail_3 : '-'" :align="true"/>
                             </v-col>
                         </v-row>
                     </v-card>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Province'" :value="data.company_address?.province ? data.company_address.province : '-' "/>
+                    <DetailRowNew :name="'Province'" :value="data.company_address_province ? data.company_address_province : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'City'" :value="data.company_address?.city ? data.company_address.city : '-' "/>
+                    <DetailRowNew :name="'City'" :value="data.company_address_city ? data.company_address_city : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'District'" :value="data.company_address?.district ? data.company_address.district : '-' "/>
+                    <DetailRowNew :name="'District'" :value="data.company_address_district ? data.company_address_district : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Subdistrict'" :value="data.company_address?.sub_district ? data.company_address.sub_district : '-' "/>
+                    <DetailRowNew :name="'Subdistrict'" :value="data.company_address_sub_district ? data.company_address_sub_district : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Postal Code'" :value="data.company_address?.postal_code ? data.company_address.postal_code : '-' "/>
+                    <DetailRowNew :name="'Postal Code'" :value="data.company_address_postal_code ? data.company_address_postal_code : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Latitude'" :value="data.company_address?.latitude ? data.company_address.latitude : '-'"/>
+                    <DetailRowNew :name="'Latitude'" :value="data.company_address_latitude ? data.company_address_latitude : '-'"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Longitude'" :value="data.company_address?.longitude ? data.company_address.longitude : '-'"/>
+                    <DetailRowNew :name="'Longitude'" :value="data.company_address_longitude ? data.company_address_longitude : '-'"/>
                 </v-col>
                 <v-col cols="12" class="-mt24">
-                    <DetailRowNew :name="'Address Note'" :value="data.company_address?.note ? data.company_address.note : '-'" :align="true"/>
+                    <DetailRowNew :name="'Address Note'" :value="data.company_address_note ? data.company_address_note : '-'" :align="true"/>
                 </v-col>
             </v-row>
         </div>
         <div class="box">
             <v-row class="my2">
-                <v-col cols="12" class="fs16 bold" v-if="data.business_type?.value_int === 1">Sales and Shipping Info</v-col>
-                <v-col cols="12" class="fs16 bold" v-else>Business/Shipping Info</v-col>
+                <v-col cols="12" class="fs16 bold">Sales and Shipping Info</v-col>
             </v-row>
             <v-row class="px-5 mt-10">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Address Name'" :value="data.ship_to_address?.address_name? data.ship_to_address.address_name : '-' "/>
+                    <DetailRowNew :name="'Address Name'" :value="data.shipping_address_name? data.shipping_address_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Address Region'" :value="data.ship_to_address?.region? data.ship_to_address.region : '-' "/>
+                    <DetailRowNew :name="'Address Region'" :value="data.shipping_address_region? data.shipping_address_region : '-' "/>
                 </v-col>
                 <v-col cols="12" md="12" class="-mt24 mb24">
                     <v-card outlined class="pa20">
@@ -168,40 +167,40 @@
                         </div>
                         <v-row class="px-5">
                             <v-col cols="12" md="12">
-                                <DetailRowNew :name="'Address Detail'" :value="data.ship_to_address?.address_1? data.ship_to_address.address_1 : '-'" :align="true"/>
+                                <DetailRowNew :name="'Address Detail'" :value="data.shipping_address_detail_1? data.shipping_address_detail_1 : '-'" :align="true"/>
                             </v-col>
                             <v-col cols="12" md="12" class="-mt24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.ship_to_address?.address_2? data.ship_to_address.address_2 : '-'" :align="true"/>
+                                <DetailRowNew :name="'Continue Address Detail'" :value="data.shipping_address_detail_2? data.shipping_address_detail_2 : '-'" :align="true"/>
                             </v-col>
                             <v-col cols="12" md="12" class="-mt24 -mb24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.ship_to_address?.address_3? data.ship_to_address.address_3 : '-'" :align="true"/>
+                                <DetailRowNew :name="'Continue Address Detail'" :value="data.shipping_address_detail_3? data.shipping_address_detail_3 : '-'" :align="true"/>
                             </v-col>
                         </v-row>
                     </v-card>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Province'" :value="data.ship_to_address?.province? data.ship_to_address.province : '-' "/>
+                    <DetailRowNew :name="'Province'" :value="data.shipping_address_province? data.shipping_address_province : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'City'" :value="data.ship_to_address?.city? data.ship_to_address.city : '-' "/>
+                    <DetailRowNew :name="'City'" :value="data.shipping_address_city? data.shipping_address_city : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'District'" :value="data.ship_to_address?.district? data.ship_to_address.district : '-' "/>
+                    <DetailRowNew :name="'District'" :value="data.shipping_address_district? data.shipping_address_district : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Subdistrict'" :value="data.ship_to_address?.sub_district? data.ship_to_address.sub_district : '-' "/>
+                    <DetailRowNew :name="'Subdistrict'" :value="data.shipping_address_sub_district? data.shipping_address_sub_district : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Postal Code'" :value="data.ship_to_address?.postal_code? data.ship_to_address.postal_code : '-' "/>
+                    <DetailRowNew :name="'Postal Code'" :value="data.shipping_address_postal_code? data.shipping_address_postal_code : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Latitude'" :value="data.ship_to_address?.latitude? data.ship_to_address.latitude : '-' "/>
+                    <DetailRowNew :name="'Latitude'" :value="data.shipping_address_latitude? data.shipping_address_latitude : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Longitude'" :value="data.ship_to_address?.longitude? data.ship_to_address.longitude : '-' "/>
+                    <DetailRowNew :name="'Longitude'" :value="data.shipping_address_longitude? data.shipping_address_longitude : '-' "/>
                 </v-col>
                 <v-col cols="12" md="12" class="-mt24">
-                    <DetailRowNew :name="'Address Note'" :value="data.ship_to_address?.note? data.ship_to_address.note : '-'" :align="true"/>
+                    <DetailRowNew :name="'Address Note'" :value="data.shipping_address_note? data.shipping_address_note : '-'" :align="true"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Site'" :value="data.site?.description? data.site.description : '-' "/>
@@ -246,10 +245,10 @@
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Taxpayer Number'" :value="data.taxpayer_doc_number? data.taxpayer_doc_number : '-' "/>
                 </v-col>
-                <v-col cols="12" md="6" class="-mt24">
+                <v-col cols="12" md="6" class="-mt24" v-if="data.business_type?.value_int === 1">
                     <DetailRowNew :name="'PIC Operation/Purchasing Name'" :value="data.pic_operation_name? data.pic_operation_name : '-' "/>
                 </v-col>
-                <v-col cols="12" md="6" class="-mt24">
+                <v-col cols="12" md="6" class="-mt24" v-if="data.business_type?.value_int === 1">
                     <DetailRowNew :name="'PIC Operation/Purchasing Contact'" :value="data.pic_operation_contact? data.pic_operation_contact : '-' "/>
                 </v-col>
             </v-row>
@@ -355,10 +354,10 @@
             </v-row>
             <v-row class="px-5 mt-10">
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Address Name'" :value="data.bill_to_address?.address_name? data.bill_to_address.address_name : '-' "/>
+                    <DetailRowNew :name="'Address Name'" :value="data.billing_address_name? data.billing_address_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Address Region'" :value="data.bill_to_address?.region? data.bill_to_address.region : '-' "/>
+                    <DetailRowNew :name="'Address Region'" :value="data.billing_address_region? data.billing_address_region : '-' "/>
                 </v-col>
                 <v-col cols="12" md="12" class="-mt24 mb24">
                     <v-card outlined class="pa20">
@@ -367,40 +366,40 @@
                         </div>
                         <v-row class="px-5">
                             <v-col cols="12" md="12">
-                                <DetailRowNew :name="'Address Detail'" :value="data.bill_to_address?.address_1? data.bill_to_address.address_1 : '-'" :align="true"/>
+                                <DetailRowNew :name="'Address Detail'" :value="data.billing_address_detail_1? data.billing_address_detail_1 : '-'" :align="true"/>
                             </v-col>
                             <v-col cols="12" md="12" class="-mt24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.bill_to_address?.address_2? data.bill_to_address.address_2 : '-'" :align="true"/>
+                                <DetailRowNew :name="'Continue Address Detail'" :value="data.billing_address_detail_2? data.billing_address_detail_2 : '-'" :align="true"/>
                             </v-col>
                             <v-col cols="12" md="12" class="-mt24 -mb24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.bill_to_address?.address_3? data.bill_to_address.address_3 : '-'" :align="true"/>
+                                <DetailRowNew :name="'Continue Address Detail'" :value="data.billing_address_detail_3? data.billing_address_detail_3 : '-'" :align="true"/>
                             </v-col>
                         </v-row>
                     </v-card>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Province'" :value="data.bill_to_address?.province? data.bill_to_address.province : '-' "/>
+                    <DetailRowNew :name="'Province'" :value="data.billing_address_province? data.billing_address_province : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'City'" :value="data.bill_to_address?.city? data.bill_to_address.city : '-' "/>
+                    <DetailRowNew :name="'City'" :value="data.billing_address_city? data.billing_address_city : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'District'" :value="data.bill_to_address?.district? data.bill_to_address.district : '-' "/>
+                    <DetailRowNew :name="'District'" :value="data.billing_address_district? data.billing_address_district : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Subdistrict'" :value="data.bill_to_address?.sub_district? data.bill_to_address.sub_district : '-' "/>
+                    <DetailRowNew :name="'Subdistrict'" :value="data.billing_address_sub_district? data.billing_address_sub_district : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Postal Code'" :value="data.bill_to_address?.postal_code? data.bill_to_address.postal_code : '-' "/>
+                    <DetailRowNew :name="'Postal Code'" :value="data.billing_address_postal_code? data.billing_address_postal_code : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Latitude'" :value="data.bill_to_address?.latitude? data.bill_to_address.latitude : '-' "/>
+                    <DetailRowNew :name="'Latitude'" :value="data.billing_address_latitude? data.billing_address_latitude : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Longitude'" :value="data.bill_to_address?.longitude? data.bill_to_address.longitude : '-' "/>
+                    <DetailRowNew :name="'Longitude'" :value="data.billing_address_longitude? data.billing_address_longitude : '-' "/>
                 </v-col>
                 <v-col cols="12" md="12" class="-mt24">
-                    <DetailRowNew :name="'Address Note'" :value="data.bill_to_address?.note? data.ship_to_address.note : '-'" :align="true"/>
+                    <DetailRowNew :name="'Address Note'" :value="data.billing_address_note? data.billing_address_note : '-'" :align="true"/>
                 </v-col>
             </v-row>
         </div>

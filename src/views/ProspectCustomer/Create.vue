@@ -8,11 +8,11 @@
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectCustomer
-                            @selected="setIdComponentSelected($event, 'customer_id')"
+                            @selected="setIdComponentSelected($event, 'customer_code')"
                             :norequired="true"
                             name="customer"
                             :dense="true"
-                            :error="error.customer_id"
+                            :error="error.customer_code"
                             :data-unq="`prospectCustomer-select-customer`"
                             customer_type="personal"
                         ></SelectCustomer>
@@ -137,7 +137,7 @@
                             table="prospect_customer"
                             attribute="reg_channel"
                             :dense="true"
-                            :glossary="form.selected_channel"
+                            :glossary="selected_channel"
                             :error="error.registration_channel_value"
                             :data-unq="`prospectCustomer-select-registrationChannel`"
                             :disabled="true"
@@ -151,6 +151,7 @@
                                 class="ma-3"
                                 data-unq="prospectCustomer-upload-multiImage"
                                 max_img="7"
+                                label="Shipping Goods Place/Outlet Image"
                             />
                         </v-row>
                     </v-col>
@@ -165,13 +166,13 @@
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
-                            data-unq="prospectCustomer-input-companyAddressAddressName"
-                            name="company_address_address_name"
-                            v-model="form.company_address.address_name"
+                            data-unq="prospectCustomer-input-companyAddressName"
+                            name="company_address_name"
+                            v-model="form.company_address_name"
                             required
                             outlined
                             dense
-                            :error-messages="error.address_name"
+                            :error-messages="error.company_address_name"
                             maxlength="30"
                         >
                             <template v-slot:label>Address Name<span class="text-red">*</span></template>
@@ -179,13 +180,13 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address', 'region', 'province')"
+                            @selected="admDivisionSelected($event, 'company_address_region', 'company_address_province')"
                             name="company_address_region"
                             :dense="true"
                             label="Region"
-                            :error="error.region"
+                            :error="error.company_address_region"
                             :data-unq="`prospectCustomer-select-companyAddressRegion`"
-                            :adm_division="form.company_address.region"
+                            :adm_division="form.company_address_region"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24 mb24">
@@ -196,13 +197,13 @@
                             <v-row>
                                 <v-col cols="12" md="12">
                                     <v-text-field
-                                        data-unq="prospectCustomer-input-companyAddressAddress_1"
-                                        name="address_1"
-                                        v-model="form.company_address.address_1"
+                                        data-unq="prospectCustomer-input-companyAddress1"
+                                        name="company_address_detail_1"
+                                        v-model="form.company_address_detail_1"
                                         required
                                         outlined
                                         dense
-                                        :error-messages="error.address_1"
+                                        :error-messages="error.company_address_detail_1"
                                         :counter="60"
                                         maxlength="60"
                                     >
@@ -211,13 +212,13 @@
                                 </v-col>
                                 <v-col cols="12" md="12" class="-mt24">
                                     <v-text-field
-                                        data-unq="prospectCustomer-input-companyAddressAddress2"
+                                        data-unq="prospectCustomer-input-companyAddress2"
                                         name="address_1"
-                                        v-model="form.company_address.address_2"
+                                        v-model="form.company_address_detail_2"
                                         required
                                         outlined
                                         dense
-                                        :error-messages="error.address_2"
+                                        :error-messages="error.company_address_detail_2"
                                         :counter="60"
                                         maxlength="60"
                                     >
@@ -226,13 +227,13 @@
                                 </v-col>
                                 <v-col cols="12" md="12" class="-mt24 -mb24">
                                     <v-text-field
-                                        data-unq="prospectCustomer-input-companyAddressAddress3"
+                                        data-unq="prospectCustomer-input-companyAddress3"
                                         name="address_1"
-                                        v-model="form.company_address.address_3"
+                                        v-model="form.company_address_detail_3"
                                         required
                                         outlined
                                         dense
-                                        :error-messages="error.address_3"
+                                        :error-messages="error.company_address_detail_3"
                                         :counter="60"
                                         maxlength="60"
                                     >
@@ -244,71 +245,71 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address', 'province', 'city')"
+                            @selected="admDivisionSelected($event, 'company_address_province', 'company_address_city')"
                             name="company_address_province"
                             :dense="true"
                             label="Province"
-                            :error="error.province"
+                            :error="error.company_address_province"
                             :data-unq="`prospectCustomer-select-companyAddressProvince`"
-                            :region="form.company_address.region"
-                            :disabled="disabled.company_address.province"
-                            :adm_division="form.company_address.province"
+                            :region="form.company_address_region"
+                            :disabled="disabled.company_address_province"
+                            :adm_division="form.company_address_province"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address', 'city', 'district')"
+                            @selected="admDivisionSelected($event, 'company_address_city', 'company_address_district')"
                             name="company_address_city"
                             :dense="true"
                             label="City"
-                            :error="error.city"
+                            :error="error.company_address_city"
                             :data-unq="`prospectCustomer-select-companyAddressCity`"
-                            :region="form.company_address.region"
-                            :province="form.company_address.province"
-                            :disabled="disabled.company_address.city"
-                            :adm_division="form.company_address.city"
+                            :region="form.company_address_region"
+                            :province="form.company_address_province"
+                            :disabled="disabled.company_address_city"
+                            :adm_division="form.company_address_city"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address', 'district', 'sub_district')"
+                            @selected="admDivisionSelected($event, 'company_address_district', 'company_address_sub_district')"
                             name="company_address_district"
                             :dense="true"
                             label="District"
-                            :error="error.district"
+                            :error="error.company_address_district"
                             :data-unq="`prospectCustomer-select-companyAddressDistrict`"
-                            :region="form.company_address.region"
-                            :province="form.company_address.province"
-                            :city="form.company_address.city"
-                            :disabled="disabled.company_address.district"
-                            :adm_division="form.company_address.district"
+                            :region="form.company_address_region"
+                            :province="form.company_address_province"
+                            :city="form.company_address_city"
+                            :disabled="disabled.company_address_district"
+                            :adm_division="form.company_address_district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address', 'sub_district', 'postal_code')"
-                            name="company_address_district"
+                            @selected="admDivisionSelected($event, 'company_address_sub_district', 'company_address_postal_code')"
+                            name="company_address_sub_district"
                             :dense="true"
                             label="Subdistrict"
-                            :error="error.sub_district"
+                            :error="error.company_address_sub_district"
                             :data-unq="`prospectCustomer-select-companyAddressSubdistrict`"
-                            :region="form.company_address.region"
-                            :province="form.company_address.province"
-                            :city="form.company_address.city"
-                            :district="form.company_address.district"
-                            :disabled="disabled.company_address.sub_district"
-                            :adm_division="form.company_address.sub_district"
+                            :region="form.company_address_region"
+                            :province="form.company_address_province"
+                            :city="form.company_address_city"
+                            :district="form.company_address_district"
+                            :disabled="disabled.company_address_sub_district"
+                            :adm_division="form.company_address_sub_district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-companyAddressPostalCode"
                             name="company_address_postal_code"
-                            v-model="form.company_address.postal_code"
+                            v-model="form.company_address_postal_code"
                             required
                             outlined
                             dense
-                            :error-messages="error.postal_code"
+                            :error-messages="error.company_address_postal_code"
                             maxlength="10"
                             :disabled="true"
                         >
@@ -319,11 +320,11 @@
                         <v-text-field
                             data-unq="prospectCustomer-input-companyAddressLatitude"
                             name="company_address_latitude"
-                            v-model="form.company_address.latitude"
+                            v-model="form.company_address_latitude"
                             required
                             outlined
                             dense
-                            :error-messages="error.latitude"
+                            :error-messages="error.company_address_latitude"
                             maxlength="17"
                         >
                             <template v-slot:label>Latitude<span class="text-red">*</span></template>
@@ -333,11 +334,11 @@
                         <v-text-field
                             data-unq="prospectCustomer-input-companyAddressLongitude"
                             name="company_address_longitude"
-                            v-model="form.company_address.longitude"
+                            v-model="form.company_address_longitude"
                             required
                             outlined
                             dense
-                            :error-messages="error.longitude"
+                            :error-messages="error.company_address_longitude"
                             maxlength="16"
                         >
                             <template v-slot:label>Longitude<span class="text-red">*</span></template>
@@ -345,14 +346,15 @@
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24">
                         <v-textarea
-                            name="company_address_address_note"
-                            v-model="form.company_address.note"
+                            name="company_address_note"
+                            v-model="form.company_address_note"
                             :counter="1000"
                             maxlength="1000"
                             outlined
                             dense
                             rows="5"
                             :data-unq="`prospectCustomer-input-companyAddressAddressNote`"
+                            :error-messages="error.company_address_note"
                         >
                             <template v-slot:label>Address Note</template>
                         </v-textarea>
@@ -360,31 +362,29 @@
                 </v-row>
             </div>
         </div>
-        <div class="box-title fs16 bold" v-if="form.business_type_id === 1">
+        <div class="box-title fs16 bold">
             Sales and Shipping Info
         </div>
-        <div class="box-title fs16 bold" v-else>
-            Business/Shipping Info
-        </div>
         <div class="box-body">
-            <div class="-mt24" v-if="form.business_type_id === 1">
+            <div class="-mt24" v-if="form.business_type_id === 1 && checkCompanyAddress() === true">
                 <v-checkbox
                     data-unq="prospectCustomer-input-shippingInfoCheckBox"
                     label="Same as Company Address"
                     v-model="flagging.shipping_info"
+                    @click="clickedShippingInfo(flagging.shipping_info)"
                 ></v-checkbox>
             </div>
-            <div class="mt24">
+            <div class="mt24" v-if="flagging.shipping_info === false">
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-shippingInfoAddressName"
-                            name="ship_to_address_address_name"
-                            v-model="form.ship_to_address.address_name"
+                            name="shipping_address_name"
+                            v-model="form.shipping_address_name"
                             required
                             outlined
                             dense
-                            :error-messages="error.address_name"
+                            :error-messages="error.shipping_address_name"
                             maxlength="30"
                             :disabled="flagging.shipping_info"
                         >
@@ -393,14 +393,14 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'ship_to_address', 'region', 'province')"
-                            name="ship_to_address_region"
+                            @selected="admDivisionSelected($event, 'shipping_address_region', 'shipping_address_province')"
+                            name="shipping_address_region"
                             :dense="true"
                             label="Region"
-                            :error="error.region"
+                            :error="error.shipping_address_region"
                             :data-unq="`prospectCustomer-select-shippingInfoRegion`"
                             :disabled="flagging.shipping_info"
-                            :adm_division="form.ship_to_address.region"
+                            :adm_division="form.shipping_address_region"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24 mb24">
@@ -412,12 +412,12 @@
                                 <v-col cols="12" md="12">
                                     <v-text-field
                                         data-unq="prospectCustomer-input-shippingInfoAddress_1"
-                                        name="address_1"
-                                        v-model="form.ship_to_address.address_1"
+                                        name="shipping_address_detail_1"
+                                        v-model="form.shipping_address_detail_1"
                                         required
                                         outlined
                                         dense
-                                        :error-messages="error.address_1"
+                                        :error-messages="error.shipping_address_detail_1"
                                         :counter="60"
                                         maxlength="60"
                                         :disabled="flagging.shipping_info"
@@ -428,12 +428,12 @@
                                 <v-col cols="12" md="12" class="-mt24">
                                     <v-text-field
                                         data-unq="prospectCustomer-input-shippingInfoAddress2"
-                                        name="address_1"
-                                        v-model="form.ship_to_address.address_2"
+                                        name="shipping_address_detail_2"
+                                        v-model="form.shipping_address_detail_2"
                                         required
                                         outlined
                                         dense
-                                        :error-messages="error.address_2"
+                                        :error-messages="error.shipping_address_detail_2"
                                         :counter="60"
                                         maxlength="60"
                                         :disabled="flagging.shipping_info"
@@ -444,12 +444,12 @@
                                 <v-col cols="12" md="12" class="-mt24 -mb24">
                                     <v-text-field
                                         data-unq="prospectCustomer-input-shippingInfoAddress3"
-                                        name="address_1"
-                                        v-model="form.ship_to_address.address_3"
+                                        name="shipping_address_detail_3"
+                                        v-model="form.shipping_address_detail_3"
                                         required
                                         outlined
                                         dense
-                                        :error-messages="error.address_3"
+                                        :error-messages="error.shipping_address_detail_3"
                                         :counter="60"
                                         maxlength="60"
                                         :disabled="flagging.shipping_info"
@@ -462,71 +462,71 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'ship_to_address', 'province', 'city')"
-                            name="ship_to_address_province"
+                            @selected="admDivisionSelected($event, 'shipping_address_province', 'shipping_address_city')"
+                            name="shipping_address_province"
                             :dense="true"
                             label="Province"
-                            :error="error.province"
+                            :error="error.shipping_address_province"
                             :data-unq="`prospectCustomer-select-shippingInfoProvince`"
-                            :region="form.ship_to_address.region"
-                            :disabled="disabled.ship_to_address.province || flagging.shipping_info"
-                            :adm_division="form.ship_to_address.province"
+                            :region="form.shipping_address_region"
+                            :disabled="disabled.shipping_address_province || flagging.shipping_info"
+                            :adm_division="form.shipping_address_province"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'ship_to_address', 'city', 'district')"
-                            name="ship_to_address_city"
+                            @selected="admDivisionSelected($event, 'shipping_address_city', 'shipping_address_district')"
+                            name="shipping_address_city"
                             :dense="true"
                             label="City"
-                            :error="error.city"
+                            :error="error.shipping_address_city"
                             :data-unq="`prospectCustomer-select-shippingInfoCity`"
-                            :region="form.ship_to_address.region"
-                            :province="form.ship_to_address.province"
-                            :disabled="disabled.ship_to_address.city || flagging.shipping_info"
-                            :adm_division="form.ship_to_address.city"
+                            :region="form.shipping_address_region"
+                            :province="form.shipping_address_province"
+                            :disabled="disabled.shipping_address_city || flagging.shipping_info"
+                            :adm_division="form.shipping_address_city"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'ship_to_address', 'district', 'sub_district')"
-                            name="ship_to_address_district"
+                            @selected="admDivisionSelected($event, 'shipping_address_district', 'shipping_address_sub_district')"
+                            name="shipping_address_district"
                             :dense="true"
                             label="District"
-                            :error="error.district"
+                            :error="error.shipping_address_district"
                             :data-unq="`prospectCustomer-select-shippingInfoDistrict`"
-                            :region="form.ship_to_address.region"
-                            :province="form.ship_to_address.province"
-                            :city="form.ship_to_address.city"
-                            :disabled="disabled.ship_to_address.district || flagging.shipping_info"
-                            :adm_division="form.ship_to_address.district"
+                            :region="form.shipping_address_region"
+                            :province="form.shipping_address_province"
+                            :city="form.shipping_address_city"
+                            :disabled="disabled.shipping_address_district || flagging.shipping_info"
+                            :adm_division="form.shipping_address_district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'ship_to_address', 'sub_district', 'postal_code')"
-                            name="ship_to_address_district"
+                            @selected="admDivisionSelected($event, 'shipping_address_sub_district', 'shipping_address_postal_code')"
+                            name="shipping_address_sub_district"
                             :dense="true"
                             label="Subdistrict"
-                            :error="error.sub_district"
+                            :error="error.shipping_address_sub_district"
                             :data-unq="`prospectCustomer-select-shippingInfoSubdistrict`"
-                            :region="form.ship_to_address.region"
-                            :province="form.ship_to_address.province"
-                            :city="form.ship_to_address.city"
-                            :district="form.ship_to_address.district"
-                            :disabled="disabled.ship_to_address.sub_district || flagging.shipping_info"
-                            :adm_division="form.ship_to_address.sub_district"
+                            :region="form.shipping_address_region"
+                            :province="form.shipping_address_province"
+                            :city="form.shipping_address_city"
+                            :district="form.shipping_address_district"
+                            :disabled="disabled.shipping_address_sub_district || flagging.shipping_info"
+                            :adm_division="form.shipping_address_sub_district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-shippingInfoPostalCode"
-                            name="ship_to_address_postal_code"
-                            v-model="form.ship_to_address.postal_code"
+                            name="shipping_address_postal_code"
+                            v-model="form.shipping_address_postal_code"
                             required
                             outlined
                             dense
-                            :error-messages="error.postal_code"
+                            :error-messages="error.shipping_address_postal_code"
                             maxlength="10"
                             :disabled="true"
                         >
@@ -536,12 +536,12 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-shippingInfoLatitude"
-                            name="ship_to_address_latitude"
-                            v-model="form.ship_to_address.latitude"
+                            name="shipping_address_latitude"
+                            v-model="form.shipping_address_latitude"
                             required
                             outlined
                             dense
-                            :error-messages="error.latitude"
+                            :error-messages="error.shipping_address_latitude"
                             maxlength="17"
                             :disabled="flagging.shipping_info"
                         >
@@ -551,12 +551,12 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-shippingInfoLongitude"
-                            name="ship_to_address_longitude"
-                            v-model="form.ship_to_address.longitude"
+                            name="shipping_address_longitude"
+                            v-model="form.shipping_address_longitude"
                             required
                             outlined
                             dense
-                            :error-messages="error.longitude"
+                            :error-messages="error.shipping_address_longitude"
                             maxlength="16"
                             :disabled="flagging.shipping_info"
                         >
@@ -565,8 +565,8 @@
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24">
                         <v-textarea
-                            name="ship_to_address_address_note"
-                            v-model="form.ship_to_address.note"
+                            name="shipping_address_note"
+                            v-model="form.shipping_address_note"
                             :counter="1000"
                             maxlength="1000"
                             outlined
@@ -578,6 +578,10 @@
                             <template v-slot:label>Address Note</template>
                         </v-textarea>
                     </v-col>
+                </v-row>
+            </div>
+            <div class="mt24">
+                <v-row>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectShippingMethod
                             @selected="setIdComponentSelected($event, 'shipping_method_id')"
@@ -592,7 +596,7 @@
                         <v-text-field
                             data-unq="prospectCustomer-input-shippingInfoPicOrderName"
                             name="pic_order_name"
-                            v-model="form.ship_to_address.pic_order_name"
+                            v-model="form.pic_order_name"
                             required
                             outlined
                             dense
@@ -606,7 +610,7 @@
                         <v-text-field
                             data-unq="prospectCustomer-input-shippingInfoPicOrderContact"
                             name="pic_order_contact"
-                            v-model="form.ship_to_address.pic_order_contact"
+                            v-model="form.pic_order_contact"
                             required
                             outlined
                             dense
@@ -619,7 +623,7 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectSalesTerritory
                             @selected="setIdComponentSelected($event, 'sales_territory_id')"
-                            name="territory"
+                            name="sales_territory_id"
                             :dense="true"
                             :error="error.sales_territory_id"
                             label="Territory"
@@ -629,7 +633,7 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectSalesPerson
                             @selected="setIdComponentSelected($event, 'salesperson_id')"
-                            name="sales_person"
+                            name="salesperson_id"
                             :dense="true"
                             :error="error.salesperson_id"
                             label="Salesperson"
@@ -639,7 +643,7 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectPriceLevel
                             @selected="setIdComponentSelected($event, 'price_level_id')"
-                            name="price_level"
+                            name="price_level_id"
                             :dense="true"
                             :error="error.price_level_id"
                             label="Price Level"
@@ -713,12 +717,12 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-idCardNumber"
-                            name="id_card_number"
-                            v-model="form.id_card_number"
+                            name="id_card_doc_number"
+                            v-model="form.id_card_doc_number"
                             required
                             outlined
                             dense
-                            :error-messages="error.id_card_number"
+                            :error-messages="error.id_card_doc_number"
                             maxlength="30"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                         >
@@ -730,12 +734,12 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-taxpayerNumber"
-                            name="taxpayer_number"
-                            v-model="form.taxpayer_number"
+                            name="taxpayer_doc_number"
+                            v-model="form.taxpayer_doc_number"
                             required
                             outlined
                             dense
-                            :error-messages="error.taxpayer_number"
+                            :error-messages="error.taxpayer_doc_number"
                             maxlength="50"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                         >
@@ -746,13 +750,13 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
-                            data-unq="prospectCustomer-input-purchasingName"
-                            name="purchasing_name"
-                            v-model="form.purchasing_name"
+                            data-unq="prospectCustomer-input-picOperationName"
+                            name="pic_operation_name"
+                            v-model="form.pic_operation_name"
                             required
                             outlined
                             dense
-                            :error-messages="error.purchasing_name"
+                            :error-messages="error.pic_operation_name"
                             maxlength="20"
                         >
                             <template v-slot:label>
@@ -762,13 +766,13 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
-                            data-unq="prospectCustomer-input-purchasingContact"
-                            name="purchasing_contact"
-                            v-model="form.purchasing_contact"
+                            data-unq="prospectCustomer-input-picOperationContact"
+                            name="pic_operation_contact"
+                            v-model="form.pic_operation_contact"
                             required
                             outlined
                             dense
-                            :error-messages="error.purchasing_contact"
+                            :error-messages="error.pic_operation_contact"
                             maxlength="50"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                         >
@@ -895,7 +899,7 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectPaymentTerm
                             @selected="setIdComponentSelected($event, 'payment_term_id')"
-                            name="payment_term"
+                            name="payment_term_id"
                             :dense="true"
                             :error="error.payment_term_id"
                             label="Payment Terms"
@@ -972,11 +976,11 @@
             Billing Address
         </div>
         <div class="box-body">
-            <div v-if="form.business_type_id === 1">
+            <div v-if="form.business_type_id === 1 && checkCompanyAddress() === true">
                 <div v-if="flagging.shipping_info === true" class="-mt24">
                     <v-checkbox
                         data-unq="prospectCustomer-input-billAddressCheckBox"
-                        label="Same as Company and Shipping Address"
+                        label="Same as Company & Sales and Shipping Address"
                         v-model="flagging.billing_address.check_box"
                     ></v-checkbox>
                 </div>
@@ -984,28 +988,28 @@
                     <div class="fs16 -mb10">Billing Address Same As</div>
                     <v-radio-group v-model="flagging.billing_address.radio_group" row>
                         <v-radio label="Company Address" value="1"></v-radio>
-                        <v-radio label="Shipping Address" value="2"></v-radio>
+                        <v-radio label="Sales and Shipping Address" value="2"></v-radio>
                     </v-radio-group>
                 </div>
             </div>
-            <div v-else class="-mt24">
+            <div v-else-if="form.business_type_id !== 1 && checkShippingAddress() === true" class="-mt24">
                 <v-checkbox
                     data-unq="prospectCustomer-input-billAddressCheckBox"
-                    label="Same as Business/Shipping Address"
-                    v-model="flagging.billing_address.check_box"
+                    label="Same as Sales and Shipping Address"
+                    v-model="flagging.billing_address.check_box" 
                 ></v-checkbox>
             </div>
-            <div class="mt24">
+            <div class="mt24" v-if="flagging.billing_address.check_box === false">
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
-                            data-unq="prospectCustomer-input-billAddressAddressName"
-                            name="bill_to_address_address_name"
-                            v-model="form.bill_to_address.address_name"
+                            data-unq="prospectCustomer-input-billAddressName"
+                            name="billing_address_name"
+                            v-model="form.billing_address_name"
                             required
                             outlined
                             dense
-                            :error-messages="error.address_name"
+                            :error-messages="error.billing_address_name"
                             maxlength="30"
                         >
                             <template v-slot:label>Address Name<span class="text-red">*</span></template>
@@ -1013,13 +1017,13 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'bill_to_address', 'region', 'province')"
-                            name="bill_to_address_region"
+                            @selected="admDivisionSelected($event, 'billing_address_region', 'billing_address_province')"
+                            name="billing_address_region"
                             :dense="true"
                             label="Region"
-                            :error="error.region"
+                            :error="error.billing_address_region"
                             :data-unq="`prospectCustomer-select-billAddressRegion`"
-                            :adm_division="form.bill_to_address.region"
+                            :adm_division="form.billing_address_region"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24 mb24">
@@ -1030,13 +1034,13 @@
                             <v-row>
                                 <v-col cols="12" md="12">
                                     <v-text-field
-                                        data-unq="prospectCustomer-input-billAddressAddress_1"
-                                        name="address_1"
-                                        v-model="form.bill_to_address.address_1"
+                                        data-unq="prospectCustomer-input-billAddress1"
+                                        name="billing_address_detail_1"
+                                        v-model="form.billing_address_detail_1"
                                         required
                                         outlined
                                         dense
-                                        :error-messages="error.address_1"
+                                        :error-messages="error.billing_address_detail_1"
                                         :counter="60"
                                         maxlength="60"
                                     >
@@ -1045,13 +1049,13 @@
                                 </v-col>
                                 <v-col cols="12" md="12" class="-mt24">
                                     <v-text-field
-                                        data-unq="prospectCustomer-input-billAddressAddress2"
-                                        name="address_1"
-                                        v-model="form.bill_to_address.address_2"
+                                        data-unq="prospectCustomer-input-billAddress2"
+                                        name="billing_address_detail_2"
+                                        v-model="form.billing_address_detail_2"
                                         required
                                         outlined
                                         dense
-                                        :error-messages="error.address_2"
+                                        :error-messages="error.billing_address_detail_2"
                                         :counter="60"
                                         maxlength="60"
                                     >
@@ -1060,13 +1064,13 @@
                                 </v-col>
                                 <v-col cols="12" md="12" class="-mt24 -mb24">
                                     <v-text-field
-                                        data-unq="prospectCustomer-input-billAddressAddress3"
-                                        name="address_1"
-                                        v-model="form.bill_to_address.address_3"
+                                        data-unq="prospectCustomer-input-billAddress3"
+                                        name="billing_address_detail_3"
+                                        v-model="form.billing_address_detail_3"
                                         required
                                         outlined
                                         dense
-                                        :error-messages="error.address_3"
+                                        :error-messages="error.billing_address_detail_3"
                                         :counter="60"
                                         maxlength="60"
                                     >
@@ -1078,71 +1082,71 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'bill_to_address', 'province', 'city')"
-                            name="bill_to_address_province"
+                            @selected="admDivisionSelected($event, 'provbilling_address_provinceince', 'billing_address_city')"
+                            name="billing_address_province"
                             :dense="true"
                             label="Province"
-                            :error="error.province"
+                            :error="error.billing_address_province"
                             :data-unq="`prospectCustomer-select-billAddressProvince`"
-                            :region="form.bill_to_address.region"
-                            :disabled="disabled.bill_to_address.province"
-                            :adm_division="form.bill_to_address.province"
+                            :region="form.billing_address_region"
+                            :disabled="disabled.billing_address_province"
+                            :adm_division="form.billing_address_province"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'bill_to_address', 'city', 'district')"
-                            name="bill_to_address_city"
+                            @selected="admDivisionSelected($event, 'billing_address_city', 'billing_address_district')"
+                            name="billing_address_city"
                             :dense="true"
                             label="City"
-                            :error="error.city"
+                            :error="error.billing_address_city"
                             :data-unq="`prospectCustomer-select-billAddressCity`"
-                            :region="form.bill_to_address.region"
-                            :province="form.bill_to_address.province"
-                            :disabled="disabled.bill_to_address.city"
-                            :adm_division="form.bill_to_address.city"
+                            :region="form.billing_address_region"
+                            :province="form.billing_address_province"
+                            :disabled="disabled.billing_address_city"
+                            :adm_division="form.billing_address_city"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'bill_to_address', 'district', 'sub_district')"
-                            name="bill_to_address_district"
+                            @selected="admDivisionSelected($event, 'billing_address_district', 'billing_address_sub_district')"
+                            name="billing_address_district"
                             :dense="true"
                             label="District"
-                            :error="error.district"
+                            :error="error.billing_address_district"
                             :data-unq="`prospectCustomer-select-billAddressDistrict`"
-                            :region="form.bill_to_address.region"
-                            :province="form.bill_to_address.province"
-                            :city="form.bill_to_address.city"
-                            :disabled="disabled.bill_to_address.district"
-                            :adm_division="form.bill_to_address.district"
+                            :region="form.billing_address_region"
+                            :province="form.billing_address_province"
+                            :city="form.billing_address_city"
+                            :disabled="disabled.billing_address_district"
+                            :adm_division="form.billing_address_district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'bill_to_address', 'sub_district', 'postal_code')"
-                            name="bill_to_address_district"
+                            @selected="admDivisionSelected($event, 'billing_address_sub_district', 'billing_address_postal_code')"
+                            name="billing_address_sub_district"
                             :dense="true"
                             label="Subdistrict"
-                            :error="error.sub_district"
+                            :error="error.billing_address_sub_district"
                             :data-unq="`prospectCustomer-select-billAddressSubdistrict`"
-                            :region="form.bill_to_address.region"
-                            :province="form.bill_to_address.province"
-                            :city="form.bill_to_address.city"
-                            :district="form.bill_to_address.district"
-                            :disabled="disabled.bill_to_address.sub_district"
-                            :adm_division="form.bill_to_address.sub_district"
+                            :region="form.billing_address_region"
+                            :province="form.billing_address_province"
+                            :city="form.billing_address_city"
+                            :district="form.billing_address_district"
+                            :disabled="disabled.billing_address_sub_district"
+                            :adm_division="form.billing_address_sub_district"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-billAddressPostalCode"
-                            name="bill_to_address_postal_code"
-                            v-model="form.bill_to_address.postal_code"
+                            name="billing_address_postal_code"
+                            v-model="form.billing_address_postal_code"
                             required
                             outlined
                             dense
-                            :error-messages="error.postal_code"
+                            :error-messages="error.billing_address_postal_code"
                             maxlength="10"
                             :disabled="true"
                         >
@@ -1152,12 +1156,12 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-billAddressLatitude"
-                            name="bill_to_address_latitude"
-                            v-model="form.bill_to_address.latitude"
+                            name="billing_address_latitude"
+                            v-model="form.billing_address_latitude"
                             required
                             outlined
                             dense
-                            :error-messages="error.latitude"
+                            :error-messages="error.billing_address_latitude"
                             maxlength="17"
                         >
                             <template v-slot:label>Latitude<span class="text-red">*</span></template>
@@ -1166,12 +1170,12 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-billAddressLongitude"
-                            name="bill_to_address_longitude"
-                            v-model="form.bill_to_address.longitude"
+                            name="billing_address_longitude"
+                            v-model="form.billing_address_longitude"
                             required
                             outlined
                             dense
-                            :error-messages="error.longitude"
+                            :error-messages="error.billing_address_longitude"
                             maxlength="16"
                         >
                             <template v-slot:label>Longitude<span class="text-red">*</span></template>
@@ -1179,8 +1183,8 @@
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24">
                         <v-textarea
-                            name="bill_to_address_address_note"
-                            v-model="form.bill_to_address.note"
+                            name="billing_address_note"
+                            v-model="form.billing_address_note"
                             :counter="1000"
                             maxlength="1000"
                             outlined
@@ -1248,25 +1252,41 @@
                         >
                             <span class="text-black80 bold">Cancel</span>
                         </v-btn>
-                        <v-btn
-                            depressed
-                            outlined
-                            color="#EBEBEB"
-                            class="main-btn"
-                            @click="draft()"
-                            data-unq="prospectCustomer-button-save"
-                        >
-                            <span class="text-secondary bold">Save</span>
-                        </v-btn>
-                        <v-btn
-                            depressed
-                            color="#50ABA3"
-                            class="main-btn white--text"
-                            @click="upgrade()"
-                            data-unq="prospectCustomer-button-create"
-                        >
-                            <span class="bold">Upgrade</span>
-                        </v-btn>
+                        <div class="ml10">
+                            <v-tooltip top>
+                                <template v-slot:activator="{ on: tooltip }">
+                                    <v-btn
+                                        depressed
+                                        outlined
+                                        color="#EBEBEB"
+                                        class="main-btn"
+                                        @click="draft()"
+                                        data-unq="prospectCustomer-button-save"
+                                        v-on="{ ...tooltip }"
+                                    >
+                                        <span class="text-secondary bold">Save</span>
+                                    </v-btn>
+                                </template>
+                                <span>Can save the data even if it is incomplete</span>
+                            </v-tooltip>
+                        </div>
+                        <div class="ml10">
+                            <v-tooltip top>
+                                <template v-slot:activator="{ on: tooltip }">
+                                    <v-btn
+                                        depressed
+                                        color="#50ABA3"
+                                        class="main-btn white--text"
+                                        @click="upgrade()"
+                                        data-unq="prospectCustomer-button-create"
+                                        v-on="{ ...tooltip }"
+                                    >
+                                        <span class="bold">Upgrade</span>
+                                    </v-btn>
+                                </template>
+                                <span>Must complete the required fields to Upgrade</span>
+                            </v-tooltip>
+                        </div>
                     </v-card-actions>
                 </v-col>
             </v-row>
@@ -1293,6 +1313,7 @@
         },
         computed: {
             ...mapState({
+                selected_channel: state => state.prospectCustomer.create_prospect_customer.selected_channel,
                 form: state => state.prospectCustomer.create_prospect_customer.form,
                 disabled: state => state.prospectCustomer.create_prospect_customer.disabled,
                 error: state => state.prospectCustomer.create_prospect_customer.error,
@@ -1300,6 +1321,7 @@
             }),
         },
         mounted () {
+            let that = this
             this.fetchProspectCustomerCreate()
             this.$root.$on("event_multipleImage", function (url) {
                 let arr = []
@@ -1309,6 +1331,12 @@
                         arr.push(e.image_url)
                     });
                     this.$store.commit('setOutletImage', arr)
+                }
+            });
+            this.$root.$on('event_error', function(err){
+                this.$store.commit('setError', {})
+                if(err){
+                    that.$store.commit('setError', err)
                 }
             });
         },
@@ -1321,7 +1349,7 @@
                     model: true,
                     title: "Create Prospective Customer",
                     text: "Are you sure want to upgrade this Customer?",
-                    urlApi: '/crm/v1/prospective-customer/upgrade',
+                    urlApi: '/crm/v1/prospective_customer/upgrade',
                     nextPage: '/customer-relation/prospective-customer',
                     post: true,
                     data: this.form
@@ -1332,10 +1360,50 @@
                     model: true,
                     title: "Create Prospective Customer",
                     text: "Are you sure want to save as draft this Prospective Customer?",
-                    urlApi: '/crm/v1/prospective-customer',
+                    urlApi: '/crm/v1/prospective_customer',
                     nextPage: '/customer-relation/prospective-customer',
                     post: true,
                     data: this.form
+                }
+            },
+            checkCompanyAddress(){
+                if(this.form.company_address_name &&
+                    this.form.company_address_detail_1 &&
+                    this.form.company_address_region &&
+                    this.form.company_address_province &&
+                    this.form.company_address_city &&
+                    this.form.company_address_district &&
+                    this.form.company_address_sub_district &&
+                    this.form.company_address_postal_code &&
+                    this.form.company_address_latitude &&
+                    this.form.company_address_longitude
+                ){
+                    return true;
+                }else{
+                    return false
+                }
+            },
+            checkShippingAddress(){
+                if(this.form.shipping_address_name &&
+                    this.form.shipping_address_detail_1 &&
+                    this.form.shipping_address_region &&
+                    this.form.shipping_address_province &&
+                    this.form.shipping_address_city &&
+                    this.form.shipping_address_district &&
+                    this.form.shipping_address_sub_district &&
+                    this.form.shipping_address_postal_code &&
+                    this.form.shipping_address_latitude &&
+                    this.form.shipping_address_longitude
+                ){
+                    return true;
+                }else{
+                    return false
+                }
+            },
+            clickedShippingInfo(d){
+                this.$store.commit('setFormProspectCustomerCreate', { ...this.form, shipping_address_refer_to: 0 })
+                if(d === true){
+                    this.$store.commit('setFormProspectCustomerCreate', { ...this.form, shipping_address_refer_to: 1 })
                 }
             },
             exchangeInvoice(){
@@ -1362,7 +1430,7 @@
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: null})
                 if (d) {
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d.id})
-                    if (comp === 'customer_id') {
+                    if (comp === 'customer_code') {
                         this.fetchCustomerDetail(d.id)
                     }
                 }
@@ -1379,69 +1447,90 @@
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d})
                 }
             },
-            admDivisionSelected(d, section, current, next) {// For selected related adm division
-                this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [current]: '' }})
+            admDivisionSelected(d, current, next) {// For selected related adm division
+                this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [current]: '' })
                 if (d) {
                     if(current !== 'sub_district'){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [current]: d.description }})
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], [next]: false }})
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [current]: d.description })
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [next]: false })
                     }else{
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [current]: d.description, [next]: d.postal_code }})
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [next]: d.postal_code })
                     }
                 }else{
                     if(current === 'region'){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
-                            province: '',
-                            city: '',
-                            district: '',
-                            sub_district: '',
-                            postal_code: '',
-                        }})
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
-                            province: true,
-                            city: true,
-                            district: true,
-                            sub_district: true,
-                        }})
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
+                            company_address_province: '',
+                            company_address_city: '',
+                            company_address_district: '',
+                            company_address_sub_district: '',
+                            company_address_postal_code: '',
+                        })
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                            company_address_province: true,
+                            company_address_city: true,
+                            company_address_district: true,
+                            company_address_sub_district: true,
+                        })
                     }
                     else if(current === 'province'){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
-                            city: '',
-                            district: '',
-                            sub_district: '',
-                            postal_code: '',
-                        }})
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
-                            city: true,
-                            district: true,
-                            sub_district: true,
-                        }})
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
+                            company_address_city: '',
+                            company_address_district: '',
+                            company_address_sub_district: '',
+                            company_address_postal_code: '',
+                        })
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                            company_address_city: true,
+                            company_address_district: true,
+                            company_address_sub_district: true,
+                        })
                     }
                     else if(current === 'city'){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
-                            district: '',
-                            sub_district: '',
-                            postal_code: '',
-                        }})
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
-                            district: true,
-                            sub_district: true,
-                        }})
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
+                            company_address_district: '',
+                            company_address_sub_district: '',
+                            company_address_postal_code: '',
+                        })
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                            company_address_district: true,
+                            company_address_sub_district: true,
+                        })
                     }
                     else if(current === 'district'){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section],
-                            sub_district: '',
-                            postal_code: '',
-                        }})
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [section]: { ...this.disabled[section], 
-                            sub_district: true,
-                        }})
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
+                            company_address_sub_district: '',
+                            company_address_postal_code: '',
+                        })
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                            company_address_sub_district: true,
+                        })
                     }
                     else if(current === 'sub_district'){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [section]: { ...this.form[section], [next]: '' }})
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [next]: '' })
                     }
                 }
             },
         },
+        watch: {
+            'flagging.billing_address.check_box': {
+                handler: function (val) {
+                    if (val === true && flagging.shipping_info === true) {
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 3 })
+                    }
+                    else if(val === true){
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 2 })
+                    }
+                },
+                deep: true
+            },
+            'flagging.billing_address.radio_group': {
+                handler: function (val) {
+                    if (val) {
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: parseInt(val) })
+                    }
+                },
+                deep: true
+            },
+        }
     }
 </script>
