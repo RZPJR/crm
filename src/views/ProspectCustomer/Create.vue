@@ -151,7 +151,7 @@
                         <v-row>
                             <UploadImageMultiple
                                 name="Prospect Customer"
-                                :error="error.images"
+                                :error="error.outlet_image"
                                 class="ma-3"
                                 data-unq="prospectCustomer-upload-multiImage"
                                 max_img="7"
@@ -799,6 +799,7 @@
                                 :type="'prospective_customer'"
                                 :extention="'pdf'"
                                 name="id_card_doc_url"
+                                :error="error.id_card_doc_url"
                             ></UploadPDF>
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
@@ -809,6 +810,7 @@
                                 :type="'prospective_customer'"
                                 :extention="'pdf'"
                                 name="company_contract_doc_url"
+                                :error="error.company_contract_doc_url"
                             ></UploadPDF>
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
@@ -819,6 +821,7 @@
                                 :type="'prospective_customer'"
                                 :extention="'pdf'"
                                 name="notarial_deed_doc_url"
+                                :error="error.notarial_deed_doc_url"
                             ></UploadPDF>
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24">
@@ -829,6 +832,7 @@
                                 :type="'prospective_customer'"
                                 :extention="'pdf'"
                                 name="taxpayer_doc_url"
+                                :error="error.taxpayer_doc_url"
                             ></UploadPDF>
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
@@ -839,6 +843,7 @@
                                 :type="'prospective_customer'"
                                 :extention="'pdf'"
                                 name="taxable_entrepeneur_doc_url"
+                                :error="error.taxable_entrepeneur_doc_url"
                             ></UploadPDF>
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
@@ -849,6 +854,7 @@
                                 :type="'prospective_customer'"
                                 :extention="'pdf'"
                                 name="business_license_doc_url"
+                                :error="error.business_license_doc_url"
                             ></UploadPDF>
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
@@ -859,6 +865,7 @@
                                 :type="'prospective_customer'"
                                 :extention="'pdf'"
                                 name="company_certificate_reg_url"
+                                :error="error.company_certificate_reg_url"
                             ></UploadPDF>
                         </v-col>
                     </v-row>
