@@ -258,7 +258,7 @@ const state = {
             // Finance Info
             pic_finance_name: '',
             pic_finance_contact: '',
-            exchange_invoice: 0,
+            exchange_invoice: 2,
             exchange_invoice_time: '',
             invoice_term: 0,
             finance_email: '',
