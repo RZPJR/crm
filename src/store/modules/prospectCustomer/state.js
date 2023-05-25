@@ -179,7 +179,10 @@ const state = {
             billing_address_district: true,
             billing_address_sub_district: true,
         },
-        selected_channel: {},
+        detail_customer: {
+            selected_channel: {},
+            business_type: {},
+        },
         form: {
             // basic info
             prospective_customer_id: 0,

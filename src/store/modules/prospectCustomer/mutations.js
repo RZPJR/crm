@@ -17,6 +17,18 @@ const mutations = {
         state.prospect_customer.filter = payload
         return state;
     },
+    setDefaultFilterProspectCustomer: function(state, payload) {
+        state.prospect_customer.filter = {
+            search: '',
+            status: 6,
+            customer_type: '',
+            area: '',
+            archetype: '',
+            sales_person: '',
+            request_by: '',
+        }
+        return state;
+    },
     setSelectDeclineTypeProspectCustomer: function(state, payload) {
         state.prospect_customer.decline.type = payload;
         return state;
@@ -67,8 +79,8 @@ const mutations = {
         state.create_prospect_customer.form.outlet_image = payload;
         return state;
     },
-    setSelectedChannel: function(state, payload) {
-        state.create_prospect_customer.selected_channel = payload;
+    setSelectedDetailCustomer: function(state, payload) {
+        state.create_prospect_customer.detail_customer = payload;
         return state;
     },
     setError: function(state, payload) {

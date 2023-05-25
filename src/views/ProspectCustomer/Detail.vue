@@ -234,7 +234,7 @@
                     <DetailRowNew :name="data.business_type?.value_int === 1? 'Contract Signing Name' : 'Business Owner Name'" :value="data.owner_name? data.owner_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="data.business_type?.value_int === 1? 'Contract Signing Position' : 'Business Owner Contact'" :value="data.owner_contact? data.owner_contact : '-' "/>
+                    <DetailRowNew :name="data.business_type?.value_int === 1? 'Contract Signing Position' : 'Business Owner Contact'" :value="data.owner_role? data.owner_role : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Email'" :value="data.email? data.email : '-' "/>
@@ -258,7 +258,7 @@
                         <DetailRowNew 
                             :data-unq="`proscus-link-idCard`"
                             :name="'ID Card'" 
-                            :value="data.id_card_doc_name ? data.id_card_doc_name : '-'" 
+                            :value="data.id_card_doc_url ? data.id_card_doc_name : '-'" 
                             :crossURL="data.id_card_doc_url"
                             :align="true"
                         />
@@ -267,7 +267,7 @@
                         <DetailRowNew 
                             :data-unq="`proscus-link-taxpayer`"
                             :name="'Contract Signing Power of Attorney'" 
-                            :value="data.company_contract_doc_name ? data.company_contract_doc_name : '-'" 
+                            :value="data.company_contract_doc_url ? data.company_contract_doc_name : '-'" 
                             :crossURL="data.company_contract_doc_url"
                             :align="true"
                         />
@@ -276,7 +276,7 @@
                         <DetailRowNew 
                             :data-unq="`proscus-link-taxpayer`"
                             :name="'Deed of Establishment/Last Amendment'" 
-                            :value="data.notarial_deed_doc_name ? data.notarial_deed_doc_name : '-'" 
+                            :value="data.notarial_deed_doc_url ? data.notarial_deed_doc_name : '-'" 
                             :crossURL="data.notarial_deed_doc_url"
                             :align="true"
                         />
@@ -285,7 +285,7 @@
                         <DetailRowNew 
                             :data-unq="`proscus-link-taxpayer`"
                             :name="'Taxpayer'" 
-                            :value="data.taxpayer_doc_name ? data.taxpayer_doc_name : '-'" 
+                            :value="data.taxpayer_doc_url ? data.taxpayer_doc_name : '-'" 
                             :crossURL="data.taxpayer_doc_url"
                             :align="true"
                         />
@@ -294,7 +294,7 @@
                         <DetailRowNew 
                             :data-unq="`proscus-link-taxpayer`"
                             :name="'Taxable Entrepreneur Confirmation Number'" 
-                            :value="data.taxable_entrepeneur_doc_name ? data.taxable_entrepeneur_doc_name : '-'" 
+                            :value="data.taxable_entrepeneur_doc_url ? data.taxable_entrepeneur_doc_name : '-'" 
                             :crossURL="data.taxable_entrepeneur_doc_url"
                             :align="true"
                         />
@@ -303,7 +303,7 @@
                         <DetailRowNew 
                             :data-unq="`proscus-link-taxpayer`"
                             :name="'Business License'" 
-                            :value="data.business_license_doc_name ? data.business_license_doc_name : '-'" 
+                            :value="data.business_license_doc_url ? data.business_license_doc_name : '-'" 
                             :crossURL="data.business_license_doc_url"
                             :align="true"
                         />
@@ -312,7 +312,7 @@
                         <DetailRowNew 
                             :data-unq="`proscus-link-taxpayer`"
                             :name="'Certificate of Company Registration/Business Identification Number'" 
-                            :value="data.company_certificate_reg_name ? data.company_certificate_reg_name : '-'" 
+                            :value="data.company_certificate_reg_url ? data.company_certificate_reg_name : '-'" 
                             :crossURL="data.company_certificate_reg_url"
                             :align="true"
                         />

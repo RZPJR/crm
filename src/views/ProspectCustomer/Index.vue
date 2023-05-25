@@ -152,7 +152,7 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td :data-unq="`proscus-value-name-${props.index}`">{{ props.item.brand_name }}</td>
+                        <td :data-unq="`proscus-value-name-${props.index}`">{{ props.item.business_name }}</td>
                         <td :data-unq="`proscus-value-phonenumber-${props.index}`">{{ props.item.pic_order_contact }}</td>
                         <td :data-unq="`proscus-value-archetype-${props.index}`">{{ props.item.archetype.description }}</td>
                         <td :data-unq="`proscus-value-customer_type-${props.index}`">{{ props.item.customer_type.description }}</td>
@@ -228,7 +228,7 @@
                                     <v-list-item 
                                         v-privilege="'pro_cst_upg'" 
                                         @click="upgrade(props.item.id)"
-                                        v-if="props.item.reg_status == 1 && props.item.merchant"
+                                        v-if="props.item.reg_status == 6"
                                         :data-unq="`proscus-button-upgrade-${props.index}`" 
                                     >
                                         <v-list-item-title>Upgrade</v-list-item-title>
@@ -318,6 +318,9 @@
             return {
                 showFilter : false,
             }
+        },
+        created() {
+            this.$store.commit("setDefaultFilterProspectCustomer")
         },
         mounted() {
             this.fetchProspectCustomer()
