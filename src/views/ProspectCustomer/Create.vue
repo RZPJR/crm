@@ -7,9 +7,21 @@
             <div class="mt36">
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
+                        <SelectGlossary
+                            @selected="setValueComponentSelected($event, 'business_type_id')"
+                            name="business_type"
+                            label="Business Type"
+                            table="customer"
+                            attribute="business_type"
+                            :dense="true"
+                            :glossary="detail_customer.business_type"
+                            :error="error.business_type_id"
+                            :data-unq="`prospectCustomer-select-voucherType`"
+                        ></SelectGlossary>
+                    </v-col>
+                    <v-col cols="12" md="6" class="-mt24">
                         <SelectCustomer
                             @selected="setIdComponentSelected($event, 'customer_code')"
-                            :norequired="true"
                             name="customer"
                             :dense="true"
                             :error="error.customer_code"
@@ -40,29 +52,20 @@
                             :dense="true"
                             :error="error.customer_type_id"
                             :data-unq="`prospectCustomer-select-businessType`"
+                            :customer_type="detail_customer.customer_type"
                         ></SelectBusinessType>
-                    </v-col>
-                    <v-col cols="12" md="6" class="-mt24">
-                        <SelectGlossary
-                            @selected="setValueComponentSelected($event, 'business_type_id')"
-                            name="business_type"
-                            label="Business Type"
-                            table="customer"
-                            attribute="business_type"
-                            :dense="true"
-                            :error="error.business_type_id"
-                            :data-unq="`prospectCustomer-select-voucherType`"
-                        ></SelectGlossary>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectArchetype
                             @selected="setIdComponentSelected($event, 'archetype_id')"
+                            label="Archetype"
                             name="archetype"
-                            :disabled="disabled.archetype"
-                            :customer_type_id="form.customer_type_id"
                             :dense="true"
+                            :customer_type_id="form.customer_type_id"
                             :error="error.archetype_id"
                             :data-unq="`prospectCustomer-select-archetype`"
+                            :disabled="disabled.archetype"
+                            :archetype="detail_customer.archetype"
                         ></SelectArchetype>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -89,6 +92,7 @@
                             :error="error.customer_class_id"
                             :data-unq="`prospectCustomer-select-customerClass`"
                             label="Customer Class"
+                            :customer_class="detail_customer.customer_class"
                         ></SelectCustomerClass>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -137,7 +141,7 @@
                             table="prospect_customer"
                             attribute="reg_channel"
                             :dense="true"
-                            :glossary="selected_channel"
+                            :glossary="detail_customer.selected_channel"
                             :error="error.registration_channel_value"
                             :data-unq="`prospectCustomer-select-registrationChannel`"
                             :disabled="true"
@@ -366,7 +370,7 @@
             Sales and Shipping Info
         </div>
         <div class="box-body">
-            <div class="-mt24" v-if="form.business_type_id === 1 && checkCompanyAddress() === true">
+            <div class="-mt24" v-if="form.business_type_id === 1">
                 <v-checkbox
                     data-unq="prospectCustomer-input-shippingInfoCheckBox"
                     label="Same as Company Address"
@@ -628,6 +632,8 @@
                             :error="error.sales_territory_id"
                             label="Territory"
                             :data-unq="`prospectCustomer-select-territory`"
+                            :territory="detail_customer.sales_territory"
+                            v-model="detail_customer.sales_territory"
                         ></SelectSalesTerritory>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -638,6 +644,7 @@
                             :error="error.salesperson_id"
                             label="Salesperson"
                             :data-unq="`prospectCustomer-select-salesPerson`"
+                            :sales_person="detail_customer.salesperson"
                         ></SelectSalesPerson>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -873,6 +880,7 @@
                             outlined
                             dense
                             :error-messages="error.pic_finance_contact"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                             maxlength="64"
                         >
                             <template v-slot:label>
@@ -904,6 +912,8 @@
                             :error="error.payment_term_id"
                             label="Payment Terms"
                             :data-unq="`prospectCustomer-select-paymentTerm`"
+                            :payment_term="detail_customer.payment_term"
+                            v-model="detail_customer.payment_term"
                         ></SelectPaymentTerm>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt36">
@@ -976,7 +986,7 @@
             Billing Address
         </div>
         <div class="box-body">
-            <div v-if="form.business_type_id === 1 && checkCompanyAddress() === true">
+            <div v-if="form.business_type_id === 1">
                 <div v-if="flagging.shipping_info === true" class="-mt24">
                     <v-checkbox
                         data-unq="prospectCustomer-input-billAddressCheckBox"
@@ -992,7 +1002,7 @@
                     </v-radio-group>
                 </div>
             </div>
-            <div v-else-if="form.business_type_id !== 1 && checkShippingAddress() === true" class="-mt24">
+            <div v-else-if="form.business_type_id !== 1" class="-mt24">
                 <v-checkbox
                     data-unq="prospectCustomer-input-billAddressCheckBox"
                     label="Same as Sales and Shipping Address"
@@ -1313,7 +1323,7 @@
         },
         computed: {
             ...mapState({
-                selected_channel: state => state.prospectCustomer.create_prospect_customer.selected_channel,
+                detail_customer: state => state.prospectCustomer.create_prospect_customer.detail_customer,
                 form: state => state.prospectCustomer.create_prospect_customer.form,
                 disabled: state => state.prospectCustomer.create_prospect_customer.disabled,
                 error: state => state.prospectCustomer.create_prospect_customer.error,
@@ -1356,6 +1366,7 @@
                 }
             },
             draft() {
+                console.log(this.form)
                 this.send_data.confirm_data = {
                     model: true,
                     title: "Create Prospective Customer",
@@ -1364,40 +1375,6 @@
                     nextPage: '/customer-relation/prospective-customer',
                     post: true,
                     data: this.form
-                }
-            },
-            checkCompanyAddress(){
-                if(this.form.company_address_name &&
-                    this.form.company_address_detail_1 &&
-                    this.form.company_address_region &&
-                    this.form.company_address_province &&
-                    this.form.company_address_city &&
-                    this.form.company_address_district &&
-                    this.form.company_address_sub_district &&
-                    this.form.company_address_postal_code &&
-                    this.form.company_address_latitude &&
-                    this.form.company_address_longitude
-                ){
-                    return true;
-                }else{
-                    return false
-                }
-            },
-            checkShippingAddress(){
-                if(this.form.shipping_address_name &&
-                    this.form.shipping_address_detail_1 &&
-                    this.form.shipping_address_region &&
-                    this.form.shipping_address_province &&
-                    this.form.shipping_address_city &&
-                    this.form.shipping_address_district &&
-                    this.form.shipping_address_sub_district &&
-                    this.form.shipping_address_postal_code &&
-                    this.form.shipping_address_latitude &&
-                    this.form.shipping_address_longitude
-                ){
-                    return true;
-                }else{
-                    return false
                 }
             },
             clickedShippingInfo(d){
@@ -1450,14 +1427,14 @@
             admDivisionSelected(d, current, next) {// For selected related adm division
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [current]: '' })
                 if (d) {
-                    if(current !== 'sub_district'){
+                    if(!current.includes('sub_district')){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [current]: d.description })
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [next]: false })
                     }else{
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [next]: d.postal_code })
                     }
                 }else{
-                    if(current === 'region'){
+                    if(current === 'company_address_region'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
                             company_address_province: '',
                             company_address_city: '',
@@ -1472,7 +1449,7 @@
                             company_address_sub_district: true,
                         })
                     }
-                    else if(current === 'province'){
+                    else if(current === 'company_address_province'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
                             company_address_city: '',
                             company_address_district: '',
@@ -1485,7 +1462,7 @@
                             company_address_sub_district: true,
                         })
                     }
-                    else if(current === 'city'){
+                    else if(current === 'company_address_city'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
                             company_address_district: '',
                             company_address_sub_district: '',
@@ -1496,7 +1473,7 @@
                             company_address_sub_district: true,
                         })
                     }
-                    else if(current === 'district'){
+                    else if(current === 'company_address_district'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
                             company_address_sub_district: '',
                             company_address_postal_code: '',
@@ -1505,7 +1482,7 @@
                             company_address_sub_district: true,
                         })
                     }
-                    else if(current === 'sub_district'){
+                    else if(current === 'company_address_sub_district'){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [next]: '' })
                     }
                 }
