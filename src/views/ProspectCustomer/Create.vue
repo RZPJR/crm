@@ -620,6 +620,7 @@
                             dense
                             :error-messages="error.pic_order_contact"
                             maxlength="30"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                         >
                             <template v-slot:label>PIC Order Recepient Contact<span class="text-red">*</span></template>
                         </v-text-field>
@@ -1438,6 +1439,7 @@
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [current]: d.description })
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, [next]: false })
                     }else{
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [current]: d.description })
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [next]: d.postal_code })
                     }
                 }else{
