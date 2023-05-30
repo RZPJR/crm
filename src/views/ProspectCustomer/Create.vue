@@ -688,6 +688,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
+                            v-if="form.business_type_id === 1"
                             data-unq="prospectCustomer-input-contractSigningPosition"
                             name="owner_role"
                             v-model="form.owner_role"
@@ -697,10 +698,23 @@
                             :error-messages="error.owner_role"
                             maxlength="20"
                         >
-                            <template v-slot:label v-if="form.business_type_id === 1">
+                            <template v-slot:label>
                                 Contract Signing Position<span class="text-red">*</span>
                             </template>
-                            <template v-slot:label v-else>
+                        </v-text-field>
+                        <v-text-field
+                            v-else
+                            data-unq="prospectCustomer-input-contractSigningPosition"
+                            name="owner_role"
+                            v-model="form.owner_role"
+                            required
+                            outlined
+                            dense
+                            :error-messages="error.owner_role"
+                            maxlength="20"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                        >
+                            <template v-slot:label>
                                 Business Owner Contact<span class="text-red">*</span>
                             </template>
                         </v-text-field>
