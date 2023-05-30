@@ -324,7 +324,6 @@
             this.$store.commit("setDefaultFilterProspectCustomer")
         },
         mounted() {
-            this.fetchProspectCustomer()
             let self = this
             this.$root.$on('event_success', function (res) {
                 if (res) {

@@ -105,23 +105,8 @@
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Region'" :value="data.company_address_region ? data.company_address_region : '-' "/>
                 </v-col>
-                <v-col cols="12" md="12" class="-mt24 mb24">
-                    <v-card outlined class="pa20">
-                        <div class="fs16 bold mb20">
-                            Address Detail
-                        </div>
-                        <v-row class="px-5">
-                            <v-col cols="12" md="12">
-                                <DetailRowNew :name="'Address Detail'" :value="data.company_address_detail_1? data.company_address_detail_1 : '-'" :align="true"/>
-                            </v-col>
-                            <v-col cols="12" md="12" class="-mt24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.company_address_detail_2? data.company_address_detail_2 : '-'" :align="true"/>
-                            </v-col>
-                            <v-col cols="12" md="12" class="-mt24 -mb24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.company_address_detail_3? data.company_address_detail_3 : '-'" :align="true"/>
-                            </v-col>
-                        </v-row>
-                    </v-card>
+                <v-col cols="12" class="-mt24">
+                    <DetailRowNew :name="'Address Detail'" :value="address_detail.company_address ? address_detail.company_address : '-'" :align="true"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Province'" :value="data.company_address_province ? data.company_address_province : '-' "/>
@@ -160,23 +145,8 @@
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Address Region'" :value="data.shipping_address_region? data.shipping_address_region : '-' "/>
                 </v-col>
-                <v-col cols="12" md="12" class="-mt24 mb24">
-                    <v-card outlined class="pa20">
-                        <div class="fs16 bold mb20">
-                            Address Detail
-                        </div>
-                        <v-row class="px-5">
-                            <v-col cols="12" md="12">
-                                <DetailRowNew :name="'Address Detail'" :value="data.shipping_address_detail_1? data.shipping_address_detail_1 : '-'" :align="true"/>
-                            </v-col>
-                            <v-col cols="12" md="12" class="-mt24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.shipping_address_detail_2? data.shipping_address_detail_2 : '-'" :align="true"/>
-                            </v-col>
-                            <v-col cols="12" md="12" class="-mt24 -mb24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.shipping_address_detail_3? data.shipping_address_detail_3 : '-'" :align="true"/>
-                            </v-col>
-                        </v-row>
-                    </v-card>
+                <v-col cols="12" class="-mt24">
+                    <DetailRowNew :name="'Address Detail'" :value="address_detail.shipping_address ? address_detail.shipping_address : '-'" :align="true"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Province'" :value="data.shipping_address_province? data.shipping_address_province : '-' "/>
@@ -359,23 +329,8 @@
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Address Region'" :value="data.billing_address_region? data.billing_address_region : '-' "/>
                 </v-col>
-                <v-col cols="12" md="12" class="-mt24 mb24">
-                    <v-card outlined class="pa20">
-                        <div class="fs16 bold mb20">
-                            Address Detail
-                        </div>
-                        <v-row class="px-5">
-                            <v-col cols="12" md="12">
-                                <DetailRowNew :name="'Address Detail'" :value="data.billing_address_detail_1? data.billing_address_detail_1 : '-'" :align="true"/>
-                            </v-col>
-                            <v-col cols="12" md="12" class="-mt24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.billing_address_detail_2? data.billing_address_detail_2 : '-'" :align="true"/>
-                            </v-col>
-                            <v-col cols="12" md="12" class="-mt24 -mb24">
-                                <DetailRowNew :name="'Continue Address Detail'" :value="data.billing_address_detail_3? data.billing_address_detail_3 : '-'" :align="true"/>
-                            </v-col>
-                        </v-row>
-                    </v-card>
+                <v-col cols="12" class="-mt24">
+                    <DetailRowNew :name="'Address Detail'" :value="address_detail.billing_address ? address_detail.billing_address : '-'" :align="true"/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Province'" :value="data.billing_address_province? data.billing_address_province : '-' "/>
@@ -471,6 +426,7 @@
             </v-card>
         </v-dialog>
         <AuditLogNew :data="data_audit_log"/>
+        <LoadingBar :value="isLoading"/>
     </v-container>
 </template>
 <script>
@@ -490,6 +446,8 @@
         computed: {
             ...mapState({
                 data: state => state.prospectCustomer.detail_prospect_customer.data,
+                isLoading: state => state.prospectCustomer.detail_prospect_customer.isLoadingDetail,
+                address_detail: state => state.prospectCustomer.detail_prospect_customer.address_detail,
                 detail_decline: state => state.prospectCustomer.detail_prospect_customer,
             })
         },

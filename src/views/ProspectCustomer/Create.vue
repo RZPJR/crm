@@ -370,7 +370,7 @@
             Sales and Shipping Info
         </div>
         <div class="box-body">
-            <div class="-mt24" v-if="form.business_type_id === 1">
+            <div class="-mt24" v-if="form.business_type_id !== 2">
                 <v-checkbox
                     data-unq="prospectCustomer-input-shippingInfoCheckBox"
                     label="Same as Company Address"
@@ -378,7 +378,7 @@
                     @click="clickedShippingInfo(flagging.shipping_info)"
                 ></v-checkbox>
             </div>
-            <div class="mt24" v-if="flagging.shipping_info === false">
+            <div class="mt24">
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
@@ -605,7 +605,7 @@
                             outlined
                             dense
                             :error-messages="error.pic_order_name"
-                            maxlength="30"
+                            maxlength="50"
                         >
                             <template v-slot:label>PIC Order Recepient Name<span class="text-red">*</span></template>
                         </v-text-field>
@@ -619,7 +619,7 @@
                             outlined
                             dense
                             :error-messages="error.pic_order_contact"
-                            maxlength="30"
+                            maxlength="20"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                         >
                             <template v-slot:label>PIC Order Recepient Contact<span class="text-red">*</span></template>
@@ -678,7 +678,7 @@
                             :error-messages="error.owner_name"
                             maxlength="50"
                         >
-                            <template v-slot:label v-if="form.business_type_id === 1">
+                            <template v-slot:label v-if="form.business_type_id !== 2">
                                 Contract Signing Name<span class="text-red">*</span>
                             </template>
                             <template v-slot:label v-else>
@@ -688,7 +688,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
-                            v-if="form.business_type_id === 1"
+                            v-if="form.business_type_id !== 2"
                             data-unq="prospectCustomer-input-contractSigningPosition"
                             name="owner_role"
                             v-model="form.owner_role"
@@ -779,7 +779,7 @@
                             outlined
                             dense
                             :error-messages="error.pic_operation_name"
-                            maxlength="20"
+                            maxlength="50"
                         >
                             <template v-slot:label>
                                 PIC Operation/Purchasing Name<span class="text-red">*</span>
@@ -795,7 +795,7 @@
                             outlined
                             dense
                             :error-messages="error.pic_operation_contact"
-                            maxlength="50"
+                            maxlength="20"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                         >
                             <template v-slot:label>
@@ -818,7 +818,7 @@
                                 :idx="0"
                             ></UploadPDF>
                         </v-col>
-                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
+                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
                                 label="Contract Signing Power of Attorney"
                                 @onSelect="onSelectFile($event, 'company_contract_doc_url')"
@@ -829,7 +829,7 @@
                                 :error="error.company_contract_doc_url"
                             ></UploadPDF>
                         </v-col>
-                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
+                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
                                 label="Deed of Establishment/Last Amendment"
                                 @onSelect="onSelectFile($event, 'notarial_deed_doc_url')"
@@ -852,7 +852,7 @@
                                 :idx="3"
                             ></UploadPDF>
                         </v-col>
-                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
+                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
                                 label="Taxable Entrepreneur Confirmation Number"
                                 @onSelect="onSelectFile($event, 'taxable_entrepeneur_doc_url')"
@@ -863,7 +863,7 @@
                                 :error="error.taxable_entrepeneur_doc_url"
                             ></UploadPDF>
                         </v-col>
-                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
+                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
                                 label="Business License"
                                 @onSelect="onSelectFile($event, 'business_license_doc_url')"
@@ -874,7 +874,7 @@
                                 :error="error.business_license_doc_url"
                             ></UploadPDF>
                         </v-col>
-                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
+                        <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
                                 label="Certificate of Company Registration/Business Identification Number"
                                 @onSelect="onSelectFile($event, 'company_certificate_reg_url')"
@@ -905,7 +905,7 @@
                             dense
                             :error-messages="error.pic_finance_contact"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                            maxlength="64"
+                            maxlength="20"
                         >
                             <template v-slot:label>
                                 PIC Finance Contact<span class="text-red">*</span>
@@ -1010,7 +1010,7 @@
             Billing Address
         </div>
         <div class="box-body">
-            <div v-if="form.business_type_id === 1">
+            <div v-if="form.business_type_id !== 2">
                 <div v-if="flagging.shipping_info === true" class="-mt24">
                     <v-checkbox
                         data-unq="prospectCustomer-input-billAddressCheckBox"
@@ -1325,6 +1325,7 @@
                 </v-col>
             </v-row>
         </div>
+        <LoadingBar :value="isLoading"/>
         <ConfirmationDialogNew :data-unq="`prospectCustomer-input-confirmDialog`" :sendData="send_data.confirm_data"/>
     </v-container>
 </template>
@@ -1352,6 +1353,7 @@
                 disabled: state => state.prospectCustomer.create_prospect_customer.disabled,
                 error: state => state.prospectCustomer.create_prospect_customer.error,
                 send_data: state => state.prospectCustomer.create_prospect_customer,
+                isLoading: state => state.prospectCustomer.create_prospect_customer.isLoading,
             }),
         },
         mounted () {
@@ -1390,7 +1392,6 @@
                 }
             },
             draft() {
-                console.log(this.form)
                 this.send_data.confirm_data = {
                     model: true,
                     title: "Create Prospective Customer",
@@ -1553,9 +1554,16 @@
             },
         },
         watch: {
+            'flagging.shipping_info': {
+                handler: function (val) {
+                    console.log("in shippingh", val)
+                    this.$store.commit('setShippingInfoAddress', val)
+                },
+                deep: true
+            },
             'flagging.billing_address.check_box': {
                 handler: function (val) {
-                    if (val === true && flagging.shipping_info === true) {
+                    if (val === true && this.flagging.shipping_info === true) {
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 3 })
                     }
                     else if(val === true){

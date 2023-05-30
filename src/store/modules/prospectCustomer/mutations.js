@@ -20,7 +20,7 @@ const mutations = {
     setDefaultFilterProspectCustomer: function(state, payload) {
         state.prospect_customer.filter = {
             search: '',
-            status: 6,
+            status:'',
             customer_type: '',
             area: '',
             archetype: '',
@@ -65,6 +65,10 @@ const mutations = {
         state.detail_prospect_customer.data = payload;
         return state;
     },
+    setAddressDetailCustomerDetail: function(state, payload) {
+        state.detail_prospect_customer.address_detail = payload;
+        return state;
+    },
 
     // Create
     setFormProspectCustomerCreate: function(state, payload) {
@@ -85,6 +89,51 @@ const mutations = {
     },
     setError: function(state, payload) {
         state.create_prospect_customer.error = payload;
+        return state;
+    },
+    setPreloadCustomerDetail: function(state, payload) {
+        state.create_prospect_customer.isLoading = payload;
+        return state;
+    },
+    setShippingInfoAddress: function(state, payload) {
+        let data = state.create_prospect_customer.form
+        if(payload === true){
+            state.create_prospect_customer.form = {
+                shipping_address_id: data.company_address_id,
+                shipping_address_name: data.company_address_name,
+                shipping_address_detail_1: data.company_address_detail_1,
+                shipping_address_detail_2: data.company_address_detail_2,
+                shipping_address_detail_3: data.company_address_detail_3,
+                shipping_address_region: data.company_address_region,
+                shipping_address_province: data.company_address_province,
+                shipping_address_city: data.company_address_city,
+                shipping_address_district: data.company_address_district,
+                shipping_address_sub_district: data.company_address_sub_district,
+                shipping_address_postal_code: data.company_address_postal_code,
+                shipping_address_note: data.company_address_note,
+                shipping_address_latitude: data.company_address_latitude,
+                shipping_address_longitude: data.company_address_longitude,
+            };
+        }
+        else{
+            state.create_prospect_customer.form = {
+                shipping_address_id: 0,
+                shipping_address_name: '',
+                shipping_address_detail_1: '',
+                shipping_address_detail_2: '',
+                shipping_address_detail_3: '',
+                shipping_address_region: '',
+                shipping_address_province: '',
+                shipping_address_city: '',
+                shipping_address_district: '',
+                shipping_address_sub_district: '',
+                shipping_address_postal_code: '',
+                shipping_address_note: '',
+                shipping_address_latitude: '',
+                shipping_address_longitude: '',
+            };
+        }
+        
         return state;
     },
 };
