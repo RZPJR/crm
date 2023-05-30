@@ -71,8 +71,14 @@ const actions = {
         commit('setDataProspectCustomerDetail', []);
         try {
             const response = await http.get("/prospective_customer/" + payload.id);
-            if (response.data.data) 
-            commit('setDataProspectCustomerDetail', response.data.data);
+            if (response.data.data) {
+                commit('setDataProspectCustomerDetail', response.data.data);
+                commit('setAddressDetailCustomerDetail', {
+                    company_address: response.data.data.company_address_detail_1 + response.data.data.company_address_detail_2 + response.data.data.company_address_detail_3,
+                    shipping_address: response.data.data.shipping_address_detail_1 + response.data.data.shipping_address_detail_2 + response.data.data.shipping_address_detail_3,
+                    billing_address: response.data.data.billing_address_detail_1 + response.data.data.billing_address_detail_2 + response.data.data.billing_address_detail_3,
+                });
+            }
             commit('setPreloadProspectCustomerDetail', false);
         } catch (error) {
             console.log(error);
@@ -81,22 +87,23 @@ const actions = {
     },
 
     fetchCustomerDetail: async ({ state, commit, dispatch }, payload) => {
+        commit('setPreloadCustomerDetail', true);
         try {
             const response = await http.get("/customer/" + payload);
             let data = response.data.data
             if (data){
                 commit('setFormProspectCustomerCreate', { ...state.create_prospect_customer.form,
-                    customer_code: data.customer_code,
-                    customer_type_id: data.customer_type.id,
-                    archetype_id: data.archetype.id,
-                    customer_class_id: data.customer_class.id,
-                    referrer_code: data.referrer_code,
-                    payment_term_id: data.payment_term.id,
-                    sales_territory_id: data.sales_territory.id,
-                    salesperson_id: data.salesperson.id,
-                    business_type_id: data.business_type.id,
+                    customer_code: data.customer_code? data.customer_code : '',
+                    customer_type_id: data.customer_type.id? data.customer_type.id : '',
+                    archetype_id: data.archetype.id? data.archetype.id : '',
+                    customer_class_id: data.customer_class.id? data.customer_class.id : '',
+                    referrer_code: data.referrer_code? data.referrer_code : '',
+                    payment_term_id: data.payment_term.id? data.payment_term.id : '',
+                    sales_territory_id: data.sales_territory.id? data.sales_territory.id : '',
+                    salesperson_id: data.salesperson.id? data.salesperson.id : '',
+                    business_type_id: data.business_type.value_int? data.business_type.value_int : 0,
 
-                    company_address_name: data.company_address.address_name,
+                    company_address_name: data.company_address.address_name? data.company_address.address_name : '',
                     company_address_detail_1: data.company_address.address_1,
                     company_address_detail_2: data.company_address.address_2,
                     company_address_detail_3: data.company_address.address_3,
@@ -107,8 +114,8 @@ const actions = {
                     company_address_sub_district: data.company_address.sub_district,
                     company_address_postal_code: data.company_address.postal_code,
                     company_address_note: data.company_address.note,
-                    company_address_latitude: data.company_address.latitude.toString(),
-                    company_address_longitude: data.company_address.longitude.toString(),
+                    company_address_latitude: data.company_address.latitude !== 0? data.company_address.latitude.toString() : '',
+                    company_address_longitude: data.company_address.longitude !==0? data.company_address.longitude.toString() : '',
 
                     shipping_address_name: data.ship_to_address.address_name,
                     shipping_address_detail_1: data.ship_to_address.address_1,
@@ -121,8 +128,8 @@ const actions = {
                     shipping_address_sub_district: data.ship_to_address.sub_district,
                     shipping_address_postal_code: data.ship_to_address.postal_code,
                     shipping_address_note: data.ship_to_address.note,
-                    shipping_address_latitude: data.ship_to_address.latitude.toString(),
-                    shipping_address_longitude: data.ship_to_address.longitude.toString(),
+                    shipping_address_latitude: data.ship_to_address.latitude !== 0? data.ship_to_address.latitude.toString() : '',
+                    shipping_address_longitude: data.ship_to_address.longitude !== 0? data.ship_to_address.longitude.toString() : '',
 
                     billing_address_name: data.bill_to_address.address_name,
                     billing_address_detail_1: data.bill_to_address.address_1,
@@ -135,8 +142,8 @@ const actions = {
                     billing_address_sub_district: data.bill_to_address.sub_district,
                     billing_address_postal_code: data.bill_to_address.postal_code,
                     billing_address_note: data.bill_to_address.note,
-                    billing_address_latitude: data.bill_to_address.latitude.toString(),
-                    billing_address_longitude: data.bill_to_address.longitude.toString(),
+                    billing_address_latitude: data.bill_to_address.latitude !== 0? data.bill_to_address.latitude.toString() : '',
+                    billing_address_longitude: data.bill_to_address.longitude !== 0? data.bill_to_address.longitude.toString() : '',
                 })
                 commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
                     customer_id: payload,
@@ -174,8 +181,10 @@ const actions = {
                     billing_address_sub_district: false,
                 })
             }
+            commit('setPreloadCustomerDetail', false);
         } catch (error) {
             console.log(error);
+            commit('setPreloadCustomerDetail', false);
         }
     },
 
@@ -305,6 +314,7 @@ const actions = {
             billing_address_district: true,
             billing_address_sub_district: true,
         })
+        commit("setError", {})
     },
 };
 

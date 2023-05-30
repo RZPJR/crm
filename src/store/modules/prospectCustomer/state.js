@@ -151,6 +151,11 @@ const state = {
             taxpayer_number: "",
             pic_finance_name: "",
         },
+        address_detail: {
+            company_address: '',
+            shipping_address: '',
+            billing_address: '',
+        },
         outlet_pictures: [],
         declineDialog: false,
         decline_type: "",
@@ -161,6 +166,7 @@ const state = {
 
     //Create prospect_customer
     create_prospect_customer:{
+        isLoading: false,
         error: {},
         disabled: {
             archetype: true,
