@@ -74,6 +74,7 @@
                         :dense="true"
                         data-unq="proscus-filter-archetype"
                         @selected="archetypeSelected"
+                        label="Archetype"
                     ></SelectArchetype>
                 </v-col>
                 <v-col cols="12" md="3" class="-mb24">
