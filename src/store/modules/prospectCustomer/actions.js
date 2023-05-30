@@ -85,11 +85,31 @@ const actions = {
             commit('setPreloadProspectCustomerDetail', false);
         }
     },
+    
+    fetchPriceLevel: async ({ state, commit, dispatch }, payload) => {
+        try {
+            const response = await http.get("sales/v1/sales_price_level", {
+                params: {
+                    page: 1,
+                    per_page: 10,
+                    customer_type_id: payload.customer_type_id,
+                    region_id: payload.region_id,
+                }
+            }, true);
+            if(response.data.data){
+                commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer, price_level: response.data.data[0]})
+                commit('setFormProspectCustomerCreate', { ...state.create_prospect_customer.form, price_level_id: response.data.data[0].id})
+            }
+        } catch (error){
+            console.log(error);
+        }
+    },
 
     fetchCustomerDetail: async ({ state, commit, dispatch }, payload) => {
         commit('setPreloadCustomerDetail', true);
         try {
             const response = await http.get("/customer/" + payload);
+            let form = state.create_prospect_customer.form
             let data = response.data.data
             if (data){
                 commit('setFormProspectCustomerCreate', { ...state.create_prospect_customer.form,
@@ -145,6 +165,11 @@ const actions = {
                     billing_address_latitude: data.bill_to_address.latitude !== 0? data.bill_to_address.latitude.toString() : '',
                     billing_address_longitude: data.bill_to_address.longitude !== 0? data.bill_to_address.longitude.toString() : '',
                 })
+
+                if(data.ship_to_address.region !== '' && data.customer_type.id !== ''){
+                    dispatch('fetchPriceLevel', {customer_type_id: data.customer_type.id, region_id: data.ship_to_address.region})
+                }
+
                 commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
                     customer_id: payload,
                     customer_type: data.customer_type,
@@ -160,9 +185,6 @@ const actions = {
                     salesperson: data.salesperson,
                 });
 
-
-                // commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer, payment_term: data.payment_term});
-                commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer, sales_territory: data.sales_territory});
                 commit("setDisabledProspectCustomerCreate", {
                     archetype: false,
                     company_address_province: false,
@@ -272,7 +294,7 @@ const actions = {
             finance_email: '',
             
             // Billing Address
-            billing_address_refer_to: 1,
+            billing_address_refer_to: 0,
             billing_address_id: 0,
             billing_address_name: '',
             billing_address_detail_1: '',
@@ -315,6 +337,7 @@ const actions = {
             billing_address_sub_district: true,
         })
         commit("setError", {})
+        commit("setConfirmData", {})
     },
 };
 
