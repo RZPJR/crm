@@ -7,6 +7,16 @@
             <div class="mt36">
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
+                        <SelectCustomer
+                            @selected="setCodeComponentSelected($event, 'customer_code')"
+                            name="customer"
+                            :dense="true"
+                            :error="error.customer_code"
+                            :data-unq="`prospectCustomer-select-customer`"
+                            customer_type="personal"
+                        ></SelectCustomer>
+                    </v-col>
+                    <v-col cols="12" md="6" class="-mt24">
                         <SelectGlossary
                             @selected="setValueComponentSelected($event, 'business_type_id')"
                             name="business_type"
@@ -20,14 +30,14 @@
                         ></SelectGlossary>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
-                        <SelectCustomer
-                            @selected="setIdComponentSelected($event, 'customer_code')"
-                            name="customer"
+                        <SelectBusinessType
+                            @selected="customerTypeSelected"
+                            name="customer_type"
                             :dense="true"
-                            :error="error.customer_code"
-                            :data-unq="`prospectCustomer-select-customer`"
-                            customer_type="personal"
-                        ></SelectCustomer>
+                            :error="error.customer_type_id"
+                            :data-unq="`prospectCustomer-select-businessType`"
+                            :customer_type="detail_customer.customer_type"
+                        ></SelectBusinessType>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
@@ -44,16 +54,6 @@
                                 Business/Company Name<span class="text-red">*</span>
                             </template>
                         </v-text-field>
-                    </v-col>
-                    <v-col cols="12" md="6" class="-mt24">
-                        <SelectBusinessType
-                            @selected="customerTypeSelected"
-                            name="customer_type"
-                            :dense="true"
-                            :error="error.customer_type_id"
-                            :data-unq="`prospectCustomer-select-businessType`"
-                            :customer_type="detail_customer.customer_type"
-                        ></SelectBusinessType>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectArchetype
@@ -162,10 +162,10 @@
                 </v-row>
             </div>
         </div>
-        <div class="box-title fs16 bold" v-if="form.business_type_id === 1">
+        <div class="box-title fs16 bold" v-if="form.business_type_id !== 2">
             Company Address
         </div>
-        <div class="box-body" v-if="form.business_type_id === 1">
+        <div class="box-body" v-if="form.business_type_id !== 2">
             <div class="mt36">
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
@@ -801,6 +801,7 @@
                                 :extention="'pdf'"
                                 name="id_card_doc_url"
                                 :error="error.id_card_doc_url"
+                                :idx="0"
                             ></UploadPDF>
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
@@ -834,6 +835,7 @@
                                 :extention="'pdf'"
                                 name="taxpayer_doc_url"
                                 :error="error.taxpayer_doc_url"
+                                :idx="3"
                             ></UploadPDF>
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id === 1">
@@ -1415,15 +1417,54 @@
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: null})
                 if (d) {
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d.id})
+                }
+            },
+            setCodeComponentSelected(d, comp){
+                this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: null})
+                if (d) {
+                    this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d.code})
                     if (comp === 'customer_code') {
                         this.fetchCustomerDetail(d.id)
                     }
+                }
+                else if (d === null && comp === 'customer_code') {
+                    this.fetchProspectCustomerCreate()
+                    this.$store.commit('setSelectedDetailCustomer', { ...this.detail_customer, 
+                        customer_id: null,
+                        customer_type: {},
+                        archetype: {},
+                        business_type: {},
+                        customer_class: {},
+                        payment_term: {},
+                        sales_territory: {},
+                        salesperson: {},
+                    })
                 }
             },
             setValueComponentSelected(d, comp) {// For Selected then set Value
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: null})
                 if (d) {
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d.value})
+                    if (comp === "business_type_id" && d.value === 2) {
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
+                            company_address_id: 0,
+                            company_address_name: '',
+                            company_address_detail_1: '',
+                            company_address_detail_2: '',
+                            company_address_detail_3: '',
+                            company_address_region: '',
+                            company_address_province: '',
+                            company_address_city: '',
+                            company_address_district: '',
+                            company_address_sub_district: '',
+                            company_address_postal_code: '',
+                            company_address_note: '',
+                            company_address_latitude: '',
+                            company_address_longitude: '',
+                        })
+                    }else{
+                        this.fetchCustomerDetail(this.detail_customer.customer_id)
+                    }
                 }
             },
             onSelectFile(d, comp){

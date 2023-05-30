@@ -137,10 +137,16 @@ const actions = {
                     billing_address_latitude: data.bill_to_address.latitude.toString(),
                     billing_address_longitude: data.bill_to_address.longitude.toString(),
                 })
-                commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer, 
+                commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
+                    customer_id: payload,
                     customer_type: data.customer_type,
                     archetype: data.archetype,
-                    customer_class: data.customer_class, // from here
+                    business_type: {
+                        id: data.business_type.id,
+                        value: data.business_type.value_int,
+                        value_name: data.business_type.value_name
+                    },
+                    customer_class: data.customer_class,
                     payment_term: data.payment_term,
                     sales_territory: data.sales_territory,
                     salesperson: data.salesperson,
