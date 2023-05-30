@@ -94,6 +94,7 @@ const actions = {
                     payment_term_id: data.payment_term.id,
                     sales_territory_id: data.sales_territory.id,
                     salesperson_id: data.salesperson.id,
+                    business_type_id: data.business_type.id,
 
                     company_address_name: data.company_address.address_name,
                     company_address_detail_1: data.company_address.address_1,
