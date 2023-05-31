@@ -14,6 +14,8 @@
                             :error="error.customer_code"
                             :data-unq="`prospectCustomer-select-customer`"
                             customer_type="personal"
+                            :customer="detail_customer.customer"
+                            :not_call_api="true"
                         ></SelectCustomer>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -68,7 +70,7 @@
                             :archetype="detail_customer.archetype"
                         ></SelectArchetype>
                     </v-col>
-                    <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
+                    <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             data-unq="prospectCustomer-input-brandName"
                             name="brand_name"
@@ -119,6 +121,7 @@
                             :dense="true"
                             :error="error.time_consent"
                             :data-unq="`prospectCustomer-select-timeConsent`"
+                            :glossary="detail_customer.time_consent"
                         ></SelectGlossary>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -131,6 +134,7 @@
                             :dense="true"
                             :error="error.reference_info"
                             :data-unq="`prospectCustomer-select-referenceInfo`"
+                            :glossary="detail_customer.reference_info"
                         ></SelectGlossary>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -594,6 +598,7 @@
                             :error="error.shipping_method_id"
                             label="Shipping Method"
                             :data-unq="`prospectCustomer-select-shippingMethod`"
+                            :shipping_method="detail_customer.shipping_method"
                         ></SelectShippingMethod>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -819,6 +824,13 @@
                                 :error="error.id_card_doc_url"
                                 :idx="0"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-idCard`"
+                                :name="'Previous ID Card'" 
+                                :value="detail_customer.id_card_doc_url ? detail_customer.id_card_doc_name : '-'" 
+                                :crossURL="detail_customer.id_card_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -830,6 +842,13 @@
                                 name="company_contract_doc_url"
                                 :error="error.company_contract_doc_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-contractSigningPowerofAttorney`"
+                                :name="'Previous Contract Signing Power of Attorney'" 
+                                :value="detail_customer.company_contract_doc_url ? detail_customer.company_contract_doc_name : '-'" 
+                                :crossURL="detail_customer.company_contract_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -841,6 +860,13 @@
                                 name="notarial_deed_doc_url"
                                 :error="error.notarial_deed_doc_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-previousDeedofEstablishmentLastAmendment`"
+                                :name="'Previous Deed of Establishment/Last Amendment'" 
+                                :value="detail_customer.notarial_deed_doc_url ? detail_customer.notarial_deed_doc_name : '-'" 
+                                :crossURL="detail_customer.notarial_deed_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24">
                             <UploadPDF
@@ -853,6 +879,13 @@
                                 :error="error.taxpayer_doc_url"
                                 :idx="3"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-taxpayer`"
+                                :name="'Previous Taxpayer'" 
+                                :value="detail_customer.taxpayer_doc_url ? detail_customer.taxpayer_doc_name : '-'" 
+                                :crossURL="detail_customer.taxpayer_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -864,6 +897,13 @@
                                 name="taxable_entrepeneur_doc_url"
                                 :error="error.taxable_entrepeneur_doc_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-taxableEntrepreneurConfirmationNumber`"
+                                :name="'Previous Taxable Entrepreneur Confirmation Number'" 
+                                :value="detail_customer.taxable_entrepeneur_doc_url ? detail_customer.taxable_entrepeneur_doc_name : '-'" 
+                                :crossURL="detail_customer.taxable_entrepeneur_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -875,6 +915,13 @@
                                 name="business_license_doc_url"
                                 :error="error.business_license_doc_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-businessLicense`"
+                                :name="'Previous Business License'" 
+                                :value="detail_customer.business_license_doc_url ? detail_customer.business_license_doc_name : '-'" 
+                                :crossURL="detail_customer.business_license_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -886,6 +933,13 @@
                                 name="company_certificate_reg_url"
                                 :error="error.company_certificate_reg_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-certificateofCompanyRegistrationBusinessIdentificationNumber`"
+                                :name="'Previous Certificate of Company Registration/Business Identification Number'" 
+                                :value="detail_customer.company_certificate_reg_url ? detail_customer.company_certificate_reg_name : '-'" 
+                                :crossURL="detail_customer.company_certificate_reg_url"
+                                :align="true"
+                            />
                         </v-col>
                     </v-row>
                 </div>
@@ -986,6 +1040,7 @@
                             :dense="true"
                             :error="error.invoice_term"
                             :data-unq="`prospectCustomer-select-voucherType`"
+                            :glossary="detail_customer.invoice_term"
                         ></SelectGlossary>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24" v-if="form.exchange_invoice === 1">
@@ -1159,7 +1214,7 @@
                             :region="form.billing_address_region"
                             :province="form.billing_address_province"
                             :city="form.billing_address_city"
-                            :disabled="disabled.billing_address_district || flagging.billing_address.disabled"
+                            :disabled="disabled.billing_address_district"
                             :adm_division="form.billing_address_district"
                         ></SelectAdmDivision>
                     </v-col>
@@ -1301,24 +1356,6 @@
                                 <template v-slot:activator="{ on: tooltip }">
                                     <v-btn
                                         depressed
-                                        outlined
-                                        color="#EBEBEB"
-                                        class="main-btn"
-                                        @click="draft()"
-                                        data-unq="prospectCustomer-button-save"
-                                        v-on="{ ...tooltip }"
-                                    >
-                                        <span class="text-secondary bold">Save</span>
-                                    </v-btn>
-                                </template>
-                                <span>Can save the data even if it is incomplete</span>
-                            </v-tooltip>
-                        </div>
-                        <div class="ml10">
-                            <v-tooltip top>
-                                <template v-slot:activator="{ on: tooltip }">
-                                    <v-btn
-                                        depressed
                                         color="#50ABA3"
                                         class="main-btn white--text"
                                         @click="upgrade()"
@@ -1369,7 +1406,7 @@
         },
         mounted () {
             let that = this
-            this.fetchProspectCustomerCreate()
+            this.fetchProspectCustomerUpgrade({id: this.$route.params.id})
             this.$root.$on("event_multipleImage", function (url) {
                 let arr = []
                 this.$store.commit('setOutletImage', [])
@@ -1389,7 +1426,7 @@
         },
         methods: {
             ...mapActions([
-                "fetchProspectCustomerCreate","fetchCustomerDetail","fetchPriceLevel"
+                "fetchProspectCustomerUpgrade","fetchCustomerDetail","fetchPriceLevel"
             ]),
             upgrade() {
                 this.send_data.confirm_data = {
@@ -1397,17 +1434,6 @@
                     title: "Create Prospective Customer",
                     text: "Are you sure want to upgrade this Customer?",
                     urlApi: '/crm/v1/prospective_customer/upgrade',
-                    nextPage: '/customer-relation/prospective-customer',
-                    post: true,
-                    data: this.form
-                }
-            },
-            draft() {
-                this.send_data.confirm_data = {
-                    model: true,
-                    title: "Create Prospective Customer",
-                    text: "Are you sure want to save as draft this Prospective Customer?",
-                    urlApi: '/crm/v1/prospective_customer',
                     nextPage: '/customer-relation/prospective-customer',
                     post: true,
                     data: this.form

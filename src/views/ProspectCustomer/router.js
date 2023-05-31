@@ -45,4 +45,23 @@ export default [
         },
         props: true,
     },
+    {
+        path: '/customer-relation/prospective-customer/:id',
+        name: 'ProspectCustomerUpgrade',
+        component: () => import("./Upgrade.vue"),
+        meta: {
+            auth: true,
+            title: 'Upgrade Prospective Customer',
+            breadcrumbs: [
+                {
+                    text: 'Prospective Customer List',
+                    to : '/customer-relation/prospective-customer'
+                },
+                {
+                    text: 'Upgrade Prospective Customer',
+                },
+            ],
+        },
+        props: true,
+    },
 ]
