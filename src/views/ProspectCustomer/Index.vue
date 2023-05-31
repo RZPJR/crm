@@ -228,7 +228,7 @@
                                     </v-list-item>
                                     <v-list-item 
                                         v-privilege="'pro_cst_upg'" 
-                                        @click="upgrade(props.item.id)"
+                                        :to="'/customer-relation/prospective-customer/'+ props.item.id "
                                         v-if="props.item.reg_status == 6"
                                         :data-unq="`proscus-button-upgrade-${props.index}`" 
                                     >
