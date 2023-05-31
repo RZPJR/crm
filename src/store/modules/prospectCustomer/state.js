@@ -247,6 +247,7 @@ const state = {
             // Business Info
             owner_name: '',
             owner_role: '',
+            owner_contact: '',
             email: '',
             id_card_doc_number: '',
             taxpayer_doc_number: '',

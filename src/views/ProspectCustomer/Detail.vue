@@ -204,7 +204,7 @@
                     <DetailRowNew :name="data.business_type?.value_int === 1? 'Contract Signing Name' : 'Business Owner Name'" :value="data.owner_name? data.owner_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="data.business_type?.value_int === 1? 'Contract Signing Position' : 'Business Owner Contact'" :value="data.owner_role? data.owner_role : '-' "/>
+                    <DetailRowNew :name="data.business_type?.value_int === 1? 'Contract Signing Position' : 'Business Owner Contact'" :value="data.owner_role? data.owner_role : data.owner_contact? data.owner_contact : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
                     <DetailRowNew :name="'Email'" :value="data.email? data.email : '-' "/>

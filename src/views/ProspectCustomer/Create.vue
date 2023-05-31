@@ -184,7 +184,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address_region', 'company_address_province')"
+                            @selected="admDivisionSelected($event, 'company_address_', 'company_address_region', 'company_address_province')"
                             name="company_address_region"
                             :dense="true"
                             label="Region"
@@ -249,7 +249,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address_province', 'company_address_city')"
+                            @selected="admDivisionSelected($event, 'company_address_', 'company_address_province', 'company_address_city')"
                             name="company_address_province"
                             :dense="true"
                             label="Province"
@@ -262,7 +262,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address_city', 'company_address_district')"
+                            @selected="admDivisionSelected($event, 'company_address_', 'company_address_city', 'company_address_district')"
                             name="company_address_city"
                             :dense="true"
                             label="City"
@@ -276,7 +276,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address_district', 'company_address_sub_district')"
+                            @selected="admDivisionSelected($event, 'company_address_', 'company_address_district', 'company_address_sub_district')"
                             name="company_address_district"
                             :dense="true"
                             label="District"
@@ -291,7 +291,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'company_address_sub_district', 'company_address_postal_code')"
+                            @selected="admDivisionSelected($event, 'company_address_', 'company_address_sub_district', 'company_address_postal_code')"
                             name="company_address_sub_district"
                             :dense="true"
                             label="Subdistrict"
@@ -397,7 +397,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'shipping_address_region', 'shipping_address_province')"
+                            @selected="admDivisionSelected($event, 'shipping_address_', 'shipping_address_region', 'shipping_address_province')"
                             name="shipping_address_region"
                             :dense="true"
                             label="Region"
@@ -466,7 +466,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'shipping_address_province', 'shipping_address_city')"
+                            @selected="admDivisionSelected($event, 'shipping_address_', 'shipping_address_province', 'shipping_address_city')"
                             name="shipping_address_province"
                             :dense="true"
                             label="Province"
@@ -479,7 +479,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'shipping_address_city', 'shipping_address_district')"
+                            @selected="admDivisionSelected($event, 'shipping_address_', 'shipping_address_city', 'shipping_address_district')"
                             name="shipping_address_city"
                             :dense="true"
                             label="City"
@@ -493,7 +493,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'shipping_address_district', 'shipping_address_sub_district')"
+                            @selected="admDivisionSelected($event, 'shipping_address_', 'shipping_address_district', 'shipping_address_sub_district')"
                             name="shipping_address_district"
                             :dense="true"
                             label="District"
@@ -508,7 +508,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'shipping_address_sub_district', 'shipping_address_postal_code')"
+                            @selected="admDivisionSelected($event, 'shipping_address_', 'shipping_address_sub_district', 'shipping_address_postal_code')"
                             name="shipping_address_sub_district"
                             :dense="true"
                             label="Subdistrict"
@@ -656,6 +656,8 @@
                             :error="error.price_level_id"
                             label="Price Level"
                             :data-unq="`prospectCustomer-select-priceLevel`"
+                            :price_level="detail_customer.price_level"
+                            :disabled="true"
                         ></SelectPriceLevel>
                     </v-col>
                 </v-row>
@@ -705,12 +707,12 @@
                         <v-text-field
                             v-else
                             data-unq="prospectCustomer-input-contractSigningPosition"
-                            name="owner_role"
-                            v-model="form.owner_role"
+                            name="owner_contact"
+                            v-model="form.owner_contact"
                             required
                             outlined
                             dense
-                            :error-messages="error.owner_role"
+                            :error-messages="error.owner_contact"
                             maxlength="20"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                         >
@@ -897,6 +899,22 @@
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
+                            data-unq="prospectCustomer-input-picFinanceName"
+                            name="pic_finance_name"
+                            v-model="form.pic_finance_name"
+                            required
+                            outlined
+                            dense
+                            :error-messages="error.pic_finance_name"
+                            maxlength="50"
+                        >
+                            <template v-slot:label>
+                                PIC Finance Name<span class="text-red">*</span>
+                            </template>
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6" class="-mt24">
+                        <v-text-field
                             data-unq="prospectCustomer-input-picFinanceContact"
                             name="pic_finance_contact"
                             v-model="form.pic_finance_contact"
@@ -909,22 +927,6 @@
                         >
                             <template v-slot:label>
                                 PIC Finance Contact<span class="text-red">*</span>
-                            </template>
-                        </v-text-field>
-                    </v-col>
-                    <v-col cols="12" md="6" class="-mt24">
-                        <v-text-field
-                            data-unq="prospectCustomer-input-picFinanceName"
-                            name="pic_finance_name"
-                            v-model="form.pic_finance_name"
-                            required
-                            outlined
-                            dense
-                            :error-messages="error.pic_finance_name"
-                            maxlength="50"
-                        >
-                            <template v-slot:label>
-                                PIC Finance Name<span class="text-red">*</span>
                             </template>
                         </v-text-field>
                     </v-col>
@@ -1033,7 +1035,7 @@
                     v-model="flagging.billing_address.check_box" 
                 ></v-checkbox>
             </div>
-            <div class="mt24" v-if="flagging.billing_address.check_box === false">
+            <div class="mt24">
                 <v-row>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
@@ -1045,19 +1047,21 @@
                             dense
                             :error-messages="error.billing_address_name"
                             maxlength="30"
+                            :disabled="flagging.billing_address.disabled"
                         >
                             <template v-slot:label>Address Name<span class="text-red">*</span></template>
                         </v-text-field>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'billing_address_region', 'billing_address_province')"
+                            @selected="admDivisionSelected($event, 'billing_address_', 'billing_address_region', 'billing_address_province')"
                             name="billing_address_region"
                             :dense="true"
                             label="Region"
                             :error="error.billing_address_region"
                             :data-unq="`prospectCustomer-select-billAddressRegion`"
                             :adm_division="form.billing_address_region"
+                            :disabled="flagging.billing_address.disabled"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="12" class="-mt24 mb24">
@@ -1077,6 +1081,7 @@
                                         :error-messages="error.billing_address_detail_1"
                                         :counter="60"
                                         maxlength="60"
+                                        :disabled="flagging.billing_address.disabled"
                                     >
                                         <template v-slot:label>Address Detail<span class="text-red">*</span></template>
                                     </v-text-field>
@@ -1092,6 +1097,7 @@
                                         :error-messages="error.billing_address_detail_2"
                                         :counter="60"
                                         maxlength="60"
+                                        :disabled="flagging.billing_address.disabled"
                                     >
                                         <template v-slot:label>Continue Address Detail</template>
                                     </v-text-field>
@@ -1107,6 +1113,7 @@
                                         :error-messages="error.billing_address_detail_3"
                                         :counter="60"
                                         maxlength="60"
+                                        :disabled="flagging.billing_address.disabled"
                                     >
                                         <template v-slot:label>Continue Address Detail</template>
                                     </v-text-field>
@@ -1116,20 +1123,20 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'provbilling_address_provinceince', 'billing_address_city')"
+                            @selected="admDivisionSelected($event, 'billing_address_', 'billing_address_province', 'billing_address_city')"
                             name="billing_address_province"
                             :dense="true"
                             label="Province"
                             :error="error.billing_address_province"
                             :data-unq="`prospectCustomer-select-billAddressProvince`"
                             :region="form.billing_address_region"
-                            :disabled="disabled.billing_address_province"
+                            :disabled="disabled.billing_address_province || flagging.billing_address.disabled"
                             :adm_division="form.billing_address_province"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'billing_address_city', 'billing_address_district')"
+                            @selected="admDivisionSelected($event, 'billing_address_', 'billing_address_city', 'billing_address_district')"
                             name="billing_address_city"
                             :dense="true"
                             label="City"
@@ -1137,13 +1144,13 @@
                             :data-unq="`prospectCustomer-select-billAddressCity`"
                             :region="form.billing_address_region"
                             :province="form.billing_address_province"
-                            :disabled="disabled.billing_address_city"
+                            :disabled="disabled.billing_address_city || flagging.billing_address.disabled"
                             :adm_division="form.billing_address_city"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'billing_address_district', 'billing_address_sub_district')"
+                            @selected="admDivisionSelected($event, 'billing_address_', 'billing_address_district', 'billing_address_sub_district')"
                             name="billing_address_district"
                             :dense="true"
                             label="District"
@@ -1153,12 +1160,12 @@
                             :province="form.billing_address_province"
                             :city="form.billing_address_city"
                             :disabled="disabled.billing_address_district"
-                            :adm_division="form.billing_address_district"
+                            :adm_division="form.billing_address_district || flagging.billing_address.disabled"
                         ></SelectAdmDivision>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectAdmDivision
-                            @selected="admDivisionSelected($event, 'billing_address_sub_district', 'billing_address_postal_code')"
+                            @selected="admDivisionSelected($event, 'billing_address_', 'billing_address_sub_district', 'billing_address_postal_code')"
                             name="billing_address_sub_district"
                             :dense="true"
                             label="Subdistrict"
@@ -1168,7 +1175,7 @@
                             :province="form.billing_address_province"
                             :city="form.billing_address_city"
                             :district="form.billing_address_district"
-                            :disabled="disabled.billing_address_sub_district"
+                            :disabled="disabled.billing_address_sub_district || flagging.billing_address.disabled"
                             :adm_division="form.billing_address_sub_district"
                         ></SelectAdmDivision>
                     </v-col>
@@ -1197,6 +1204,7 @@
                             dense
                             :error-messages="error.billing_address_latitude"
                             maxlength="17"
+                            :disabled="flagging.billing_address.disabled"
                         >
                             <template v-slot:label>Latitude<span class="text-red">*</span></template>
                         </v-text-field>
@@ -1211,6 +1219,7 @@
                             dense
                             :error-messages="error.billing_address_longitude"
                             maxlength="16"
+                            :disabled="flagging.billing_address.disabled"
                         >
                             <template v-slot:label>Longitude<span class="text-red">*</span></template>
                         </v-text-field>
@@ -1225,6 +1234,7 @@
                             dense
                             rows="5"
                             :data-unq="`prospectCustomer-input-billAddressAddressNote`"
+                            :disabled="flagging.billing_address.disabled"
                         >
                             <template v-slot:label>Address Note</template>
                         </v-textarea>
@@ -1340,9 +1350,10 @@
                 flagging:{
                     shipping_info: false,
                     billing_address: {
+                        disabled: false,
                         check_box: false,
                         radio_group: 0,
-                    }
+                    },
                 }
             }
         },
@@ -1378,7 +1389,7 @@
         },
         methods: {
             ...mapActions([
-                "fetchProspectCustomerCreate","fetchCustomerDetail"
+                "fetchProspectCustomerCreate","fetchCustomerDetail","fetchPriceLevel"
             ]),
             upgrade() {
                 this.send_data.confirm_data = {
@@ -1423,9 +1434,14 @@
                 if (d) {
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, customer_type_id: d.id})
                     this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, archetype: false})
+                    if(this.form.shipping_address_region !== '' && this.form.customer_type_id !== ''){
+                        this.fetchPriceLevel({customer_type_id: this.form.customer_type_id, region_id: this.form.shipping_address_region})
+                    }
                 }else{
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, archetype_id: null})
                     this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, archetype: true})
+                    this.$store.commit('setFormProspectCustomerCreate', { ...this.form, price_level_id: '' })
+                    this.$store.commit('setSelectedDetailCustomer', { ...this.detail_customer, price_level: {} })
                 }
             },
             setIdComponentSelected(d, comp){// For Selected then set Id
@@ -1477,8 +1493,9 @@
                             company_address_latitude: '',
                             company_address_longitude: '',
                         })
-                    }else{
-                        this.fetchCustomerDetail(this.detail_customer.customer_id)
+                    }else if(comp === "business_type_id" && d.value === 1){
+                        if(this.detail_customer.customer_id)
+                            this.fetchCustomerDetail(this.detail_customer.customer_id)
                     }
                 }
             },
@@ -1488,7 +1505,7 @@
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d})
                 }
             },
-            admDivisionSelected(d, current, next) {// For selected related adm division
+            admDivisionSelected(d, section, current, next) {// For selected related adm division
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [current]: '' })
                 if (d) {
                     if(!current.includes('sub_district')){
@@ -1499,56 +1516,64 @@
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [next]: d.postal_code })
                     }
                 }else{
-                    if(current === 'company_address_region'){
+                    if(current.includes('region')){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
-                            company_address_province: '',
-                            company_address_city: '',
-                            company_address_district: '',
-                            company_address_sub_district: '',
-                            company_address_postal_code: '',
+                            [section + 'province']: '',
+                            [section + 'city']: '',
+                            [section + 'district']: '',
+                            [section + 'sub_district']: '',
+                            [section + 'postal_code']: '',
                         })
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            company_address_province: true,
-                            company_address_city: true,
-                            company_address_district: true,
-                            company_address_sub_district: true,
+                            [section + 'province']: true,
+                            [section + 'city']: true,
+                            [section + 'district']: true,
+                            [section + 'sub_district']: true,
                         })
                     }
-                    else if(current === 'company_address_province'){
+                    else if(current.includes('province')){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
-                            company_address_city: '',
-                            company_address_district: '',
-                            company_address_sub_district: '',
-                            company_address_postal_code: '',
+                            [section + 'city']: '',
+                            [section + 'district']: '',
+                            [section + 'sub_district']: '',
+                            [section + 'postal_code']: '',
                         })
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            company_address_city: true,
-                            company_address_district: true,
-                            company_address_sub_district: true,
+                            [section + 'city']: true,
+                            [section + 'district']: true,
+                            [section + 'sub_district']: true,
                         })
                     }
-                    else if(current === 'company_address_city'){
+                    else if(current.includes('city')){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
-                            company_address_district: '',
-                            company_address_sub_district: '',
-                            company_address_postal_code: '',
+                            [section + 'district']: '',
+                            [section + 'sub_district']: '',
+                            [section + 'postal_code']: '',
                         })
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            company_address_district: true,
-                            company_address_sub_district: true,
+                            [section + 'district']: true,
+                            [section + 'sub_district']: true,
                         })
                     }
-                    else if(current === 'company_address_district'){
+                    else if(current.includes('district')){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
-                            company_address_sub_district: '',
-                            company_address_postal_code: '',
+                            [section + 'sub_district']: '',
+                            [section + 'postal_code']: '',
                         })
                         this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            company_address_sub_district: true,
+                            [section + 'sub_district']: true,
                         })
                     }
-                    else if(current === 'company_address_sub_district'){
+                    else if(current.includes('sub_district')){
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [next]: '' })
+                    }
+                }
+                if(current === 'shipping_address_region'){
+                    this.$store.commit('setFormProspectCustomerCreate', { ...this.form, price_level_id: '' })
+                    if(this.form.shipping_address_region !== '' && this.form.customer_type_id !== ''){
+                        this.fetchPriceLevel({customer_type_id: this.form.customer_type_id, region_id: this.form.shipping_address_region})
+                    }else{
+                        this.$store.commit('setSelectedDetailCustomer', { ...this.detail_customer, price_level: {} })
                     }
                 }
             },
@@ -1556,18 +1581,100 @@
         watch: {
             'flagging.shipping_info': {
                 handler: function (val) {
-                    console.log("in shippingh", val)
-                    this.$store.commit('setShippingInfoAddress', val)
+                    if(val === true){
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
+                            shipping_address_id: this.form.company_address_id,
+                            shipping_address_name: this.form.company_address_name,
+                            shipping_address_detail_1: this.form.company_address_detail_1,
+                            shipping_address_detail_2: this.form.company_address_detail_2,
+                            shipping_address_detail_3: this.form.company_address_detail_3,
+                            shipping_address_region: this.form.company_address_region,
+                            shipping_address_province: this.form.company_address_province,
+                            shipping_address_city: this.form.company_address_city,
+                            shipping_address_district: this.form.company_address_district,
+                            shipping_address_sub_district: this.form.company_address_sub_district,
+                            shipping_address_postal_code: this.form.company_address_postal_code,
+                            shipping_address_note: this.form.company_address_note,
+                            shipping_address_latitude: this.form.company_address_latitude,
+                            shipping_address_longitude: this.form.company_address_longitude,
+                        })
+                    }else{
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
+                            shipping_address_id: 0,
+                            shipping_address_name: '',
+                            shipping_address_detail_1: '',
+                            shipping_address_detail_2: '',
+                            shipping_address_detail_3: '',
+                            shipping_address_region: '',
+                            shipping_address_province: '',
+                            shipping_address_city: '',
+                            shipping_address_district: '',
+                            shipping_address_sub_district: '',
+                            shipping_address_postal_code: '',
+                            shipping_address_note: '',
+                            shipping_address_latitude: '',
+                            shipping_address_longitude: '',
+                        })
+                    }
                 },
                 deep: true
             },
             'flagging.billing_address.check_box': {
                 handler: function (val) {
                     if (val === true && this.flagging.shipping_info === true) {
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 3 })
+                        this.flagging.billing_address.disabled = true
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 3,
+                            billing_address_id: this.form.company_address_id,
+                            billing_address_name: this.form.company_address_name,
+                            billing_address_detail_1: this.form.company_address_detail_1,
+                            billing_address_detail_2: this.form.company_address_detail_2,
+                            billing_address_detail_3: this.form.company_address_detail_3,
+                            billing_address_region: this.form.company_address_region,
+                            billing_address_province: this.form.company_address_province,
+                            billing_address_city: this.form.company_address_city,
+                            billing_address_district: this.form.company_address_district,
+                            billing_address_sub_district: this.form.company_address_sub_district,
+                            billing_address_postal_code: this.form.company_address_postal_code,
+                            billing_address_note: this.form.company_address_note,
+                            billing_address_latitude: this.form.company_address_latitude,
+                            billing_address_longitude: this.form.company_address_longitude,
+                        })
                     }
                     else if(val === true){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 2 })
+                        this.flagging.billing_address.disabled = true
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 2,
+                            billing_address_id: this.form.shipping_address_id,
+                            billing_address_name: this.form.shipping_address_name,
+                            billing_address_detail_1: this.form.shipping_address_detail_1,
+                            billing_address_detail_2: this.form.shipping_address_detail_2,
+                            billing_address_detail_3: this.form.shipping_address_detail_3,
+                            billing_address_region: this.form.shipping_address_region,
+                            billing_address_province: this.form.shipping_address_province,
+                            billing_address_city: this.form.shipping_address_city,
+                            billing_address_district: this.form.shipping_address_district,
+                            billing_address_sub_district: this.form.shipping_address_sub_district,
+                            billing_address_postal_code: this.form.shipping_address_postal_code,
+                            billing_address_note: this.form.shipping_address_note,
+                            billing_address_latitude: this.form.shipping_address_latitude,
+                            billing_address_longitude: this.form.shipping_address_longitude,
+                        })
+                    }else{
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,  billing_address_refer_to: 0,
+                            billing_address_id: 0,
+                            billing_address_name: '',
+                            billing_address_detail_1: '',
+                            billing_address_detail_2: '',
+                            billing_address_detail_3: '',
+                            billing_address_region: '',
+                            billing_address_province: '',
+                            billing_address_city: '',
+                            billing_address_district: '',
+                            billing_address_sub_district: '',
+                            billing_address_postal_code: '',
+                            billing_address_note: '',
+                            billing_address_latitude: '',
+                            billing_address_longitude: '',
+                        })
                     }
                 },
                 deep: true
@@ -1575,7 +1682,43 @@
             'flagging.billing_address.radio_group': {
                 handler: function (val) {
                     if (val) {
+                        this.flagging.billing_address.disabled = true
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: parseInt(val) })
+                        if (val === '1') {
+                            this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 1,
+                                billing_address_id: this.form.company_address_id,
+                                billing_address_name: this.form.company_address_name,
+                                billing_address_detail_1: this.form.company_address_detail_1,
+                                billing_address_detail_2: this.form.company_address_detail_2,
+                                billing_address_detail_3: this.form.company_address_detail_3,
+                                billing_address_region: this.form.company_address_region,
+                                billing_address_province: this.form.company_address_province,
+                                billing_address_city: this.form.company_address_city,
+                                billing_address_district: this.form.company_address_district,
+                                billing_address_sub_district: this.form.company_address_sub_district,
+                                billing_address_postal_code: this.form.company_address_postal_code,
+                                billing_address_note: this.form.company_address_note,
+                                billing_address_latitude: this.form.company_address_latitude,
+                                billing_address_longitude: this.form.company_address_longitude,
+                            })
+                        }else if (val === '2'){
+                            this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 2,
+                                billing_address_id: this.form.shipping_address_id,
+                                billing_address_name: this.form.shipping_address_name,
+                                billing_address_detail_1: this.form.shipping_address_detail_1,
+                                billing_address_detail_2: this.form.shipping_address_detail_2,
+                                billing_address_detail_3: this.form.shipping_address_detail_3,
+                                billing_address_region: this.form.shipping_address_region,
+                                billing_address_province: this.form.shipping_address_province,
+                                billing_address_city: this.form.shipping_address_city,
+                                billing_address_district: this.form.shipping_address_district,
+                                billing_address_sub_district: this.form.shipping_address_sub_district,
+                                billing_address_postal_code: this.form.shipping_address_postal_code,
+                                billing_address_note: this.form.shipping_address_note,
+                                billing_address_latitude: this.form.shipping_address_latitude,
+                                billing_address_longitude: this.form.shipping_address_longitude,
+                            })
+                        }
                     }
                 },
                 deep: true
