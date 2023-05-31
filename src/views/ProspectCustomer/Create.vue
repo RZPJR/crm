@@ -68,7 +68,7 @@
                             :archetype="detail_customer.archetype"
                         ></SelectArchetype>
                     </v-col>
-                    <v-col cols="12" md="6" class="-mt24">
+                    <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                         <v-text-field
                             data-unq="prospectCustomer-input-brandName"
                             name="brand_name"
