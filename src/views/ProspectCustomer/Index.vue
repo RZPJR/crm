@@ -220,7 +220,7 @@
                                     <v-list-item 
                                         v-privilege="'pro_cst_reg'" 
                                         @click="regis(props.item.id)"
-                                        v-if="props.item.reg_status == 1 && !(props.item.merchant)"
+                                        v-if="props.item.reg_status === 1 && !(props.item.merchant)"
                                         :data-unq="`proscus-button-register-${props.index}`" 
                                     >
                                         <v-list-item-title>Register</v-list-item-title>
@@ -229,7 +229,7 @@
                                     <v-list-item 
                                         v-privilege="'pro_cst_upg'" 
                                         :to="'/customer-relation/prospective-customer/'+ props.item.id "
-                                        v-if="props.item.reg_status == 6"
+                                        v-if="props.item.reg_status === 6"
                                         :data-unq="`proscus-button-upgrade-${props.index}`" 
                                     >
                                         <v-list-item-title>Upgrade</v-list-item-title>
@@ -241,7 +241,7 @@
                                     <v-list-item                                         
                                         :data-unq="`proscus-button-decline-${props.index}`"  
                                         v-privilege="'pro_cst_dec'" 
-                                        v-if="props.item.reg_status == 6"
+                                        v-if="props.item.reg_status === 6 || props.item.reg_status === 11"
                                         @click="openDeclineDialog(props.item.id)"
                                     >
                                         <v-list-item-title>Decline</v-list-item-title>

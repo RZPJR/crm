@@ -22,14 +22,22 @@
                             </v-btn>
                         </template>
                         <v-list class="bg-white">
+                            <v-list-item 
+                                v-privilege="'pro_cst_upg'" 
+                                :to="'/customer-relation/prospective-customer/'+ data.id "
+                                v-if="data.reg_status === 6"
+                                :data-unq="`proscus-button-upgrade-${data.id}`" 
+                            >
+                                <v-list-item-title>Upgrade</v-list-item-title>
+                                <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
+                            </v-list-item>
                             <v-list-item
                                 :data-unq="`prospectCustomer-button-decline`"
                                 v-privilege="'pro_cst_dec'"
-                                v-if="data.reg_status === 6"
+                                v-if="data.reg_status === 6 || data.reg_status === 11"
                                 @click="openDeclineDialog()"
                             >
                                 <v-list-item-title>Decline</v-list-item-title>
-                                <v-list-item-icon><v-icon>mdi-open-in-new</v-icon></v-list-item-icon>
                             </v-list-item>
                             <v-list-item 
                                 @click="seeHistory()"

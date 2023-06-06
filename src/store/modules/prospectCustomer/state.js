@@ -184,10 +184,14 @@ const state = {
             billing_address_city: true,
             billing_address_district: true,
             billing_address_sub_district: true,
+
+            invoice_term: true,
+            shipping_info: false,
         },
         detail_customer: {
             selected_channel: {},
             business_type: {},
+            outlet_image: [],
         },
         form: {
             // basic info
