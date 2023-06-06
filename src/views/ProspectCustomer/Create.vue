@@ -26,7 +26,7 @@
                             :dense="true"
                             :glossary="detail_customer.business_type"
                             :error="error.business_type_id"
-                            :data-unq="`prospectCustomer-select-voucherType`"
+                            :data-unq="`prospectCustomer-select-businessType`"
                         ></SelectGlossary>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -35,7 +35,7 @@
                             name="customer_type"
                             :dense="true"
                             :error="error.customer_type_id"
-                            :data-unq="`prospectCustomer-select-businessType`"
+                            :data-unq="`prospectCustomer-select-customerType`"
                             :customer_type="detail_customer.customer_type"
                         ></SelectBusinessType>
                     </v-col>
@@ -375,7 +375,6 @@
                     data-unq="prospectCustomer-input-shippingInfoCheckBox"
                     label="Same as Company Address"
                     v-model="flagging.shipping_info"
-                    @click="clickedShippingInfo(flagging.shipping_info)"
                 ></v-checkbox>
             </div>
             <div class="mt24">
@@ -594,6 +593,7 @@
                             :error="error.shipping_method_id"
                             label="Shipping Method"
                             :data-unq="`prospectCustomer-select-shippingMethod`"
+                            :shipping_method="detail_customer.shipping_method"
                         ></SelectShippingMethod>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -952,13 +952,27 @@
                                     v-model="form.exchange_invoice"
                                     inset
                                     :true-value="1"
-                                    :false-value="0"
+                                    :false-value="2"
                                     color="#50ABA3"
                                     @click="exchangeInvoice"
                                 >
                                 </v-switch>
                             </div>
                         </div>
+                    </v-col>
+                    <v-col cols="12" md="6" class="-mt24">
+                        <SelectGlossary
+                            @selected="setValueComponentSelected($event, 'invoice_term')"
+                            name="invoice_term"
+                            label="Invoice Term"
+                            table="prospect_customer"
+                            attribute="invoice_term"
+                            :dense="true"
+                            :error="error.invoice_term"
+                            :data-unq="`prospectCustomer-select-invoiceTerm`"
+                            :disabled="disabled.invoice_term"
+                            :glossary="detail_customer.invoice_term"
+                        ></SelectGlossary>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24" v-if="form.exchange_invoice === 1">
                         <v-text-field
@@ -977,28 +991,17 @@
                         </v-text-field>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24" v-if="form.exchange_invoice === 1">
-                        <SelectGlossary
-                            @selected="setValueComponentSelected($event, 'invoice_term')"
-                            name="invoice_term"
-                            label="Invoice Term"
-                            table="prospect_customer"
-                            attribute="invoice_term"
-                            :dense="true"
-                            :error="error.invoice_term"
-                            :data-unq="`prospectCustomer-select-voucherType`"
-                        ></SelectGlossary>
-                    </v-col>
-                    <v-col cols="12" md="6" class="-mt24" v-if="form.exchange_invoice === 1">
                         <v-text-field
                             data-unq="prospectCustomer-input-emailFinanceInfo"
                             name="finance_email"
-                            v-model="form.finance_email"
+                            v-model="form.email"
                             required
                             outlined
                             dense
                             :error-messages="error.finance_email"
                             maxlength="100"
                             :rules="form.finance_email? email_rules : []"
+                            :disabled="true"
                         >
                             <template v-slot:label>
                                 Email<span class="text-red">*</span>
@@ -1017,12 +1020,18 @@
                     <v-checkbox
                         data-unq="prospectCustomer-input-billAddressCheckBox"
                         label="Same as Company & Sales and Shipping Address"
-                        v-model="flagging.billing_address.check_box"
+                        v-model="flagging.billing_address.check_box_all"
                     ></v-checkbox>
                 </div>
                 <div v-else>
-                    <div class="fs16 -mb10">Billing Address Same As</div>
-                    <v-radio-group v-model="flagging.billing_address.radio_group" row>
+                    <div class="fs16 -mb10">
+                        <v-checkbox
+                            data-unq="prospectCustomer-input-billAddressCheckBox"
+                            label="Billing Address Same as Company / Sales and Shipping Address"
+                            v-model="flagging.billing_address.check_box_or"
+                        ></v-checkbox>
+                    </div>
+                    <v-radio-group v-if="flagging.billing_address.check_box_or" v-model="flagging.billing_address.radio_group" row>
                         <v-radio label="Company Address" value="1"></v-radio>
                         <v-radio label="Sales and Shipping Address" value="2"></v-radio>
                     </v-radio-group>
@@ -1032,7 +1041,7 @@
                 <v-checkbox
                     data-unq="prospectCustomer-input-billAddressCheckBox"
                     label="Same as Sales and Shipping Address"
-                    v-model="flagging.billing_address.check_box" 
+                    v-model="flagging.billing_address.check_box_all" 
                 ></v-checkbox>
             </div>
             <div class="mt24">
@@ -1336,7 +1345,7 @@
             </v-row>
         </div>
         <LoadingBar :value="isLoading"/>
-        <ConfirmationDialogNew :data-unq="`prospectCustomer-input-confirmDialog`" :sendData="send_data.confirm_data"/>
+        <ConfirmationDialogNew :data-unq="`prospectCustomer-input-confirmDialog`" :sendData="confirm_data"/>
     </v-container>
 </template>
 
@@ -1351,10 +1360,12 @@
                     shipping_info: false,
                     billing_address: {
                         disabled: false,
-                        check_box: false,
+                        check_box_all: false,
                         radio_group: 0,
+                        check_box_or: false,
                     },
-                }
+                },
+                confirm_data: {},
             }
         },
         computed: {
@@ -1363,7 +1374,6 @@
                 form: state => state.prospectCustomer.create_prospect_customer.form,
                 disabled: state => state.prospectCustomer.create_prospect_customer.disabled,
                 error: state => state.prospectCustomer.create_prospect_customer.error,
-                send_data: state => state.prospectCustomer.create_prospect_customer,
                 isLoading: state => state.prospectCustomer.create_prospect_customer.isLoading,
             }),
         },
@@ -1392,7 +1402,7 @@
                 "fetchProspectCustomerCreate","fetchCustomerDetail","fetchPriceLevel"
             ]),
             upgrade() {
-                this.send_data.confirm_data = {
+                this.confirm_data = {
                     model: true,
                     title: "Create Prospective Customer",
                     text: "Are you sure want to upgrade this Customer?",
@@ -1403,7 +1413,7 @@
                 }
             },
             draft() {
-                this.send_data.confirm_data = {
+                this.confirm_data = {
                     model: true,
                     title: "Create Prospective Customer",
                     text: "Are you sure want to save as draft this Prospective Customer?",
@@ -1413,19 +1423,28 @@
                     data: this.form
                 }
             },
-            clickedShippingInfo(d){
-                this.$store.commit('setFormProspectCustomerCreate', { ...this.form, shipping_address_refer_to: 0 })
-                if(d === true){
-                    this.$store.commit('setFormProspectCustomerCreate', { ...this.form, shipping_address_refer_to: 1 })
-                }
-            },
             exchangeInvoice(){
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, exchange_invoice: this.form.exchange_invoice})
-                if(this.form.exchange_invoice === 0){
+                if(this.form.exchange_invoice === 2){
+                    this.flagging.invoice_term = true
+                    this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, invoice_term: true })
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
                         exchange_invoice_time: '',
                         invoice_term: 0,
                         finance_email: '',
+                        invoice_term: 1
+                    })
+                    this.$store.commit('setSelectedDetailCustomer', { ...this.detail_customer, 
+                        invoice_term: {
+                            id: 575,
+                            value: 1,
+                            value_name: 'direct'
+                        }
+                    })
+                }else{
+                    this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, invoice_term: false })
+                    this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
+                        finance_email: this.form.email,
                     })
                 }
             },
@@ -1454,8 +1473,8 @@
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: null})
                 if (d) {
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d.code})
-                    if (comp === 'customer_code') {
-                        this.fetchCustomerDetail(d.id)
+                    if (comp === 'customer_code' ) {
+                        this.fetchCustomerDetail(d?.id)
                     }
                 }
                 else if (d === null && comp === 'customer_code') {
@@ -1469,6 +1488,7 @@
                         payment_term: {},
                         sales_territory: {},
                         salesperson: {},
+                        price_level: {},
                     })
                 }
             },
@@ -1582,7 +1602,8 @@
             'flagging.shipping_info': {
                 handler: function (val) {
                     if(val === true){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
+                            shipping_address_refer_to: 1,
                             shipping_address_id: this.form.company_address_id,
                             shipping_address_name: this.form.company_address_name,
                             shipping_address_detail_1: this.form.company_address_detail_1,
@@ -1599,7 +1620,8 @@
                             shipping_address_longitude: this.form.company_address_longitude,
                         })
                     }else{
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
+                            shipping_address_refer_to: 0,
                             shipping_address_id: 0,
                             shipping_address_name: '',
                             shipping_address_detail_1: '',
@@ -1615,11 +1637,17 @@
                             shipping_address_latitude: '',
                             shipping_address_longitude: '',
                         })
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                            shipping_address_province: true,
+                            shipping_address_city: true,
+                            shipping_address_district: true,
+                            shipping_address_sub_district: true,
+                        })
                     }
                 },
                 deep: true
             },
-            'flagging.billing_address.check_box': {
+            'flagging.billing_address.check_box_all': {
                 handler: function (val) {
                     if (val === true && this.flagging.shipping_info === true) {
                         this.flagging.billing_address.disabled = true
@@ -1659,6 +1687,7 @@
                             billing_address_longitude: this.form.shipping_address_longitude,
                         })
                     }else{
+                        this.flagging.billing_address.disabled = false
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form,  billing_address_refer_to: 0,
                             billing_address_id: 0,
                             billing_address_name: '',
@@ -1674,6 +1703,12 @@
                             billing_address_note: '',
                             billing_address_latitude: '',
                             billing_address_longitude: '',
+                        })
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                            billing_address_province: true,
+                            billing_address_city: true,
+                            billing_address_district: true,
+                            billing_address_sub_district: true,
                         })
                     }
                 },
@@ -1719,6 +1754,37 @@
                                 billing_address_longitude: this.form.shipping_address_longitude,
                             })
                         }
+                    }
+                },
+                deep: true
+            },
+            'flagging.billing_address.check_box_or': {
+                handler: function (val) {
+                    if (val === false) {
+                        this.flagging.billing_address.radio_group = 0
+                        this.flagging.billing_address.disabled = false
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,  billing_address_refer_to: 0,
+                            billing_address_id: 0,
+                            billing_address_name: '',
+                            billing_address_detail_1: '',
+                            billing_address_detail_2: '',
+                            billing_address_detail_3: '',
+                            billing_address_region: '',
+                            billing_address_province: '',
+                            billing_address_city: '',
+                            billing_address_district: '',
+                            billing_address_sub_district: '',
+                            billing_address_postal_code: '',
+                            billing_address_note: '',
+                            billing_address_latitude: '',
+                            billing_address_longitude: '',
+                        })
+                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                            billing_address_province: true,
+                            billing_address_city: true,
+                            billing_address_district: true,
+                            billing_address_sub_district: true,
+                        })
                     }
                 },
                 deep: true

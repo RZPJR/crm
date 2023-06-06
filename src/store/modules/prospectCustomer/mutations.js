@@ -99,6 +99,10 @@ const mutations = {
         state.create_prospect_customer.confirm_data = payload;
         return state;
     },
+    setOutletImageUpgrade: function(state, payload) {
+        state.create_prospect_customer.detail_customer.outlet_image.push(payload);
+        return state;
+    },
 };
 
 export default mutations;

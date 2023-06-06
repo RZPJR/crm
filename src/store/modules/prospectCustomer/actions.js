@@ -109,7 +109,6 @@ const actions = {
         commit('setPreloadCustomerDetail', true);
         try {
             const response = await http.get("/customer/" + payload);
-            let form = state.create_prospect_customer.form
             let data = response.data.data
             if (data){
                 commit('setFormProspectCustomerCreate', { ...state.create_prospect_customer.form,
@@ -122,20 +121,6 @@ const actions = {
                     sales_territory_id: data.sales_territory? data.sales_territory.id : '',
                     salesperson_id: data.salesperson? data.salesperson.id : '',
                     business_type_id: data.business_type? data.business_type.value_int : 0,
-
-                    company_address_name: data.company_address.address_name? data.company_address.address_name : '',
-                    company_address_detail_1: data.company_address.address_1,
-                    company_address_detail_2: data.company_address.address_2,
-                    company_address_detail_3: data.company_address.address_3,
-                    company_address_region: data.company_address.region,
-                    company_address_province: data.company_address.province,
-                    company_address_city: data.company_address.city,
-                    company_address_district: data.company_address.district,
-                    company_address_sub_district: data.company_address.sub_district,
-                    company_address_postal_code: data.company_address.postal_code,
-                    company_address_note: data.company_address.note,
-                    company_address_latitude: data.company_address.latitude !== 0? data.company_address.latitude.toString() : '',
-                    company_address_longitude: data.company_address.longitude !==0? data.company_address.longitude.toString() : '',
 
                     shipping_address_name: data.ship_to_address.address_name,
                     shipping_address_detail_1: data.ship_to_address.address_1,
@@ -261,7 +246,7 @@ const actions = {
             shipping_address_note: '',
             shipping_address_latitude: '',
             shipping_address_longitude: '',
-            shipping_method_id: '',
+            shipping_method_id: 'DELIVERY',
             pic_order_name: '',
             pic_order_contact: '',
             sales_territory_id: '',
@@ -291,7 +276,7 @@ const actions = {
             pic_finance_contact: '',
             exchange_invoice: 2,
             exchange_invoice_time: '',
-            invoice_term: 0,
+            invoice_term: 1,
             finance_email: '',
             
             // Billing Address
@@ -315,11 +300,25 @@ const actions = {
             comment_1: '',
             comment_2: '',
         });
-        commit("setSelectedDetailCustomer", { ...create_prospect_customer.detail_customer, selected_channel: {
-            id: 249,
-            value: 1,
-            value_name: 'Dashboard'
-        }});
+        commit("setSelectedDetailCustomer", { ...create_prospect_customer.detail_customer, 
+            selected_channel: {
+                id: 249,
+                value: 1,
+                value_name: 'Dashboard'
+            },
+            shipping_method: {
+                id: 'DELIVERY',
+                description: 'DELIVERY',
+                type: 1,
+                type_description: 'Delivery'
+            },
+            invoice_term: {
+                id: 575,
+                value: 1,
+                value_name: 'direct'
+            },
+            outlet_image: [],
+        });
         commit("setDisabledProspectCustomerCreate", {
             archetype: true,
             company_address_province: true,
@@ -336,12 +335,13 @@ const actions = {
             billing_address_city: true,
             billing_address_district: true,
             billing_address_sub_district: true,
+
+            invoice_term: true,
         })
         commit("setError", {})
-        commit("setConfirmData", {})
     },
 
-    // Create Prospect Customer 
+    // Upgrade Prospect Customer 
     fetchProspectCustomerUpgrade: async ({ commit, state, dispatch }, payload) => {
         commit('setPreloadCustomerDetail', true);
         dispatch('fetchProspectCustomerCreate')
@@ -464,49 +464,58 @@ const actions = {
                     value_name: 'Dashboard'
                 }});
                 commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
-                    customer: data.customer,
-                    customer_type: data.customer_type,
-                    archetype: data.archetype,
+                    customer: data?.customer,
+                    customer_type: data?.customer_type,
+                    archetype: data?.archetype,
                     business_type: {
-                        id: data.business_type.id,
-                        value: data.business_type.value_int,
-                        value_name: data.business_type.value_name
+                        id: data?.business_type?.id,
+                        value: data?.business_type?.value_int,
+                        value_name: data?.business_type?.value_name
                     },
-                    customer_class: data.customer_class,
+                    customer_class: data?.customer_class,
                     time_consent: {
-                        id: data.time_consent.id,
-                        value: data.time_consent.value_int,
-                        value_name: data.time_consent.value_name
+                        id: data?.time_consent?.id,
+                        value: data?.time_consent?.value_int,
+                        value_name: data?.time_consent?.value_name
                     },
                     reference_info: {
-                        id: data.reference_info.id,
-                        value: data.reference_info.value_int,
-                        value_name: data.reference_info.value_name
+                        id: data?.reference_info?.id,
+                        value: data?.reference_info?.value_int,
+                        value_name: data?.reference_info?.value_name
                     },
-                    sales_territory: data.sales_territory,
-                    salesperson: data.salesperson,
-                    price_level: data.price_level,
+                    sales_territory: data?.sales_territory,
+                    salesperson: data?.salesperson,
+                    price_level: data?.price_level,
                     invoice_term: {
-                        id: data.invoice_term? data.invoice_term.id : '',
-                        value: data.invoice_term? data.invoice_term.value_int : 0,
-                        value_name: data.invoice_term? data.invoice_term.value_name : '',
+                        id: data?.invoice_term? data?.invoice_term?.id : '',
+                        value: data?.invoice_term? data?.invoice_term?.value_int : 0,
+                        value_name: data?.invoice_term? data?.invoice_term?.value_name : '',
                     },
-                    shipping_method: data.shipping_method,
-                    payment_term: data.payment_term,
-                    id_card_doc_url: data.id_card_doc_url,
-                    company_contract_doc_url: data.company_contract_doc_url,
-                    notarial_deed_doc_url: data.notarial_deed_doc_url,
-                    taxpayer_doc_url: data.taxpayer_doc_url,
-                    taxable_entrepeneur_doc_url: data.taxable_entrepeneur_doc_url,
-                    business_license_doc_url: data.business_license_doc_url,
-                    company_certificate_reg_url: data.company_certificate_reg_url,
-                    id_card_doc_name: data.id_card_doc_name,
-                    company_contract_doc_name: data.company_contract_doc_name,
-                    notarial_deed_doc_name: data.notarial_deed_doc_name,
-                    taxpayer_doc_name: data.taxpayer_doc_name,
-                    taxable_entrepeneur_doc_name: data.taxable_entrepeneur_doc_name,
-                    business_license_doc_name: data.business_license_doc_name,
-                    company_certificate_reg_name: data.company_certificate_reg_name,
+                    shipping_method: data?.shipping_method,
+                    payment_term: data?.payment_term,
+                    id_card_doc_url: data?.id_card_doc_url,
+                    company_contract_doc_url: data?.company_contract_doc_url,
+                    notarial_deed_doc_url: data?.notarial_deed_doc_url,
+                    taxpayer_doc_url: data?.taxpayer_doc_url,
+                    taxable_entrepeneur_doc_url: data?.taxable_entrepeneur_doc_url,
+                    business_license_doc_url: data?.business_license_doc_url,
+                    company_certificate_reg_url: data?.company_certificate_reg_url,
+                    id_card_doc_name: data?.id_card_doc_name,
+                    company_contract_doc_name: data?.company_contract_doc_name,
+                    notarial_deed_doc_name: data?.notarial_deed_doc_name,
+                    taxpayer_doc_name: data?.taxpayer_doc_name,
+                    taxable_entrepeneur_doc_name: data?.taxable_entrepeneur_doc_name,
+                    business_license_doc_name: data?.business_license_doc_name,
+                    company_certificate_reg_name: data?.company_certificate_reg_name,
+                });
+                data?.outlet_image.pic_finance_contact
+                data?.outlet_image.forEach(e => {
+                    commit("setOutletImageUpgrade", {
+                        image: true,
+                        imageError: '',
+                        imgUrl: e,
+                        nameFile: e,
+                    });
                 });
                 commit("setDisabledProspectCustomerCreate", {
                     archetype: false,
@@ -524,9 +533,10 @@ const actions = {
                     billing_address_city: false,
                     billing_address_district: false,
                     billing_address_sub_district: false,
+
+                    shipping_info: data.shipping_address_refer_to === 1? true : false,
                 })
                 commit("setError", {})
-                commit("setConfirmData", {})
             }
             commit('setPreloadCustomerDetail', false);
         } catch (error) {
