@@ -111,6 +111,24 @@ const actions = {
             const response = await http.get("/customer/" + payload);
             let data = response.data.data
             if (data){
+                commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
+                    customer_id: payload,
+                    customer_type: data.customer_type,
+                    archetype: data.archetype,
+                    customer_class: data.customer_class,
+                    payment_term: data.payment_term,
+                    sales_territory: data.sales_territory,
+                    salesperson: data.salesperson,
+                });
+                if(state.create_prospect_customer.form.business_type_id === 0){
+                    commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
+                        business_type: {
+                            id: data.business_type.id,
+                            value: data.business_type.value_int,
+                            value_name: data.business_type.value_name
+                        },
+                    });
+                }
                 commit('setFormProspectCustomerCreate', { ...state.create_prospect_customer.form,
                     customer_code: data.customer_code? data.customer_code : '',
                     customer_type_id: data.customer_type? data.customer_type.id : '',
@@ -120,56 +138,41 @@ const actions = {
                     payment_term_id: data.payment_term? data.payment_term.id : '',
                     sales_territory_id: data.sales_territory? data.sales_territory.id : '',
                     salesperson_id: data.salesperson? data.salesperson.id : '',
-                    business_type_id: data.business_type? data.business_type.value_int : 0,
+                    business_type_id: state.create_prospect_customer.form.business_type_id === 0? data.business_type? data.business_type.value_int : 0 : state.create_prospect_customer.form.business_type_id,
 
-                    shipping_address_name: data.ship_to_address.address_name,
-                    shipping_address_detail_1: data.ship_to_address.address_1,
-                    shipping_address_detail_2: data.ship_to_address.address_2,
-                    shipping_address_detail_3: data.ship_to_address.address_3,
-                    shipping_address_region: data.ship_to_address.region,
-                    shipping_address_province: data.ship_to_address.province,
-                    shipping_address_city: data.ship_to_address.city,
-                    shipping_address_district: data.ship_to_address.district,
-                    shipping_address_sub_district: data.ship_to_address.sub_district,
-                    shipping_address_postal_code: data.ship_to_address.postal_code,
-                    shipping_address_note: data.ship_to_address.note,
-                    shipping_address_latitude: data.ship_to_address.latitude !== 0? data.ship_to_address.latitude.toString() : '',
-                    shipping_address_longitude: data.ship_to_address.longitude !== 0? data.ship_to_address.longitude.toString() : '',
+                    shipping_address_refer_to: 0,
+                    shipping_address_name: data.ship_to_address?.address_name,
+                    shipping_address_detail_1: data.ship_to_address?.address_1,
+                    shipping_address_detail_2: data.ship_to_address?.address_2,
+                    shipping_address_detail_3: data.ship_to_address?.address_3,
+                    shipping_address_region: data.ship_to_address?.region,
+                    shipping_address_province: data.ship_to_address?.province,
+                    shipping_address_city: data.ship_to_address?.city,
+                    shipping_address_district: data.ship_to_address?.district,
+                    shipping_address_sub_district: data.ship_to_address?.sub_district,
+                    shipping_address_postal_code: data.ship_to_address?.postal_code,
+                    shipping_address_note: data.ship_to_address?.note,
+                    shipping_address_latitude: data.ship_to_address?.latitude !== 0? data.ship_to_address.latitude.toString() : '',
+                    shipping_address_longitude: data.ship_to_address?.longitude !== 0? data.ship_to_address.longitude.toString() : '',
 
-                    billing_address_name: data.bill_to_address.address_name,
-                    billing_address_detail_1: data.bill_to_address.address_1,
-                    billing_address_detail_2: data.bill_to_address.address_2,
-                    billing_address_detail_3: data.bill_to_address.address_3,
-                    billing_address_region: data.bill_to_address.region,
-                    billing_address_province: data.bill_to_address.province,
-                    billing_address_city: data.bill_to_address.city,
-                    billing_address_district: data.bill_to_address.district,
-                    billing_address_sub_district: data.bill_to_address.sub_district,
-                    billing_address_postal_code: data.bill_to_address.postal_code,
-                    billing_address_note: data.bill_to_address.note,
-                    billing_address_latitude: data.bill_to_address.latitude !== 0? data.bill_to_address.latitude.toString() : '',
-                    billing_address_longitude: data.bill_to_address.longitude !== 0? data.bill_to_address.longitude.toString() : '',
+                    billing_address_refer_to: 0,
+                    billing_address_name: data.bill_to_address?.address_name,
+                    billing_address_detail_1: data.bill_to_address?.address_1,
+                    billing_address_detail_2: data.bill_to_address?.address_2,
+                    billing_address_detail_3: data.bill_to_address?.address_3,
+                    billing_address_region: data.bill_to_address?.region,
+                    billing_address_province: data.bill_to_address?.province,
+                    billing_address_city: data.bill_to_address?.city,
+                    billing_address_district: data.bill_to_address?.district,
+                    billing_address_sub_district: data.bill_to_address?.sub_district,
+                    billing_address_postal_code: data.bill_to_address?.postal_code,
+                    billing_address_note: data.bill_to_address?.note,
+                    billing_address_latitude: data.bill_to_address?.latitude !== 0? data.bill_to_address.latitude.toString() : '',
+                    billing_address_longitude: data.bill_to_address?.longitude !== 0? data.bill_to_address.longitude.toString() : '',
                 })
-
                 if(data.ship_to_address.region !== '' && data.customer_type.id !== ''){
                     dispatch('fetchPriceLevel', {customer_type_id: data.customer_type.id, region_id: data.ship_to_address.region})
                 }
-
-                commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
-                    customer_id: payload,
-                    customer_type: data.customer_type,
-                    archetype: data.archetype,
-                    business_type: {
-                        id: data.business_type.id,
-                        value: data.business_type.value_int,
-                        value_name: data.business_type.value_name
-                    },
-                    customer_class: data.customer_class,
-                    payment_term: data.payment_term,
-                    sales_territory: data.sales_territory,
-                    salesperson: data.salesperson,
-                });
-
                 commit("setDisabledProspectCustomerCreate", {
                     archetype: false,
                     company_address_province: false,
