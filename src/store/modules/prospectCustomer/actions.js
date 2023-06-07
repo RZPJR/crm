@@ -508,7 +508,6 @@ const actions = {
                     business_license_doc_name: data?.business_license_doc_name,
                     company_certificate_reg_name: data?.company_certificate_reg_name,
                 });
-                data?.outlet_image.pic_finance_contact
                 data?.outlet_image.forEach(e => {
                     commit("setOutletImageUpgrade", {
                         image: true,
