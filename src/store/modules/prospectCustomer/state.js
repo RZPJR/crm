@@ -275,7 +275,7 @@ const state = {
             finance_email: '',
             
             // Billing Address
-            billing_address_refer_to: 1,
+            billing_address_refer_to: 0,
             billing_address_id: 0,
             billing_address_name: '',
             billing_address_detail_1: '',
