@@ -16,6 +16,7 @@
                             customer_type="personal"
                             :customer="detail_customer.customer"
                             :not_call_api="true"
+                            :disabled="true"
                         ></SelectCustomer>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -1455,7 +1456,7 @@
         },
         methods: {
             ...mapActions([
-                "fetchProspectCustomerUpgrade","fetchCustomerDetail","fetchPriceLevel"
+                "fetchProspectCustomerUpgrade","fetchCustomerDetail","fetchPriceLevel","fetchProspectCustomerCreate"
             ]),
             upgrade() {
                 this.confirm_data = {
