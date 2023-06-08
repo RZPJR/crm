@@ -113,12 +113,12 @@ const actions = {
             if (data){
                 commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
                     customer_id: payload,
-                    customer_type: data.customer_type,
-                    archetype: data.archetype,
-                    customer_class: data.customer_class,
-                    payment_term: data.payment_term,
-                    sales_territory: data.sales_territory,
-                    salesperson: data.salesperson,
+                    customer_type: data?.customer_type === null? {} : data.customer_type,
+                    archetype: data?.archetype === null? {} : data.archetype,
+                    customer_class: data?.customer_class === null? {} : data.customer_class,
+                    payment_term: data?.payment_term === null? {} : data.payment_term,
+                    sales_territory: data?.sales_territory === null? {} : data.sales_territory,
+                    salesperson: data?.salesperson === null? {} : data.sales_person,
                 });
                 if(state.create_prospect_customer.form.business_type_id === 0){
                     commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
