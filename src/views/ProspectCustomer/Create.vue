@@ -1690,13 +1690,13 @@
                                 shipping_address_latitude: '',
                                 shipping_address_longitude: '',
                             })
+                            this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                                shipping_address_province: true,
+                                shipping_address_city: true,
+                                shipping_address_district: true,
+                                shipping_address_sub_district: true,
+                            })
                         }
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            shipping_address_province: true,
-                            shipping_address_city: true,
-                            shipping_address_district: true,
-                            shipping_address_sub_district: true,
-                        })
                     }
                     this.flagging.business_type.shipping_info = false
                 },
@@ -1760,13 +1760,13 @@
                                 billing_address_latitude: '',
                                 billing_address_longitude: '',
                             })
+                            this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                                billing_address_province: true,
+                                billing_address_city: true,
+                                billing_address_district: true,
+                                billing_address_sub_district: true,
+                            })
                         }
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            billing_address_province: true,
-                            billing_address_city: true,
-                            billing_address_district: true,
-                            billing_address_sub_district: true,
-                        })
                     }
                 },
                 deep: true
@@ -1837,13 +1837,13 @@
                                 billing_address_latitude: '',
                                 billing_address_longitude: '',
                             })
+                            this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                                billing_address_province: true,
+                                billing_address_city: true,
+                                billing_address_district: true,
+                                billing_address_sub_district: true,
+                            })
                         }
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            billing_address_province: true,
-                            billing_address_city: true,
-                            billing_address_district: true,
-                            billing_address_sub_district: true,
-                        })
                     }
                     this.flagging.business_type.billing_address = false
                 },

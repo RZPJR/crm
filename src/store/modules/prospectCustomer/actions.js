@@ -189,6 +189,8 @@ const actions = {
                     billing_address_city: false,
                     billing_address_district: false,
                     billing_address_sub_district: false,
+                    
+                    invoice_term: true,
                 })
             }
             commit('setPreloadCustomerDetail', false);
@@ -467,6 +469,7 @@ const actions = {
                     value_name: 'Dashboard'
                 }});
                 commit("setSelectedDetailCustomer", { ...state.create_prospect_customer.detail_customer,
+                    customer_id: data?.customer?.id,
                     customer: data?.customer,
                     customer_type: data?.customer_type,
                     archetype: data?.archetype,
@@ -511,7 +514,7 @@ const actions = {
                     business_license_doc_name: data?.business_license_doc_name,
                     company_certificate_reg_name: data?.company_certificate_reg_name,
                 });
-                data?.outlet_image.forEach(e => {
+                data?.outlet_image?.forEach(e => {
                     commit("setOutletImageUpgrade", {
                         image: true,
                         imageError: '',
