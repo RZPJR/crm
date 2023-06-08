@@ -186,7 +186,6 @@ const state = {
             billing_address_sub_district: true,
 
             invoice_term: true,
-            shipping_info: false,
         },
         detail_customer: {
             selected_channel: {},

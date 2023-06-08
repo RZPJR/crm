@@ -739,6 +739,7 @@
                             :error-messages="error.email"
                             maxlength="100"
                             :rules="form.email? email_rules : []"
+                            @input="onChangeEmail"
                         >
                             <template v-slot:label>
                                 Email<span class="text-red">*</span>
@@ -1421,6 +1422,10 @@
                         radio_group: 0,
                         check_box_or: false,
                     },
+                    business_type: {
+                        shipping_info: false,
+                        billing_address: false,
+                    },
                 },
                 confirm_data: {},
             }
@@ -1458,6 +1463,13 @@
             ...mapActions([
                 "fetchProspectCustomerUpgrade","fetchCustomerDetail","fetchPriceLevel","fetchProspectCustomerCreate"
             ]),
+            onChangeEmail(){
+                if(this.form.exchange_invoice === 1){
+                    this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
+                        finance_email: this.form.email,
+                    })
+                }
+            },
             upgrade() {
                 this.confirm_data = {
                     model: true,
@@ -1505,6 +1517,7 @@
                         }
                     })
                 }else{
+                    this.flagging.invoice_term = false
                     this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, invoice_term: false })
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
                         finance_email: this.form.email,
@@ -1558,7 +1571,18 @@
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: null})
                 if (d) {
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d.value})
-                    if (comp === "business_type_id" && d.value === 2) {
+                    if(comp === "business_type_id" && d.value === 1){ // Business Entity
+                        if(this.detail_customer.customer_id){
+                            this.fetchCustomerDetail(this.detail_customer.customer_id)
+                            this.flagging.business_type.shipping_info = true
+                            this.flagging.business_type.billing_address = true
+                        }
+                    }else if (comp === "business_type_id" && d.value === 2) { // Individual Business
+                        if(this.detail_customer.customer_id){
+                            this.fetchCustomerDetail(this.detail_customer.customer_id)
+                            this.flagging.business_type.shipping_info = true
+                            this.flagging.business_type.billing_address = true
+                        }
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
                             company_address_id: 0,
                             company_address_name: '',
@@ -1575,10 +1599,7 @@
                             company_address_latitude: '',
                             company_address_longitude: '',
                         })
-                    }else if(comp === "business_type_id" && d.value === 1){
-                        if(this.detail_customer.customer_id)
-                            this.fetchCustomerDetail(this.detail_customer.customer_id)
-                    }
+                    } 
                 }
             },
             onSelectFile(d, comp){
@@ -1665,6 +1686,8 @@
                 handler: function (val) {
                     if(val){
                         this.flagging.shipping_info = val === 1? true : false
+                    }else{
+                        this.flagging.shipping_info = false
                     }
                 },
                 deep: true
@@ -1681,6 +1704,11 @@
                     }
                     else if(val === 3){
                         this.flagging.billing_address.check_box_all = true
+                    }else{
+                        this.flagging.billing_address.disabled = false
+                        this.flagging.billing_address.check_box_all = false
+                        this.flagging.billing_address.radio_group = 0
+                        this.flagging.billing_address.check_box_or = false
                     }
                 },
                 deep: true
@@ -1704,28 +1732,32 @@
                             shipping_address_longitude: this.form.company_address_longitude,
                         })
                     }else{
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
-                            shipping_address_name: '',
-                            shipping_address_detail_1: '',
-                            shipping_address_detail_2: '',
-                            shipping_address_detail_3: '',
-                            shipping_address_region: '',
-                            shipping_address_province: '',
-                            shipping_address_city: '',
-                            shipping_address_district: '',
-                            shipping_address_sub_district: '',
-                            shipping_address_postal_code: '',
-                            shipping_address_note: '',
-                            shipping_address_latitude: '',
-                            shipping_address_longitude: '',
-                        })
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            shipping_address_province: true,
-                            shipping_address_city: true,
-                            shipping_address_district: true,
-                            shipping_address_sub_district: true,
-                        })
+                        if(this.flagging.business_type.shipping_info === false){
+                            this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
+                                shipping_address_refer_to: 0,
+                                shipping_address_name: '',
+                                shipping_address_detail_1: '',
+                                shipping_address_detail_2: '',
+                                shipping_address_detail_3: '',
+                                shipping_address_region: '',
+                                shipping_address_province: '',
+                                shipping_address_city: '',
+                                shipping_address_district: '',
+                                shipping_address_sub_district: '',
+                                shipping_address_postal_code: '',
+                                shipping_address_note: '',
+                                shipping_address_latitude: '',
+                                shipping_address_longitude: '',
+                            })
+                            this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                                shipping_address_province: true,
+                                shipping_address_city: true,
+                                shipping_address_district: true,
+                                shipping_address_sub_district: true,
+                            })
+                        }
                     }
+                    this.flagging.business_type.shipping_info = false
                 },
                 deep: true
             },
@@ -1768,27 +1800,29 @@
                         })
                     }else if (val === false){
                         this.flagging.billing_address.disabled = false
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,  billing_address_refer_to: 0,
-                            billing_address_name: '',
-                            billing_address_detail_1: '',
-                            billing_address_detail_2: '',
-                            billing_address_detail_3: '',
-                            billing_address_region: '',
-                            billing_address_province: '',
-                            billing_address_city: '',
-                            billing_address_district: '',
-                            billing_address_sub_district: '',
-                            billing_address_postal_code: '',
-                            billing_address_note: '',
-                            billing_address_latitude: '',
-                            billing_address_longitude: '',
-                        })
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            billing_address_province: true,
-                            billing_address_city: true,
-                            billing_address_district: true,
-                            billing_address_sub_district: true,
-                        })
+                        if(this.flagging.business_type.billing_address === false){
+                            this.$store.commit('setFormProspectCustomerCreate', { ...this.form,  billing_address_refer_to: 0,
+                                billing_address_name: '',
+                                billing_address_detail_1: '',
+                                billing_address_detail_2: '',
+                                billing_address_detail_3: '',
+                                billing_address_region: '',
+                                billing_address_province: '',
+                                billing_address_city: '',
+                                billing_address_district: '',
+                                billing_address_sub_district: '',
+                                billing_address_postal_code: '',
+                                billing_address_note: '',
+                                billing_address_latitude: '',
+                                billing_address_longitude: '',
+                            })
+                            this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                                billing_address_province: true,
+                                billing_address_city: true,
+                                billing_address_district: true,
+                                billing_address_sub_district: true,
+                            })
+                        }
                     }
                 },
                 deep: true
@@ -1840,27 +1874,38 @@
                     if (val === false) {
                         this.flagging.billing_address.radio_group = 0
                         this.flagging.billing_address.disabled = false
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,  billing_address_refer_to: 0,
-                            billing_address_name: '',
-                            billing_address_detail_1: '',
-                            billing_address_detail_2: '',
-                            billing_address_detail_3: '',
-                            billing_address_region: '',
-                            billing_address_province: '',
-                            billing_address_city: '',
-                            billing_address_district: '',
-                            billing_address_sub_district: '',
-                            billing_address_postal_code: '',
-                            billing_address_note: '',
-                            billing_address_latitude: '',
-                            billing_address_longitude: '',
-                        })
-                        this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
-                            billing_address_province: true,
-                            billing_address_city: true,
-                            billing_address_district: true,
-                            billing_address_sub_district: true,
-                        })
+                        if(this.flagging.business_type.billing_address === false){
+                            this.$store.commit('setFormProspectCustomerCreate', { ...this.form,  billing_address_refer_to: 0,
+                                billing_address_name: '',
+                                billing_address_detail_1: '',
+                                billing_address_detail_2: '',
+                                billing_address_detail_3: '',
+                                billing_address_region: '',
+                                billing_address_province: '',
+                                billing_address_city: '',
+                                billing_address_district: '',
+                                billing_address_sub_district: '',
+                                billing_address_postal_code: '',
+                                billing_address_note: '',
+                                billing_address_latitude: '',
+                                billing_address_longitude: '',
+                            })
+                            this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled,
+                                billing_address_province: true,
+                                billing_address_city: true,
+                                billing_address_district: true,
+                                billing_address_sub_district: true,
+                            })
+                        }
+                    }
+                    this.flagging.business_type.billing_address = false
+                },
+                deep: true
+            },
+            'form.exchange_invoice': {
+                handler: function (val) {
+                    if (val === 2) {
+                        this.flagging.invoice_term = true
                     }
                 },
                 deep: true
