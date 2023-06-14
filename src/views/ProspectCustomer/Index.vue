@@ -322,6 +322,7 @@
         },
         created() {
             this.$store.commit("setDefaultFilterProspectCustomer")
+            this.$store.commit("resetPagination")
         },
         mounted() {
             let self = this

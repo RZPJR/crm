@@ -1008,6 +1008,9 @@
                                 Email<span class="text-red">*</span>
                             </template>
                         </v-text-field>
+                        <div class="-mt24">
+                            <span class="text-black60 fs12">Finance Info Email same as Business Info Email</span>
+                        </div>
                     </v-col>
                 </v-row>
             </div>
