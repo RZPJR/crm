@@ -151,7 +151,7 @@
                     <DetailRowNew :name="'Address Name'" :value="data.shipping_address_name? data.shipping_address_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Address Region'" :value="data.shipping_address_region? data.shipping_address_region : '-' "/>
+                    <DetailRowNew :name="'Region'" :value="data.shipping_address_region? data.shipping_address_region : '-' "/>
                 </v-col>
                 <v-col cols="12" class="-mt24">
                     <DetailRowNew :name="'Address Detail'" :value="address_detail.shipping_address ? address_detail.shipping_address : '-'" :align="true"/>
@@ -335,7 +335,7 @@
                     <DetailRowNew :name="'Address Name'" :value="data.billing_address_name? data.billing_address_name : '-' "/>
                 </v-col>
                 <v-col cols="12" md="6" class="-mt24">
-                    <DetailRowNew :name="'Address Region'" :value="data.billing_address_region? data.billing_address_region : '-' "/>
+                    <DetailRowNew :name="'Region'" :value="data.billing_address_region? data.billing_address_region : '-' "/>
                 </v-col>
                 <v-col cols="12" class="-mt24">
                     <DetailRowNew :name="'Address Detail'" :value="address_detail.billing_address ? address_detail.billing_address : '-'" :align="true"/>
