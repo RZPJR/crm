@@ -14,6 +14,9 @@
                             :error="error.customer_code"
                             :data-unq="`prospectCustomer-select-customer`"
                             customer_type="personal"
+                            :customer="detail_customer.customer"
+                            :not_call_api="true"
+                            :disabled="true"
                         ></SelectCustomer>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -41,7 +44,7 @@
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
-                            data-unq="prospectCustomer-input-BusinessName"
+                            data-unq="prospectCustomer-input-businessName"
                             name="business_name"
                             v-model="form.business_name"
                             required
@@ -119,6 +122,7 @@
                             :dense="true"
                             :error="error.time_consent"
                             :data-unq="`prospectCustomer-select-timeConsent`"
+                            :glossary="detail_customer.time_consent"
                         ></SelectGlossary>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -131,6 +135,7 @@
                             :dense="true"
                             :error="error.reference_info"
                             :data-unq="`prospectCustomer-select-referenceInfo`"
+                            :glossary="detail_customer.reference_info"
                         ></SelectGlossary>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
@@ -156,6 +161,7 @@
                                 data-unq="prospectCustomer-upload-multiImage"
                                 max_img="7"
                                 label="Shipping Goods Place/Outlet Image"
+                                :data="detail_customer.outlet_image"
                             />
                         </v-row>
                     </v-col>
@@ -375,6 +381,7 @@
                     data-unq="prospectCustomer-input-shippingInfoCheckBox"
                     label="Same as Company Address"
                     v-model="flagging.shipping_info"
+                    @click="clickedShippingInfo(flagging.shipping_info)"
                 ></v-checkbox>
             </div>
             <div class="mt24">
@@ -820,6 +827,13 @@
                                 :error="error.id_card_doc_url"
                                 :idx="0"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-idCard`"
+                                :name="'Previous ID Card'" 
+                                :value="detail_customer.id_card_doc_url ? detail_customer.id_card_doc_name : '-'" 
+                                :crossURL="detail_customer.id_card_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -831,6 +845,13 @@
                                 name="company_contract_doc_url"
                                 :error="error.company_contract_doc_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-contractSigningPowerofAttorney`"
+                                :name="'Previous Contract Signing Power of Attorney'" 
+                                :value="detail_customer.company_contract_doc_url ? detail_customer.company_contract_doc_name : '-'" 
+                                :crossURL="detail_customer.company_contract_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -842,6 +863,13 @@
                                 name="notarial_deed_doc_url"
                                 :error="error.notarial_deed_doc_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-previousDeedofEstablishmentLastAmendment`"
+                                :name="'Previous Deed of Establishment/Last Amendment'" 
+                                :value="detail_customer.notarial_deed_doc_url ? detail_customer.notarial_deed_doc_name : '-'" 
+                                :crossURL="detail_customer.notarial_deed_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24">
                             <UploadPDF
@@ -854,6 +882,13 @@
                                 :error="error.taxpayer_doc_url"
                                 :idx="3"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-taxpayer`"
+                                :name="'Previous Taxpayer'" 
+                                :value="detail_customer.taxpayer_doc_url ? detail_customer.taxpayer_doc_name : '-'" 
+                                :crossURL="detail_customer.taxpayer_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -865,6 +900,13 @@
                                 name="taxable_entrepeneur_doc_url"
                                 :error="error.taxable_entrepeneur_doc_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-taxableEntrepreneurConfirmationNumber`"
+                                :name="'Previous Taxable Entrepreneur Confirmation Number'" 
+                                :value="detail_customer.taxable_entrepeneur_doc_url ? detail_customer.taxable_entrepeneur_doc_name : '-'" 
+                                :crossURL="detail_customer.taxable_entrepeneur_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -876,6 +918,13 @@
                                 name="business_license_doc_url"
                                 :error="error.business_license_doc_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-businessLicense`"
+                                :name="'Previous Business License'" 
+                                :value="detail_customer.business_license_doc_url ? detail_customer.business_license_doc_name : '-'" 
+                                :crossURL="detail_customer.business_license_doc_url"
+                                :align="true"
+                            />
                         </v-col>
                         <v-col cols="12" md="6" class="-mt24" v-if="form.business_type_id !== 2">
                             <UploadPDF
@@ -887,6 +936,13 @@
                                 name="company_certificate_reg_url"
                                 :error="error.company_certificate_reg_url"
                             ></UploadPDF>
+                            <DetailRowNew 
+                                :data-unq="`proscus-link-certificateofCompanyRegistrationBusinessIdentificationNumber`"
+                                :name="'Previous Certificate of Company Registration/Business Identification Number'" 
+                                :value="detail_customer.company_certificate_reg_url ? detail_customer.company_certificate_reg_name : '-'" 
+                                :crossURL="detail_customer.company_certificate_reg_url"
+                                :align="true"
+                            />
                         </v-col>
                     </v-row>
                 </div>
@@ -971,7 +1027,7 @@
                             :dense="true"
                             :error="error.invoice_term"
                             :data-unq="`prospectCustomer-select-invoiceTerm`"
-                            :disabled="disabled.invoice_term"
+                            :disabled="flagging.invoice_term"
                             :glossary="detail_customer.invoice_term"
                         ></SelectGlossary>
                     </v-col>
@@ -1008,9 +1064,6 @@
                                 Email<span class="text-red">*</span>
                             </template>
                         </v-text-field>
-                        <div class="-mt24">
-                            <span class="text-black60 fs12">Finance Info Email same as Business Info Email</span>
-                        </div>
                     </v-col>
                 </v-row>
             </div>
@@ -1020,7 +1073,7 @@
         </div>
         <div class="box-body">
             <div v-if="form.business_type_id !== 2">
-                <div v-if="flagging.shipping_info === true" class="-mt24">
+                <div v-if="flagging.shipping_info === true || form.billing_address_refer_to === 3" class="-mt24">
                     <v-checkbox
                         data-unq="prospectCustomer-input-billAddressCheckBox"
                         label="Same as Company & Sales and Shipping Address"
@@ -1035,7 +1088,8 @@
                             v-model="flagging.billing_address.check_box_or"
                         ></v-checkbox>
                     </div>
-                    <v-radio-group v-if="flagging.billing_address.check_box_or" v-model="flagging.billing_address.radio_group" row>
+                    <v-radio-group v-if="flagging.billing_address.check_box_or" v-model="flagging.billing_address.radio_group" row 
+                            :value="1" v-on:change="$emit('input', $event)">
                         <v-radio label="Company Address" value="1"></v-radio>
                         <v-radio label="Sales and Shipping Address" value="2"></v-radio>
                     </v-radio-group>
@@ -1387,27 +1441,27 @@
         },
         mounted () {
             let that = this
-            this.fetchProspectCustomerCreate()
+            this.fetchProspectCustomerUpgrade({id: this.$route.params.id})
             this.$root.$on("event_multipleImage", function (url) {
                 let arr = []
-                this.$store.commit('setOutletImage', [])
+                this.$store.commit('setFormProspectCustomerCreate', { ...that.form, outlet_image: [] })
                 if (url) {
                     url.forEach(e => {
                         arr.push(e.image_url)
                     });
-                    this.$store.commit('setOutletImage', arr)
+                    this.$store.commit('setFormProspectCustomerCreate', {  ...that.form, outlet_image: arr })
                 }
             });
             this.$root.$on('event_error', function(err){
                 this.$store.commit('setError', {})
                 if(err){
-                    that.$store.commit('setError', err)
+                    this.$store.commit('setError', err)
                 }
             });
         },
         methods: {
             ...mapActions([
-                "fetchProspectCustomerCreate","fetchCustomerDetail","fetchPriceLevel"
+                "fetchProspectCustomerUpgrade","fetchCustomerDetail","fetchPriceLevel","fetchProspectCustomerCreate"
             ]),
             onChangeEmail(){
                 if(this.form.exchange_invoice === 1){
@@ -1438,6 +1492,12 @@
                     data: this.form
                 }
             },
+            clickedShippingInfo(d){
+                this.$store.commit('setFormProspectCustomerCreate', { ...this.form, shipping_address_refer_to: 0 })
+                if(d === true){
+                    this.$store.commit('setFormProspectCustomerCreate', { ...this.form, shipping_address_refer_to: 1 })
+                }
+            },
             exchangeInvoice(){
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, exchange_invoice: this.form.exchange_invoice})
                 if(this.form.exchange_invoice === 2){
@@ -1457,6 +1517,7 @@
                         }
                     })
                 }else{
+                    this.flagging.invoice_term = false
                     this.$store.commit('setDisabledProspectCustomerCreate', { ...this.disabled, invoice_term: false })
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
                         finance_email: this.form.email,
@@ -1488,8 +1549,8 @@
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: null})
                 if (d) {
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d.code})
-                    if (comp === 'customer_code' ) {
-                        this.fetchCustomerDetail(d?.id)
+                    if (comp === 'customer_code') {
+                        this.fetchCustomerDetail(d.id)
                     }
                 }
                 else if (d === null && comp === 'customer_code') {
@@ -1503,7 +1564,6 @@
                         payment_term: {},
                         sales_territory: {},
                         salesperson: {},
-                        price_level: {},
                     })
                 }
             },
@@ -1511,14 +1571,13 @@
                 this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: null})
                 if (d) {
                     this.$store.commit('setFormProspectCustomerCreate', { ...this.form, [comp]: d.value})
-                    if(comp === "business_type_id" && d.value === 1){
+                    if(comp === "business_type_id" && d.value === 1){ // Business Entity
                         if(this.detail_customer.customer_id){
                             this.fetchCustomerDetail(this.detail_customer.customer_id)
                             this.flagging.business_type.shipping_info = true
                             this.flagging.business_type.billing_address = true
                         }
-                    }
-                    else if (comp === "business_type_id" && d.value === 2) {
+                    }else if (comp === "business_type_id" && d.value === 2) { // Individual Business
                         if(this.detail_customer.customer_id){
                             this.fetchCustomerDetail(this.detail_customer.customer_id)
                             this.flagging.business_type.shipping_info = true
@@ -1540,7 +1599,7 @@
                             company_address_latitude: '',
                             company_address_longitude: '',
                         })
-                    }
+                    } 
                 }
             },
             onSelectFile(d, comp){
@@ -1657,9 +1716,7 @@
             'flagging.shipping_info': {
                 handler: function (val) {
                     if(val === true){
-                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
-                            shipping_address_refer_to: 1,
-                            shipping_address_id: this.form.company_address_id,
+                        this.$store.commit('setFormProspectCustomerCreate', { ...this.form, 
                             shipping_address_name: this.form.company_address_name,
                             shipping_address_detail_1: this.form.company_address_detail_1,
                             shipping_address_detail_2: this.form.company_address_detail_2,
@@ -1678,7 +1735,6 @@
                         if(this.flagging.business_type.shipping_info === false){
                             this.$store.commit('setFormProspectCustomerCreate', { ...this.form,
                                 shipping_address_refer_to: 0,
-                                shipping_address_id: 0,
                                 shipping_address_name: '',
                                 shipping_address_detail_1: '',
                                 shipping_address_detail_2: '',
@@ -1710,7 +1766,6 @@
                     if (val === true && this.flagging.shipping_info === true) {
                         this.flagging.billing_address.disabled = true
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 3,
-                            billing_address_id: this.form.company_address_id,
                             billing_address_name: this.form.company_address_name,
                             billing_address_detail_1: this.form.company_address_detail_1,
                             billing_address_detail_2: this.form.company_address_detail_2,
@@ -1729,7 +1784,6 @@
                     else if(val === true){
                         this.flagging.billing_address.disabled = true
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 2,
-                            billing_address_id: this.form.shipping_address_id,
                             billing_address_name: this.form.shipping_address_name,
                             billing_address_detail_1: this.form.shipping_address_detail_1,
                             billing_address_detail_2: this.form.shipping_address_detail_2,
@@ -1744,11 +1798,10 @@
                             billing_address_latitude: this.form.shipping_address_latitude,
                             billing_address_longitude: this.form.shipping_address_longitude,
                         })
-                    }else{
+                    }else if (val === false){
                         this.flagging.billing_address.disabled = false
                         if(this.flagging.business_type.billing_address === false){
                             this.$store.commit('setFormProspectCustomerCreate', { ...this.form,  billing_address_refer_to: 0,
-                                billing_address_id: 0,
                                 billing_address_name: '',
                                 billing_address_detail_1: '',
                                 billing_address_detail_2: '',
@@ -1781,7 +1834,6 @@
                         this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: parseInt(val) })
                         if (val === '1') {
                             this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 1,
-                                billing_address_id: this.form.company_address_id,
                                 billing_address_name: this.form.company_address_name,
                                 billing_address_detail_1: this.form.company_address_detail_1,
                                 billing_address_detail_2: this.form.company_address_detail_2,
@@ -1798,7 +1850,6 @@
                             })
                         }else if (val === '2'){
                             this.$store.commit('setFormProspectCustomerCreate', { ...this.form, billing_address_refer_to: 2,
-                                billing_address_id: this.form.shipping_address_id,
                                 billing_address_name: this.form.shipping_address_name,
                                 billing_address_detail_1: this.form.shipping_address_detail_1,
                                 billing_address_detail_2: this.form.shipping_address_detail_2,
@@ -1825,7 +1876,6 @@
                         this.flagging.billing_address.disabled = false
                         if(this.flagging.business_type.billing_address === false){
                             this.$store.commit('setFormProspectCustomerCreate', { ...this.form,  billing_address_refer_to: 0,
-                                billing_address_id: 0,
                                 billing_address_name: '',
                                 billing_address_detail_1: '',
                                 billing_address_detail_2: '',
@@ -1849,6 +1899,14 @@
                         }
                     }
                     this.flagging.business_type.billing_address = false
+                },
+                deep: true
+            },
+            'form.exchange_invoice': {
+                handler: function (val) {
+                    if (val === 2) {
+                        this.flagging.invoice_term = true
+                    }
                 },
                 deep: true
             },

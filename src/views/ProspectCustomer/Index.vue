@@ -74,6 +74,7 @@
                         :dense="true"
                         data-unq="proscus-filter-archetype"
                         @selected="archetypeSelected"
+                        label="Archetype"
                     ></SelectArchetype>
                 </v-col>
                 <v-col cols="12" md="3" class="-mb24">
@@ -152,17 +153,17 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td :data-unq="`proscus-value-name-${props.index}`">{{ props.item.brand_name }}</td>
+                        <td :data-unq="`proscus-value-name-${props.index}`">{{ props.item.business_name }}</td>
                         <td :data-unq="`proscus-value-phonenumber-${props.index}`">{{ props.item.pic_order_contact }}</td>
                         <td :data-unq="`proscus-value-archetype-${props.index}`">{{ props.item.archetype.description }}</td>
                         <td :data-unq="`proscus-value-customer_type-${props.index}`">{{ props.item.customer_type.description }}</td>
-                        <td :data-unq="`proscus-value-region-${props.index}`">{{ props.item.company_address.region }}</td>
+                        <td :data-unq="`proscus-value-region-${props.index}`">{{ props.item.shipping_address_region }}</td>
                         <td :data-unq="`proscus-value-sub_district-${props.index}`">
-                            {{ props.item.company_address.province }} - 
-                            {{ props.item.company_address.city }} <br>
+                            {{ props.item.shipping_address_province }} - 
+                            {{ props.item.shipping_address_city }} <br>
                             <span class="second-color">
-                                {{ props.item.company_address.district }} -
-                                {{ props.item.company_address.sub_district }}
+                                {{ props.item.shipping_address_district }} -
+                                {{ props.item.shipping_address_sub_district }}
                             </span>
                         </td>
                         <td :data-unq="`proscus-value-customer_upgrade-${props.index}`">
@@ -219,7 +220,7 @@
                                     <v-list-item 
                                         v-privilege="'pro_cst_reg'" 
                                         @click="regis(props.item.id)"
-                                        v-if="props.item.reg_status == 1 && !(props.item.merchant)"
+                                        v-if="props.item.reg_status === 1 && !(props.item.merchant)"
                                         :data-unq="`proscus-button-register-${props.index}`" 
                                     >
                                         <v-list-item-title>Register</v-list-item-title>
@@ -227,8 +228,8 @@
                                     </v-list-item>
                                     <v-list-item 
                                         v-privilege="'pro_cst_upg'" 
-                                        @click="upgrade(props.item.id)"
-                                        v-if="props.item.reg_status == 1 && props.item.merchant"
+                                        :to="'/customer-relation/prospective-customer/'+ props.item.id "
+                                        v-if="props.item.reg_status === 6"
                                         :data-unq="`proscus-button-upgrade-${props.index}`" 
                                     >
                                         <v-list-item-title>Upgrade</v-list-item-title>
@@ -240,7 +241,7 @@
                                     <v-list-item                                         
                                         :data-unq="`proscus-button-decline-${props.index}`"  
                                         v-privilege="'pro_cst_dec'" 
-                                        v-if="props.item.reg_status == 6"
+                                        v-if="props.item.reg_status === 6 || props.item.reg_status === 11"
                                         @click="openDeclineDialog(props.item.id)"
                                     >
                                         <v-list-item-title>Decline</v-list-item-title>
@@ -319,8 +320,11 @@
                 showFilter : false,
             }
         },
+        created() {
+            this.$store.commit("setDefaultFilterProspectCustomer")
+            this.$store.commit("resetPagination")
+        },
         mounted() {
-            this.fetchProspectCustomer()
             let self = this
             this.$root.$on('event_success', function (res) {
                 if (res) {

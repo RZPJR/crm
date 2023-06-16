@@ -17,6 +17,18 @@ const mutations = {
         state.prospect_customer.filter = payload
         return state;
     },
+    setDefaultFilterProspectCustomer: function(state, payload) {
+        state.prospect_customer.filter = {
+            search: '',
+            status:'',
+            customer_type: '',
+            area: '',
+            archetype: '',
+            sales_person: '',
+            request_by: '',
+        }
+        return state;
+    },
     setSelectDeclineTypeProspectCustomer: function(state, payload) {
         state.prospect_customer.decline.type = payload;
         return state;
@@ -53,6 +65,10 @@ const mutations = {
         state.detail_prospect_customer.data = payload;
         return state;
     },
+    setAddressDetailCustomerDetail: function(state, payload) {
+        state.detail_prospect_customer.address_detail = payload;
+        return state;
+    },
 
     // Create
     setFormProspectCustomerCreate: function(state, payload) {
@@ -62,7 +78,31 @@ const mutations = {
     setDisabledProspectCustomerCreate: function(state, payload) {
         state.create_prospect_customer.disabled = payload;
         return state;
-    }
+    },
+    setOutletImage: function(state, payload) {
+        state.create_prospect_customer.form.outlet_image = payload;
+        return state;
+    },
+    setSelectedDetailCustomer: function(state, payload) {
+        state.create_prospect_customer.detail_customer = payload;
+        return state;
+    },
+    setError: function(state, payload) {
+        state.create_prospect_customer.error = payload;
+        return state;
+    },
+    setPreloadCustomerDetail: function(state, payload) {
+        state.create_prospect_customer.isLoading = payload;
+        return state;
+    },
+    setConfirmData: function(state, payload) {
+        state.create_prospect_customer.confirm_data = payload;
+        return state;
+    },
+    setOutletImageUpgrade: function(state, payload) {
+        state.create_prospect_customer.detail_customer.outlet_image.push(payload);
+        return state;
+    },
 };
 
 export default mutations;
