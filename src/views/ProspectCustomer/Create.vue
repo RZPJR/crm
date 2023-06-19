@@ -1374,6 +1374,10 @@
                     },
                 },
                 confirm_data: {},
+                temp_data : {
+                    time_consent : 0,
+                    reference_info : 0,
+                }
             }
         },
         computed: {
@@ -1505,6 +1509,8 @@
                         salesperson: {},
                         price_level: {},
                     })
+                    this.form.time_consent = this.temp_data.time_consent
+                    this.form.reference_info = this.temp_data.reference_info
                 }
             },
             setValueComponentSelected(d, comp) {// For Selected then set Value
@@ -1541,6 +1547,9 @@
                             company_address_longitude: '',
                         })
                     }
+                }
+                if (comp == 'time_consent' || comp == 'reference_info') {
+                    this.temp_data[comp] = d.value
                 }
             },
             onSelectFile(d, comp){
