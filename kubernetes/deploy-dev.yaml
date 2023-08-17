@@ -133,8 +133,8 @@ metadata:
   namespace: fe-crm
 spec:
   dnsNames:
-  - dev-fe-crm.edenfarm.tech
-  secretName: dev-fe-crm-tls
+  - fe-crm.edenfarm.tech
+  secretName: fe-crm-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer
@@ -150,10 +150,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - dev-fe-crm.edenfarm.tech
-    secretName: dev-fe-crm-tls
+    - fe-crm.edenfarm.tech
+    secretName: fe-crm-tls
   rules:
-  - host: dev-fe-crm.edenfarm.tech
+  - host: fe-crm.edenfarm.tech
     http:
       paths:
       - path: /
