@@ -40,7 +40,7 @@ spec:
       - name: registry
       containers:
       - name: fe-crm
-        image: git.edenfarm.id:5050/project-version3/erp-dashboard/crm/eks-dev:<VERSION>
+        image: git.edenfarm.id:5050/project-version3/erp-dashboard/crm/dev:<VERSION>
         ports:
         - name: http-port
           containerPort: 8080
@@ -133,8 +133,8 @@ metadata:
   namespace: fe-crm
 spec:
   dnsNames:
-  - fe-crm.edenfarm.tech
-  secretName: fe-crm-tls
+  - dev-fe-crm.edenfarm.tech
+  secretName: dev-fe-crm-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer
@@ -144,15 +144,16 @@ kind: Ingress
 metadata:
   namespace: fe-crm
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
   name: fe-crm
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
-    - fe-crm.edenfarm.tech
-    secretName: fe-crm-tls
+    - dev-fe-crm.edenfarm.tech
+    secretName: dev-fe-crm-tls
   rules:
-  - host: fe-crm.edenfarm.tech
+  - host: dev-fe-crm.edenfarm.tech
     http:
       paths:
       - path: /
