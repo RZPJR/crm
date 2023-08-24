@@ -20,7 +20,7 @@ const mutations = {
     setDefaultFilterProspectCustomer: function(state, payload) {
         state.prospect_customer.filter = {
             search: '',
-            status: 6,
+            status:'',
             customer_type: '',
             area: '',
             archetype: '',
@@ -65,6 +65,10 @@ const mutations = {
         state.detail_prospect_customer.data = payload;
         return state;
     },
+    setAddressDetailCustomerDetail: function(state, payload) {
+        state.detail_prospect_customer.address_detail = payload;
+        return state;
+    },
 
     // Create
     setFormProspectCustomerCreate: function(state, payload) {
@@ -85,6 +89,18 @@ const mutations = {
     },
     setError: function(state, payload) {
         state.create_prospect_customer.error = payload;
+        return state;
+    },
+    setPreloadCustomerDetail: function(state, payload) {
+        state.create_prospect_customer.isLoading = payload;
+        return state;
+    },
+    setConfirmData: function(state, payload) {
+        state.create_prospect_customer.confirm_data = payload;
+        return state;
+    },
+    setOutletImageUpgrade: function(state, payload) {
+        state.create_prospect_customer.detail_customer.outlet_image.push(payload);
         return state;
     },
 };
