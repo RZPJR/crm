@@ -34,7 +34,7 @@
                             <v-list-item
                                 :data-unq="`prospectCustomer-button-decline`"
                                 v-privilege="'pro_cst_dec'"
-                                v-if="data.reg_status === 6 || data.reg_status === 11"
+                                v-if="data.reg_status === 6"
                                 @click="openDeclineDialog()"
                             >
                                 <v-list-item-title>Decline</v-list-item-title>
