@@ -39,7 +39,7 @@ spec:
       - name: registry
       containers:
       - name: fe-crm
-        image: git.edenfarm.id:5050/project-version3/erp-dashboard/crm/uat:<VERSION>
+        image: git.edenfarm.id:5050/project-version3/erp-dashboard/crm/master:<VERSION>
         ports:
           - name: http-port
             containerPort: 8080
