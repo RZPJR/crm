@@ -241,7 +241,7 @@
                                     <v-list-item                                         
                                         :data-unq="`proscus-button-decline-${props.index}`"  
                                         v-privilege="'pro_cst_dec'" 
-                                        v-if="props.item.reg_status === 6 || props.item.reg_status === 11"
+                                        v-if="props.item.reg_status === 6"
                                         @click="openDeclineDialog(props.item.id)"
                                     >
                                         <v-list-item-title>Decline</v-list-item-title>
