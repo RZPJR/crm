@@ -151,6 +151,11 @@ const state = {
             taxpayer_number: "",
             pic_finance_name: "",
         },
+        address_detail: {
+            company_address: '',
+            shipping_address: '',
+            billing_address: '',
+        },
         outlet_pictures: [],
         declineDialog: false,
         decline_type: "",
@@ -161,6 +166,7 @@ const state = {
 
     //Create prospect_customer
     create_prospect_customer:{
+        isLoading: false,
         error: {},
         disabled: {
             archetype: true,
@@ -178,10 +184,13 @@ const state = {
             billing_address_city: true,
             billing_address_district: true,
             billing_address_sub_district: true,
+
+            invoice_term: true,
         },
         detail_customer: {
             selected_channel: {},
             business_type: {},
+            outlet_image: [],
         },
         form: {
             // basic info
@@ -241,6 +250,7 @@ const state = {
             // Business Info
             owner_name: '',
             owner_role: '',
+            owner_contact: '',
             email: '',
             id_card_doc_number: '',
             taxpayer_doc_number: '',
@@ -264,7 +274,7 @@ const state = {
             finance_email: '',
             
             // Billing Address
-            billing_address_refer_to: 1,
+            billing_address_refer_to: 0,
             billing_address_id: 0,
             billing_address_name: '',
             billing_address_detail_1: '',
