@@ -1699,8 +1699,12 @@
                         this.flagging.billing_address.radio_group = "1"
                     }
                     else if(val === 2){
-                        this.flagging.billing_address.check_box_or = true
-                        this.flagging.billing_address.radio_group = "2"
+                        if(this.form.business_type_id === 1){
+                            this.flagging.billing_address.check_box_or = true
+                            this.flagging.billing_address.radio_group = "2"
+                        }else{
+                            this.flagging.billing_address.check_box_all = true
+                        }
                     }
                     else if(val === 3){
                         this.flagging.billing_address.check_box_all = true
