@@ -1,6 +1,8 @@
 module.exports = {
+  productionSourceMap: true,
   lintOnSave: false,
   configureWebpack: {
+    mode: 'production',
     devServer: {
       proxy: process.env.VUE_APP_API_URL,
       headers: {
